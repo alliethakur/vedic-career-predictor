@@ -483,8 +483,8 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
               <li>✅ Personalized Sanskrit Mantras & Remedies</li>
               <li>✅ Lucky Colors, Sacred Days & Gemstone Guidance</li>
               <li>✅ Professional Career Path Analysis</li>
-              <li>✅ <strong>BONUS: 15-min Personal Consultation</strong> (₹299 value)</li>
-              <li>✅ 20-Page Premium PDF Report</li>
+              <li>✅ <strong>BONUS: 15-min Personal Consultation(Coming Soon!)</strong> (₹299 value)</li>
+              <li>✅ Premium PDF Report</li>
               <li>✅ VIP Monthly Email Tips (Refer 3 friends)</li>
             </ul>
           </div>
@@ -536,5 +536,6 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
     </div>
   );
 };
+
 
 export default PremiumModal149;
