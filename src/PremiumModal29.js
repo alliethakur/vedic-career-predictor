@@ -495,7 +495,8 @@ AstroAlign AI Team`;
              '"ॐ गुरवे नमः" - प्रतिदिन 21 बार (गुरुवार को 108 बार)'}
           </p>
         </div>
-      </div> Evening (6-8 PM), Saturn worship on Saturdays' :
+      </div> 
+        <p>Evening (6-8 PM), Saturn worship on Saturdays' :
                zodiac === 'Aquarius' ? 'Saturday (शनिवार), Afternoon (2-4 PM), Saturn mantras on Saturdays' :
                'Thursday (गुरुवार), Evening (7-9 PM), Jupiter worship on Thursdays'}
             </p>
@@ -780,3 +781,4 @@ AstroAlign AI Team`;
 };
 
 export default PremiumModal29;
+
