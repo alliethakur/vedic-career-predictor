@@ -495,29 +495,32 @@ AstroAlign AI Team`;
              '"ॐ गुरवे नमः" - प्रतिदिन 21 बार (गुरुवार को 108 बार)'}
           </p>
         </div>
-      </div> 
-        <p>Evening (6-8 PM), Saturn worship on Saturdays' :
-               zodiac === 'Aquarius' ? 'Saturday (शनिवार), Afternoon (2-4 PM), Saturn mantras on Saturdays' :
-               'Thursday (गुरुवार), Evening (7-9 PM), Jupiter worship on Thursdays'}
-            </p>
-          </div>
-          <div className="bg-white p-4 rounded-md">
-            <h4 className="font-semibold text-purple-900 mb-2">🙏 Recommended Mantras:</h4>
-            <p className="text-gray-700 text-sm">
-              {zodiac === 'Aries' ? '"ॐ भौमाय नमः" - Mars mantra for courage and strength (108 times daily)' :
-               zodiac === 'Taurus' ? '"ॐ शुक्राय नमः" - Venus mantra for prosperity and creativity (108 times)' :
-               zodiac === 'Gemini' ? '"ॐ बुधाय नमः" - Mercury mantra for intelligence and communication' :
-               zodiac === 'Cancer' ? '"ॐ सोमाय नमः" - Moon mantra for emotional balance and intuition' :
-               zodiac === 'Leo' ? '"ॐ सूर्याय नमः" - Sun mantra for confidence and leadership (108 times)' :
-               zodiac === 'Virgo' ? '"ॐ बुधाय नमः" - Mercury mantra for analytical skills and focus' :
-               zodiac === 'Libra' ? '"ॐ शुक्राय नमः" - Venus mantra for harmony and relationships' :
-               zodiac === 'Scorpio' ? '"ॐ भौमाय नमः" - Mars mantra for transformation and power' :
-               zodiac === 'Sagittarius' ? '"ॐ गुरवे नमः" - Jupiter mantra for wisdom and good fortune' :
-               zodiac === 'Capricorn' ? '"ॐ शनैश्चराय नमः" - Saturn mantra for discipline and success' :
-               zodiac === 'Aquarius' ? '"ॐ शनैश्चराय नमः" - Saturn mantra for innovation and progress' :
-               '"ॐ गुरवे नमः" - Jupiter mantra for spiritual growth and compassion'}
-            </p>
-          </div>
+        </div>
+        <div className="bg-white p-4 rounded-md">
+          <h4 className="font-semibold text-purple-900 mb-2">⏰ Best Time for Worship:</h4>
+          <p className="text-gray-700 text-sm">
+            {zodiac === 'Capricorn' ? 'Evening (6-8 PM), Saturn worship on Saturdays' :
+             zodiac === 'Aquarius' ? 'Saturday (शनिवार), Afternoon (2-4 PM), Saturn mantras on Saturdays' :
+             'Thursday (गुरुवार), Evening (7-9 PM), Jupiter worship on Thursdays'}
+          </p>
+        </div>
+        <div className="bg-white p-4 rounded-md">
+          <h4 className="font-semibold text-purple-900 mb-2">🙏 Recommended Mantras:</h4>
+          <p className="text-gray-700 text-sm">
+            {zodiac === 'Aries' ? '"ॐ भौमाय नमः" - Mars mantra for courage and strength (108 times daily)' :
+             zodiac === 'Taurus' ? '"ॐ शुक्राय नमः" - Venus mantra for prosperity and creativity (108 times)' :
+             zodiac === 'Gemini' ? '"ॐ बुधाय नमः" - Mercury mantra for intelligence and communication' :
+             zodiac === 'Cancer' ? '"ॐ सोमाय नमः" - Moon mantra for emotional balance and intuition' :
+             zodiac === 'Leo' ? '"ॐ सूर्याय नमः" - Sun mantra for confidence and leadership (108 times)' :
+             zodiac === 'Virgo' ? '"ॐ बुधाय नमः" - Mercury mantra for analytical skills and focus' :
+             zodiac === 'Libra' ? '"ॐ शुक्राय नमः" - Venus mantra for harmony and relationships' :
+             zodiac === 'Scorpio' ? '"ॐ भौमाय नमः" - Mars mantra for transformation and power' :
+             zodiac === 'Sagittarius' ? '"ॐ गुरवे नमः" - Jupiter mantra for wisdom and good fortune' :
+             zodiac === 'Capricorn' ? '"ॐ शनैश्चराय नमः" - Saturn mantra for discipline and success' :
+             zodiac === 'Aquarius' ? '"ॐ शनैश्चराय नमः" - Saturn mantra for innovation and progress' :
+             '"ॐ गुरवे नमः" - Jupiter mantra for spiritual growth and compassion'}
+          </p>
+        </div>
         </div>
       </div>
 
@@ -781,4 +784,5 @@ AstroAlign AI Team`;
 };
 
 export default PremiumModal29;
+
 
