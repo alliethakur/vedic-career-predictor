@@ -50,7 +50,7 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
   // Create order on backend
   const createOrder = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/create-order', {
+      const response = await fetch('https://vedic-career-backend.vercel.app/api/create-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
   // Verify payment on backend
   const verifyPayment = async (paymentData) => {
     try {
-      const response = await fetch('http://localhost:5000/api/verify-payment', {
+      const response = await fetch('https://vedic-career-backend.vercel.app/api/verify-payment', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
