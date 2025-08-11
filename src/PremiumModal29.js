@@ -512,6 +512,29 @@ AstroAlign AI Team`;
           </div>
         )}
 
+        {/* TEST BUTTON - REMOVE IN PRODUCTION */}
+        <div className="mb-4 p-3 bg-yellow-100 rounded-lg text-center border-2 border-yellow-400">
+          <p className="text-yellow-800 text-sm mb-2">🧪 TESTING MODE</p>
+          <button
+            onClick={() => {
+              setShowPremiumContent(true);
+              setHasActivePurchase(true);
+            }}
+            className="bg-yellow-600 text-white py-2 px-4 rounded-lg font-semibold text-sm mr-2"
+          >
+            🔍 TEST: View Full Report
+          </button>
+          <button
+            onClick={() => {
+              setShowPremiumContent(false);
+              setHasActivePurchase(false);
+            }}
+            className="bg-gray-600 text-white py-2 px-4 rounded-lg font-semibold text-sm"
+          >
+            🔄 Reset Test
+          </button>
+        </div>
+
         {/* Scrollable content area */}
         <div className="space-y-4 mb-6">
           <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200">
