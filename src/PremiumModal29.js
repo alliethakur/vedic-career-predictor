@@ -410,32 +410,6 @@ AstroAlign AI Team`;
         </div>
       </div>
 
-      {/* Career Guidance Section */}
-      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 rounded-lg border-l-4 border-blue-500">
-        <div className="flex items-center mb-4">
-          <span className="text-2xl mr-3">💼</span>
-          <h3 className="text-xl font-bold text-blue-800">करियर मार्गदर्शन (Career Path Guidance)</h3>
-        </div>
-        <div className="space-y-3">
-          <div className="bg-white p-4 rounded-md">
-            <h4 className="font-semibold text-blue-900 mb-2">🎯 आदर्श करियर क्षेत्र (Ideal Career Fields):</h4>
-            <p className="text-gray-700 text-sm">
-              {zodiac === 'Leo' ? 'नेतृत्व की भूमिकाएं, मनोरंजन उद्योग, सरकारी सेवाएं, अध्यापन, खेल प्रशिक्षण' :
-               zodiac === 'Virgo' ? 'स्वास्थ्य सेवा, रिसर्च, लेखांकन, संपादन, गुणवत्ता नियंत्रण, पोषण विज्ञान' :
-               zodiac === 'Cancer' ? 'मनोविज्ञान, परामर्श, आतिथ्य, रियल एस्टेट, बाल देखभाल, पाक कला' :
-               'रचनात्मक क्षेत्र, नवाचार उद्योग, और प्राकृतिक प्रतिभा की आवश्यकता वाली भूमिकाएं'}
-            </p>
-          </div>
-          <div className="bg-white p-4 rounded-md">
-            <h4 className="font-semibold text-blue-900 mb-2">📚 शिक्षा संबंधी सुझाव (Educational Recommendations):</h4>
-            <p className="text-gray-700 text-sm">
-              {user?.name} के प्राकृतिक {zodiac} गुणों के अनुसार विषय चुनें। व्यावहारिक शिक्षा (hands-on learning) 
-              और अनुप्रयोग आधारित ज्ञान को बढ़ावा दें।
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Lucky Elements Section - HINDI ENHANCED */}
       <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg border-l-4 border-purple-500">
         <div className="flex items-center mb-4">
@@ -495,32 +469,32 @@ AstroAlign AI Team`;
              '"ॐ गुरवे नमः" - प्रतिदिन 21 बार (गुरुवार को 108 बार)'}
           </p>
         </div>
-        </div>
-        <div className="bg-white p-4 rounded-md">
-          <h4 className="font-semibold text-purple-900 mb-2">⏰ Best Time for Worship:</h4>
-          <p className="text-gray-700 text-sm">
-            {zodiac === 'Capricorn' ? 'Evening (6-8 PM), Saturn worship on Saturdays' :
-             zodiac === 'Aquarius' ? 'Saturday (शनिवार), Afternoon (2-4 PM), Saturn mantras on Saturdays' :
-             'Thursday (गुरुवार), Evening (7-9 PM), Jupiter worship on Thursdays'}
-          </p>
-        </div>
-        <div className="bg-white p-4 rounded-md">
-          <h4 className="font-semibold text-purple-900 mb-2">🙏 Recommended Mantras:</h4>
-          <p className="text-gray-700 text-sm">
-            {zodiac === 'Aries' ? '"ॐ भौमाय नमः" - Mars mantra for courage and strength (108 times daily)' :
-             zodiac === 'Taurus' ? '"ॐ शुक्राय नमः" - Venus mantra for prosperity and creativity (108 times)' :
-             zodiac === 'Gemini' ? '"ॐ बुधाय नमः" - Mercury mantra for intelligence and communication' :
-             zodiac === 'Cancer' ? '"ॐ सोमाय नमः" - Moon mantra for emotional balance and intuition' :
-             zodiac === 'Leo' ? '"ॐ सूर्याय नमः" - Sun mantra for confidence and leadership (108 times)' :
-             zodiac === 'Virgo' ? '"ॐ बुधाय नमः" - Mercury mantra for analytical skills and focus' :
-             zodiac === 'Libra' ? '"ॐ शुक्राय नमः" - Venus mantra for harmony and relationships' :
-             zodiac === 'Scorpio' ? '"ॐ भौमाय नमः" - Mars mantra for transformation and power' :
-             zodiac === 'Sagittarius' ? '"ॐ गुरवे नमः" - Jupiter mantra for wisdom and good fortune' :
-             zodiac === 'Capricorn' ? '"ॐ शनैश्चराय नमः" - Saturn mantra for discipline and success' :
-             zodiac === 'Aquarius' ? '"ॐ शनैश्चराय नमः" - Saturn mantra for innovation and progress' :
-             '"ॐ गुरवे नमः" - Jupiter mantra for spiritual growth and compassion'}
-          </p>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div className="bg-white p-4 rounded-md">
+            <h4 className="font-semibold text-purple-900 mb-2">⏰ Best Time for Worship:</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Capricorn' ? 'Evening (6-8 PM), Saturn worship on Saturdays' :
+               zodiac === 'Aquarius' ? 'Saturday (शनिवार), Afternoon (2-4 PM), Saturn mantras on Saturdays' :
+               'Thursday (गुरुवार), Evening (7-9 PM), Jupiter worship on Thursdays'}
+            </p>
+          </div>
+          <div className="bg-white p-4 rounded-md">
+            <h4 className="font-semibold text-purple-900 mb-2">🙏 Recommended Mantras:</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Aries' ? '"ॐ भौमाय नमः" - Mars mantra for courage and strength (108 times daily)' :
+               zodiac === 'Taurus' ? '"ॐ शुक्राय नमः" - Venus mantra for prosperity and creativity (108 times)' :
+               zodiac === 'Gemini' ? '"ॐ बुधाय नमः" - Mercury mantra for intelligence and communication' :
+               zodiac === 'Cancer' ? '"ॐ सोमाय नमः" - Moon mantra for emotional balance and intuition' :
+               zodiac === 'Leo' ? '"ॐ सूर्याय नमः" - Sun mantra for confidence and leadership (108 times)' :
+               zodiac === 'Virgo' ? '"ॐ बुधाय नमः" - Mercury mantra for analytical skills and focus' :
+               zodiac === 'Libra' ? '"ॐ शुक्राय नमः" - Venus mantra for harmony and relationships' :
+               zodiac === 'Scorpio' ? '"ॐ भौमाय नमः" - Mars mantra for transformation and power' :
+               zodiac === 'Sagittarius' ? '"ॐ गुरवे नमः" - Jupiter mantra for wisdom and good fortune' :
+               zodiac === 'Capricorn' ? '"ॐ शनैश्चराय नमः" - Saturn mantra for discipline and success' :
+               zodiac === 'Aquarius' ? '"ॐ शनैश्चराय नमः" - Saturn mantra for innovation and progress' :
+               '"ॐ गुरवे नमः" - Jupiter mantra for spiritual growth and compassion'}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -785,4 +759,25 @@ AstroAlign AI Team`;
 
 export default PremiumModal29;
 
-
+      {/* Career Guidance Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 rounded-lg border-l-4 border-blue-500">
+        <div className="flex items-center mb-4">
+          <span className="text-2xl mr-3">💼</span>
+          <h3 className="text-xl font-bold text-blue-800">करियर मार्गदर्शन (Career Path Guidance)</h3>
+        </div>
+        <div className="space-y-3">
+          <div className="bg-white p-4 rounded-md">
+            <h4 className="font-semibold text-blue-900 mb-2">🎯 आदर्श करियर क्षेत्र (Ideal Career Fields):</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Leo' ? 'नेतृत्व की भूमिकाएं, मनोरंजन उद्योग, सरकारी सेवाएं, अध्यापन, खेल प्रशिक्षण' :
+               zodiac === 'Virgo' ? 'स्वास्थ्य सेवा, रिसर्च, लेखांकन, संपादन, गुणवत्ता नियंत्रण, पोषण विज्ञान' :
+               zodiac === 'Cancer' ? 'मनोविज्ञान, परामर्श, आतिथ्य, रियल एस्टेट, बाल देखभाल, पाक कला' :
+               'रचनात्मक क्षेत्र, नवाचार उद्योग, और प्राकृतिक प्रतिभा की आवश्यकता वाली भूमिकाएं'}
+            </p>
+          </div>
+          <div className="bg-white p-4 rounded-md">
+            <h4 className="font-semibold text-blue-900 mb-2">📚 शिक्षा संबंधी सुझाव (Educational Recommendations):</h4>
+            <p className="text-gray-700 text-sm">
+              {user?.name} के प्राकृतिक {zodiac} गुणों के अनुसार विषय चुनें। व्यावहारिक शिक्षा (hands-on learning) 
+              और अनुप्रयोग आधारित ज्ञान को बढ़ावा दें।
+            </p>
