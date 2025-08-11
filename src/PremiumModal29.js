@@ -239,16 +239,48 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
         <div class="section lucky-section">
           <h3>🍀 Lucky Elements & Remedies</h3>
           <h4>🌈 Lucky Colors:</h4>
-          <p>${zodiac === 'Leo' ? 'Gold, Orange, Red - Colors of the Sun' :
-           zodiac === 'Virgo' ? 'Green, Brown, Navy Blue - Earth colors' :
-           zodiac === 'Cancer' ? 'White, Silver, Light Blue - Moon colors' :
-           'Colors that enhance natural energy and confidence'}</p>
+          <p>${zodiac === 'Aries' ? 'Red, Orange, Bright Yellow - Colors of Mars energy for courage and action' :
+           zodiac === 'Taurus' ? 'Green, Pink, Earth Brown - Venus colors for prosperity and stability' :
+           zodiac === 'Gemini' ? 'Yellow, Light Blue, Silver - Mercury colors for communication and learning' :
+           zodiac === 'Cancer' ? 'White, Silver, Sea Blue, Pearl - Moon colors for intuition and emotions' :
+           zodiac === 'Leo' ? 'Gold, Orange, Bright Red - Sun colors for leadership and confidence' :
+           zodiac === 'Virgo' ? 'Green, Brown, Navy Blue, Beige - Earth colors for grounding and focus' :
+           zodiac === 'Libra' ? 'Pink, Light Blue, Pastel Green - Venus colors for harmony and balance' :
+           zodiac === 'Scorpio' ? 'Deep Red, Maroon, Black - Mars colors for transformation and power' :
+           zodiac === 'Sagittarius' ? 'Purple, Turquoise, Royal Blue - Jupiter colors for wisdom and expansion' :
+           zodiac === 'Capricorn' ? 'Black, Dark Green, Brown - Saturn colors for discipline and success' :
+           zodiac === 'Aquarius' ? 'Electric Blue, Turquoise, Silver - Saturn/Uranus colors for innovation' :
+           'Sea Green, Turquoise, Lavender - Jupiter colors for spirituality and compassion'}</p>
           
           <h4>💎 Beneficial Gemstones:</h4>
-          <p>${zodiac === 'Leo' ? 'Ruby, Amber, Citrine' :
-           zodiac === 'Virgo' ? 'Emerald, Peridot, Sapphire' :
-           zodiac === 'Cancer' ? 'Pearl, Moonstone, Opal' :
-           'Gemstones that strengthen planetary influences'}</p>
+          <p>${zodiac === 'Aries' ? 'Red Coral (मूंगा), Ruby, Carnelian - Strengthen Mars energy for courage and leadership' :
+           zodiac === 'Taurus' ? 'Diamond (हीरा), White Sapphire, Opal - Enhance Venus energy for creativity and wealth' :
+           zodiac === 'Gemini' ? 'Emerald (पन्ना), Peridot, Green Tourmaline - Boost Mercury for communication skills' :
+           zodiac === 'Cancer' ? 'Pearl (मोती), Moonstone, White Coral - Strengthen Moon energy for emotional balance' :
+           zodiac === 'Leo' ? 'Ruby (माणिक्य), Amber, Citrine, Sunstone - Enhance Sun energy for confidence and success' :
+           zodiac === 'Virgo' ? 'Emerald (पन्ना), Green Jade, Amazonite - Support Mercury for analytical abilities' :
+           zodiac === 'Libra' ? 'Diamond (हीरा), Rose Quartz, Pink Tourmaline - Strengthen Venus for relationships' :
+           zodiac === 'Scorpio' ? 'Red Coral (मूंगा), Garnet, Bloodstone - Boost Mars energy for transformation' :
+           zodiac === 'Sagittarius' ? 'Yellow Sapphire (पुखराज), Topaz, Citrine - Enhance Jupiter for wisdom and luck' :
+           zodiac === 'Capricorn' ? 'Blue Sapphire (नीलम), Amethyst, Garnet - Support Saturn for discipline and success' :
+           zodiac === 'Aquarius' ? 'Blue Sapphire (नीलम), Aquamarine, Lapis Lazuli - Strengthen Saturn for innovation' :
+           'Yellow Sapphire (पुखराज), Aquamarine, Amethyst - Enhance Jupiter for spiritual growth'}</p>
+
+          <h4>🧠 Intelligence Analysis Report:</h4>
+          <p><strong>Creative & Artistic Intelligence:</strong> ${zodiac === 'Leo' ? `${user?.name} shows exceptional creative potential with natural artistic flair. Leo energy enhances dramatic expression, visual arts, and performance abilities.` :
+           zodiac === 'Taurus' ? `Strong aesthetic sense and appreciation for beauty. Taurus influence supports visual arts, music, and crafts.` :
+           zodiac === 'Pisces' ? `Highly imaginative and intuitive creative abilities. Pisces energy supports music, poetry, photography, and spiritual arts.` :
+           `Creative traits include innovative thinking and unique artistic perspective.`}</p>
+          
+          <p><strong>Physical & Sports Intelligence:</strong> ${zodiac === 'Aries' ? `Exceptional physical coordination and competitive spirit. Natural athlete with quick reflexes.` :
+           zodiac === 'Leo' ? `Strong physical presence and team leadership abilities in sports requiring confidence.` :
+           zodiac === 'Scorpio' ? `Intense focus and determination in physical activities and martial arts.` :
+           `Shows natural physical intelligence traits matching their zodiac energy.`}</p>
+          
+          <p><strong>Logical & Analytical Intelligence:</strong> ${zodiac === 'Virgo' ? `Outstanding analytical and detail-oriented thinking. Perfect for STEM fields.` :
+           zodiac === 'Gemini' ? `Quick logical processing and excellent pattern recognition. Natural for mathematics and computer science.` :
+           zodiac === 'Capricorn' ? `Structured logical thinking with practical application focus.` :
+           `Demonstrates strong analytical abilities aligned with their zodiac traits.`}</p>
         </div>
 
         <div class="footer">
@@ -403,7 +435,7 @@ AstroAlign AI Team`;
         </div>
       </div>
 
-      {/* Lucky Elements Section */}
+      {/* Lucky Elements Section - ENHANCED */}
       <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg border-l-4 border-purple-500">
         <div className="flex items-center mb-4">
           <span className="text-2xl mr-3">🍀</span>
@@ -413,19 +445,122 @@ AstroAlign AI Team`;
           <div className="bg-white p-4 rounded-md">
             <h4 className="font-semibold text-purple-900 mb-2">🌈 Lucky Colors:</h4>
             <p className="text-gray-700 text-sm">
-              {zodiac === 'Leo' ? 'Gold, Orange, Red - Colors of the Sun' :
-               zodiac === 'Virgo' ? 'Green, Brown, Navy Blue - Earth colors' :
-               zodiac === 'Cancer' ? 'White, Silver, Light Blue - Moon colors' :
-               'Colors that enhance natural energy and confidence'}
+              {zodiac === 'Aries' ? 'Red, Orange, Bright Yellow - Colors of Mars energy for courage and action' :
+               zodiac === 'Taurus' ? 'Green, Pink, Earth Brown - Venus colors for prosperity and stability' :
+               zodiac === 'Gemini' ? 'Yellow, Light Blue, Silver - Mercury colors for communication and learning' :
+               zodiac === 'Cancer' ? 'White, Silver, Sea Blue, Pearl - Moon colors for intuition and emotions' :
+               zodiac === 'Leo' ? 'Gold, Orange, Bright Red - Sun colors for leadership and confidence' :
+               zodiac === 'Virgo' ? 'Green, Brown, Navy Blue, Beige - Earth colors for grounding and focus' :
+               zodiac === 'Libra' ? 'Pink, Light Blue, Pastel Green - Venus colors for harmony and balance' :
+               zodiac === 'Scorpio' ? 'Deep Red, Maroon, Black - Mars colors for transformation and power' :
+               zodiac === 'Sagittarius' ? 'Purple, Turquoise, Royal Blue - Jupiter colors for wisdom and expansion' :
+               zodiac === 'Capricorn' ? 'Black, Dark Green, Brown - Saturn colors for discipline and success' :
+               zodiac === 'Aquarius' ? 'Electric Blue, Turquoise, Silver - Saturn/Uranus colors for innovation' :
+               'Sea Green, Turquoise, Lavender - Jupiter colors for spirituality and compassion'}
             </p>
           </div>
           <div className="bg-white p-4 rounded-md">
             <h4 className="font-semibold text-purple-900 mb-2">💎 Beneficial Gemstones:</h4>
             <p className="text-gray-700 text-sm">
-              {zodiac === 'Leo' ? 'Ruby, Amber, Citrine' :
-               zodiac === 'Virgo' ? 'Emerald, Peridot, Sapphire' :
-               zodiac === 'Cancer' ? 'Pearl, Moonstone, Opal' :
-               'Gemstones that strengthen planetary influences'}
+              {zodiac === 'Aries' ? 'Red Coral (मूंगा), Ruby, Carnelian - Strengthen Mars energy for courage and leadership' :
+               zodiac === 'Taurus' ? 'Diamond (हीरा), White Sapphire, Opal - Enhance Venus energy for creativity and wealth' :
+               zodiac === 'Gemini' ? 'Emerald (पन्ना), Peridot, Green Tourmaline - Boost Mercury for communication skills' :
+               zodiac === 'Cancer' ? 'Pearl (मोती), Moonstone, White Coral - Strengthen Moon energy for emotional balance' :
+               zodiac === 'Leo' ? 'Ruby (माणिक्य), Amber, Citrine, Sunstone - Enhance Sun energy for confidence and success' :
+               zodiac === 'Virgo' ? 'Emerald (पन्ना), Green Jade, Amazonite - Support Mercury for analytical abilities' :
+               zodiac === 'Libra' ? 'Diamond (हीरा), Rose Quartz, Pink Tourmaline - Strengthen Venus for relationships' :
+               zodiac === 'Scorpio' ? 'Red Coral (मूंगा), Garnet, Bloodstone - Boost Mars energy for transformation' :
+               zodiac === 'Sagittarius' ? 'Yellow Sapphire (पुखराज), Topaz, Citrine - Enhance Jupiter for wisdom and luck' :
+               zodiac === 'Capricorn' ? 'Blue Sapphire (नीलम), Amethyst, Garnet - Support Saturn for discipline and success' :
+               zodiac === 'Aquarius' ? 'Blue Sapphire (नीलम), Aquamarine, Lapis Lazuli - Strengthen Saturn for innovation' :
+               'Yellow Sapphire (पुखराज), Aquamarine, Amethyst - Enhance Jupiter for spiritual growth'}
+            </p>
+          </div>
+          <div className="bg-white p-4 rounded-md">
+            <h4 className="font-semibold text-purple-900 mb-2">📅 Lucky Days & Times:</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Aries' ? 'Tuesday (मंगलवार), Morning hours (6-9 AM), Fire rituals on Tuesdays' :
+               zodiac === 'Taurus' ? 'Friday (शुक्रवार), Evening hours (6-8 PM), Venus worship on Fridays' :
+               zodiac === 'Gemini' ? 'Wednesday (बुधवार), Afternoon (12-3 PM), Mercury prayers on Wednesdays' :
+               zodiac === 'Cancer' ? 'Monday (सोमवार), Evening (7-9 PM), Moon worship on Mondays' :
+               zodiac === 'Leo' ? 'Sunday (रविवार), Morning (6-8 AM), Sun worship at sunrise' :
+               zodiac === 'Virgo' ? 'Wednesday (बुधवार), Morning (9-11 AM), Mercury mantras on Wednesdays' :
+               zodiac === 'Libra' ? 'Friday (शुक्रवार), Evening (5-7 PM), Venus prayers on Fridays' :
+               zodiac === 'Scorpio' ? 'Tuesday (मंगलवार), Night (8-10 PM), Mars worship on Tuesdays' :
+               zodiac === 'Sagittarius' ? 'Thursday (गुरुवार), Morning (7-9 AM), Jupiter prayers on Thursdays' :
+               zodiac === 'Capricorn' ? 'Saturday (शनिवार), Evening (6-8 PM), Saturn worship on Saturdays' :
+               zodiac === 'Aquarius' ? 'Saturday (शनिवार), Afternoon (2-4 PM), Saturn mantras on Saturdays' :
+               'Thursday (गुरुवार), Evening (7-9 PM), Jupiter worship on Thursdays'}
+            </p>
+          </div>
+          <div className="bg-white p-4 rounded-md">
+            <h4 className="font-semibold text-purple-900 mb-2">🙏 Recommended Mantras:</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Aries' ? '"ॐ भौमाय नमः" - Mars mantra for courage and strength (108 times daily)' :
+               zodiac === 'Taurus' ? '"ॐ शुक्राय नमः" - Venus mantra for prosperity and creativity (108 times)' :
+               zodiac === 'Gemini' ? '"ॐ बुधाय नमः" - Mercury mantra for intelligence and communication' :
+               zodiac === 'Cancer' ? '"ॐ सोमाय नमः" - Moon mantra for emotional balance and intuition' :
+               zodiac === 'Leo' ? '"ॐ सूर्याय नमः" - Sun mantra for confidence and leadership (108 times)' :
+               zodiac === 'Virgo' ? '"ॐ बुधाय नमः" - Mercury mantra for analytical skills and focus' :
+               zodiac === 'Libra' ? '"ॐ शुक्राय नमः" - Venus mantra for harmony and relationships' :
+               zodiac === 'Scorpio' ? '"ॐ भौमाय नमः" - Mars mantra for transformation and power' :
+               zodiac === 'Sagittarius' ? '"ॐ गुरवे नमः" - Jupiter mantra for wisdom and good fortune' :
+               zodiac === 'Capricorn' ? '"ॐ शनैश्चराय नमः" - Saturn mantra for discipline and success' :
+               zodiac === 'Aquarius' ? '"ॐ शनैश्चराय नमः" - Saturn mantra for innovation and progress' :
+               '"ॐ गुरवे नमः" - Jupiter mantra for spiritual growth and compassion'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* IQ Category Analysis Section - NEW */}
+      <div className="bg-gradient-to-r from-indigo-50 to-blue-50 p-6 rounded-lg border-l-4 border-indigo-500">
+        <div className="flex items-center mb-4">
+          <span className="text-2xl mr-3">🧠</span>
+          <h3 className="text-xl font-bold text-indigo-800">Intelligence Analysis Report</h3>
+        </div>
+        <div className="space-y-4">
+          <div className="bg-white p-4 rounded-md shadow-sm">
+            <h4 className="font-semibold text-indigo-900 mb-2">🎨 Creative & Artistic Intelligence:</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Leo' ? `${user?.name} shows exceptional creative potential with natural artistic flair. Leo energy enhances dramatic expression, visual arts, and performance abilities. Recommended: Music, dance, theater, visual arts, creative writing.` :
+               zodiac === 'Taurus' ? `Strong aesthetic sense and appreciation for beauty. Taurus influence supports visual arts, music, and crafts. ${user?.name} may excel in sculpture, painting, interior design, or culinary arts.` :
+               zodiac === 'Pisces' ? `Highly imaginative and intuitive creative abilities. Pisces energy supports music, poetry, photography, and spiritual arts. Natural talent for emotional expression through creativity.` :
+               zodiac === 'Libra' ? `Balanced creative expression with strong sense of harmony and design. Natural ability in fashion, graphic design, architecture, and collaborative arts.` :
+               `${user?.name} demonstrates ${zodiac} creative traits including innovative thinking and unique artistic perspective. Encourage exploration in multiple creative mediums.`}
+            </p>
+          </div>
+          
+          <div className="bg-white p-4 rounded-md shadow-sm">
+            <h4 className="font-semibold text-indigo-900 mb-2">⚽ Physical & Sports Intelligence:</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Aries' ? `Exceptional physical coordination and competitive spirit. Aries energy supports leadership in sports, martial arts, and adventure activities. Natural athlete with quick reflexes.` :
+               zodiac === 'Leo' ? `Strong physical presence and team leadership abilities. Leo influence enhances performance in sports requiring confidence and showmanship - swimming, gymnastics, athletics.` :
+               zodiac === 'Scorpio' ? `Intense focus and determination in physical activities. Scorpio energy supports individual sports, martial arts, and activities requiring mental-physical coordination.` :
+               zodiac === 'Capricorn' ? `Disciplined approach to physical fitness and sports. Natural ability in endurance sports, mountaineering, and activities requiring patience and strategy.` :
+               `${user?.name} shows ${zodiac} physical intelligence traits. Encourage activities that match their natural energy patterns and temperament.`}
+            </p>
+          </div>
+          
+          <div className="bg-white p-4 rounded-md shadow-sm">
+            <h4 className="font-semibold text-indigo-900 mb-2">🔬 Logical & Analytical Intelligence:</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Virgo' ? `Outstanding analytical and detail-oriented thinking. Virgo energy enhances scientific reasoning, research abilities, and systematic problem-solving. Perfect for STEM fields.` :
+               zodiac === 'Gemini' ? `Quick logical processing and excellent pattern recognition. Gemini influence supports mathematics, computer science, and analytical thinking. Natural debugging abilities.` :
+               zodiac === 'Capricorn' ? `Structured logical thinking with practical application focus. Excellent for engineering, business analysis, and strategic planning.` :
+               zodiac === 'Aquarius' ? `Innovative logical thinking with unique problem-solving approaches. Natural ability in technology, programming, and scientific research.` :
+               `${user?.name} demonstrates ${zodiac} analytical strengths. Their logical thinking style aligns well with structured learning approaches.`}
+            </p>
+          </div>
+          
+          <div className="bg-white p-4 rounded-md shadow-sm">
+            <h4 className="font-semibold text-indigo-900 mb-2">💭 Imagination & Abstract Intelligence:</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Pisces' ? `Exceptional imaginative and intuitive abilities. Pisces energy supports abstract thinking, spiritual understanding, and creative visualization. Strong in conceptual learning.` :
+               zodiac === 'Sagittarius' ? `Expansive imagination with philosophical thinking. Natural ability to understand abstract concepts, foreign cultures, and big-picture thinking.` :
+               zodiac === 'Aquarius' ? `Innovative imagination with futuristic thinking. Excellent abstract reasoning for technology, science fiction concepts, and theoretical frameworks.` :
+               zodiac === 'Cancer' ? `Emotionally-guided imagination with strong memory for abstract concepts. Natural ability in psychology, counseling, and human behavior understanding.` :
+               `${user?.name} shows ${zodiac} imaginative traits. Their abstract thinking abilities suggest potential in conceptual and theoretical subjects.`}
             </p>
           </div>
         </div>
