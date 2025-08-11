@@ -58,7 +58,7 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
   // Create order on backend
   const createOrder = async () => {
     try {
-      const response = await fetch('https://vedic-career-backend.vercel.app/api/create-order'), {
+      const response = await fetch('https://vedic-career-backend.vercel.app/api/create-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -539,4 +539,5 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
 
 
 export default PremiumModal149;
+
 
