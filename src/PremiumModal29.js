@@ -490,7 +490,7 @@ AstroAlign AI Team`;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6">
+      <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6">
         <div className="text-center mb-6">
           <div className="text-4xl mb-4">🕉️</div>
           <h2 className="text-2xl font-bold mb-2">Essential Vedic Insights</h2>
@@ -512,19 +512,42 @@ AstroAlign AI Team`;
           </div>
         )}
 
+        {/* Scrollable content area */}
         <div className="space-y-4 mb-6">
           <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200">
-            <h3 className="font-semibold mb-2 text-orange-900">🎯 You'll Get Complete Access To:</h3>
-            <ul className="text-sm space-y-1 text-gray-700">
+            <h3 className="font-semibold mb-3 text-orange-900">🎯 You'll Get Complete Access To:</h3>
+            <ul className="text-sm space-y-2 text-gray-700">
               <li>✅ Hindu Deity Blessings & Divine Protection Analysis</li>
               <li>✅ Complete Creative, Sports & Imagination Assessment</li>
               <li>✅ Personalized Career Path Guidance</li>
               <li>✅ Lucky Colors, Sacred Days & Gemstone Guidance</li>
               <li>✅ Vedic Career Path Based on Dharma & Karma</li>
               <li>✅ Age-wise Development According to Ancient Wisdom</li>
+              <li>✅ Professional PDF Report Download</li>
+              <li>✅ WhatsApp & Email Sharing Options</li>
+              <li>✅ Detailed Zodiac Sign Analysis</li>
+              <li>✅ Educational Recommendations</li>
+              <li>✅ Beneficial Gemstones & Remedies</li>
+              <li>✅ Lifetime Access to Your Report</li>
             </ul>
           </div>
 
+          {/* Sample preview to show value */}
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200">
+            <h3 className="font-semibold mb-2 text-purple-900">🌟 Sample Analysis Preview:</h3>
+            <div className="text-sm text-gray-700 space-y-2">
+              <p><strong>For {zodiac} Children:</strong></p>
+              <p className="text-xs bg-white p-2 rounded border-l-2 border-purple-400">
+                "Born under {zodiac} with {nakshatra} nakshatra, {user?.name} carries divine blessings of {zodiacDeities[zodiac]?.split(' - ')[0]}. 
+                Their natural talents include {zodiac === 'Leo' ? 'leadership and creative expression' : 
+                zodiac === 'Virgo' ? 'analytical thinking and problem-solving' : 
+                zodiac === 'Cancer' ? 'emotional intelligence and nurturing abilities' : 'unique cosmic gifts'}..."
+              </p>
+              <p className="text-xs text-purple-600 italic">*This is just a preview. Full analysis includes 5+ detailed sections.</p>
+            </div>
+          </div>
+
+          {/* Pricing section */}
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-2">
               <div className="text-3xl font-bold text-green-600">₹29</div>
@@ -537,8 +560,22 @@ AstroAlign AI Team`;
               One-time payment • Instant divine access • 7-day guarantee
             </p>
           </div>
+
+          {/* What makes this special */}
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg border border-blue-200">
+            <h3 className="font-semibold mb-2 text-blue-900">⭐ Why This Analysis is Special:</h3>
+            <ul className="text-xs text-gray-700 space-y-1">
+              <li>🌍 World's first IQ + Vedic astrology combination</li>
+              <li>👨‍👩‍👧‍👦 Trusted by 3,500+ Indian families</li>
+              <li>🎯 Age-appropriate guidance for 8-15 years</li>
+              <li>📱 Instant access + downloadable report</li>
+              <li>🔒 Secure payment & data protection</li>
+              <li>💯 7-day satisfaction guarantee</li>
+            </ul>
+          </div>
         </div>
 
+        {/* Action buttons */}
         <div className="space-y-3">
           <button
             onClick={handlePayment}
@@ -564,6 +601,7 @@ AstroAlign AI Team`;
           </button>
         </div>
 
+        {/* Footer info */}
         <div className="mt-4 text-center">
           <p className="text-xs text-gray-500">
             🔒 Secure payment by Razorpay • Blessed by 3,500+ Hindu families
