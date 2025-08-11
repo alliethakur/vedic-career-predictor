@@ -156,7 +156,7 @@ function PotentialTest({ user, onComplete, onBack }) {
               </svg>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-slate-800">CareerVision AI</h1>
+              <h1 className="text-xl font-bold text-slate-800">AstroAlign AI</h1>
               <p className="text-xs text-slate-500">Assessment in Progress</p>
             </div>
           </div>
@@ -320,5 +320,6 @@ function PotentialTest({ user, onComplete, onBack }) {
     </div>
   );
 }
+
 
 export default PotentialTest;
