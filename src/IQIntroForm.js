@@ -82,39 +82,40 @@ function IQIntroForm({ onStart, onPictureTestStart }) {
         </div>
       </div>
 
-      {/* Picture Test Side Option */}
-      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-50">
-        <div 
-          className="bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 rounded-2xl shadow-2xl p-6 max-w-xs hover:scale-105 transition-all duration-300 cursor-pointer border-4 border-white/20" 
-          onClick={handlePictureTestClick}
-        >
-          <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-              <span className="text-3xl">🎨</span>
-            </div>
-            <h3 className="text-lg font-bold text-white mb-2">Little Explorer Test!</h3>
-            <p className="text-white/90 text-sm mb-4 leading-relaxed">
-              Are you between <span className="font-bold">3-7 years old?</span> Try our fun picture adventure!
-            </p>
-            <div className="bg-white/20 rounded-lg p-3 mb-4 backdrop-blur-sm">
-              <div className="flex items-center justify-center space-x-2 text-white text-xs">
-                <span>🖼️ Real Pictures</span>
-                <span>•</span>
-                <span>🎯 15 Questions</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2 text-white text-xs mt-1">
-                <span>🌟 Fun Learning</span>
-                <span>•</span>
-                <span>⏱️ 10 mins</span>
-              </div>
-            </div>
-            <div className="bg-white text-purple-600 py-2 px-4 rounded-full font-semibold text-sm hover:bg-purple-50 transition-colors">
-              Coming Soon!
-            </div>
-          </div>
+      // Replace the "Picture Test Side Option" section with this mobile-responsive version:
+
+{/* Picture Test Side Option - Mobile Responsive */}
+<div className="fixed right-2 sm:right-6 top-1/2 transform -translate-y-1/2 z-50">
+  <div 
+    className="bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 rounded-xl sm:rounded-2xl shadow-2xl p-3 sm:p-6 w-48 sm:w-auto sm:max-w-xs hover:scale-105 transition-all duration-300 cursor-pointer border-2 sm:border-4 border-white/20" 
+    onClick={handlePictureTestClick}
+  >
+    <div className="text-center">
+      <div className="w-10 h-10 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+        <span className="text-xl sm:text-3xl">🎨</span>
+      </div>
+      <h3 className="text-sm sm:text-lg font-bold text-white mb-1 sm:mb-2">Little Explorer Test!</h3>
+      <p className="text-white/90 text-xs sm:text-sm mb-2 sm:mb-4 leading-relaxed">
+        Are you between <span className="font-bold">3-7 years old?</span> Try our fun picture adventure!
+      </p>
+      <div className="bg-white/20 rounded-lg p-2 sm:p-3 mb-2 sm:mb-4 backdrop-blur-sm">
+        <div className="flex items-center justify-center space-x-1 text-white text-xs">
+          <span>🖼️ Pictures</span>
+          <span>•</span>
+          <span>🎯 15 Qs</span>
+        </div>
+        <div className="flex items-center justify-center space-x-1 text-white text-xs mt-1">
+          <span>🌟 Fun</span>
+          <span>•</span>
+          <span>⏱️ 10 min</span>
         </div>
       </div>
-
+      <div className="bg-white text-purple-600 py-1.5 sm:py-2 px-3 sm:px-4 rounded-full font-semibold text-xs sm:text-sm hover:bg-purple-50 transition-colors">
+        Coming Soon!
+      </div>
+    </div>
+  </div>
+</div>
       <div className="flex items-center justify-center min-h-[calc(100vh-80px)] px-4 py-12">
         <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 w-full max-w-lg">
           <div className="text-center mb-8">
@@ -225,5 +226,6 @@ function IQIntroForm({ onStart, onPictureTestStart }) {
     </div>
   );
 }
+
 
 export default IQIntroForm;
