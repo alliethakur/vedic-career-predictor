@@ -82,7 +82,7 @@ function IQIntroForm({ onStart, onPictureTestStart }) {
         </div>
       </div>
 
-      // Replace the "Picture Test Side Option" section with this mobile-responsive version:
+
 
 {/* Picture Test Side Option - Mobile Responsive */}
 <div className="fixed right-2 sm:right-6 top-1/2 transform -translate-y-1/2 z-50">
@@ -229,3 +229,4 @@ function IQIntroForm({ onStart, onPictureTestStart }) {
 
 
 export default IQIntroForm;
+
