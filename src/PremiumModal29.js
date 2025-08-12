@@ -23,18 +23,18 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
 
   // Ruling deity for each zodiac
   const zodiacDeities = {
-    Aries: "श्री हनुमान जी (Lord Hanuman) - Courage & Strength",
-    Taurus: "श्री लक्ष्मी जी (Goddess Lakshmi) - Prosperity & Stability", 
-    Gemini: "श्री सरस्वती जी (Goddess Saraswati) - Knowledge & Communication",
-    Cancer: "श्री शिव जी (Lord Shiva) - Nurturing & Intuition",
-    Leo: "श्री सूर्य देव (Lord Surya) - Leadership & Confidence",
-    Virgo: "श्री गणेश जी (Lord Ganesha) - Wisdom & Problem-solving",
-    Libra: "श्री शुक्र देव (Lord Shukra) - Balance & Harmony",
-    Scorpio: "श्री काली माँ (Goddess Kali) - Transformation & Power",
-    Sagittarius: "श्री विष्णु जी (Lord Vishnu) - Wisdom & Truth",
-    Capricorn: "श्री शनि देव (Lord Shani) - Discipline & Karma",
-    Aquarius: "श्री वरुण देव (Lord Varuna) - Innovation & Flow",
-    Pisces: "श्री राम जी (Lord Rama) - Compassion & Spirituality"
+    Aries: "Lord Hanuman - Courage & Strength",
+    Taurus: "Goddess Lakshmi - Prosperity & Stability", 
+    Gemini: "Goddess Saraswati - Knowledge & Communication",
+    Cancer: "Lord Shiva - Nurturing & Intuition",
+    Leo: "Lord Surya - Leadership & Confidence",
+    Virgo: "Lord Ganesha - Wisdom & Problem-solving",
+    Libra: "Lord Shukra - Balance & Harmony",
+    Scorpio: "Goddess Kali - Transformation & Power",
+    Sagittarius: "Lord Vishnu - Wisdom & Truth",
+    Capricorn: "Lord Shani - Discipline & Karma",
+    Aquarius: "Lord Varuna - Innovation & Flow",
+    Pisces: "Lord Rama - Compassion & Spirituality"
   };
 
   // Load Razorpay script
@@ -203,34 +203,20 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
         </div>
 
         <div class="section deity-section">
-          <h3>🙏 ${zodiac} राशि (Rashi) Profile</h3>
+          <h3>🙏 ${zodiac} Zodiac Profile</h3>
           <p><strong>Zodiac Sign:</strong> ${zodiac}</p>
           <p><strong>Nakshatra:</strong> ${nakshatra}</p>
           <p><strong>Ruling Deity:</strong> ${zodiacDeities[zodiac]}</p>
-          <p>${user?.name} is blessed under the divine protection of ${zodiacDeities[zodiac].split(' - ')[0]}. Born in ${zodiac} rashi with ${nakshatra} nakshatra, they carry the sacred energy of cosmic wisdom that guides their natural talents and spiritual growth.</p>
+          <p>${user?.name} is blessed under the divine protection of ${zodiacDeities[zodiac].split(' - ')[0]}. Born in ${zodiac} zodiac with ${nakshatra} nakshatra, they carry the sacred energy of cosmic wisdom that guides their natural talents and spiritual growth.</p>
           
           <h4>🌟 Divine Blessings:</h4>
-          <p class="blessing-text">${zodiac === 'Leo' ? 'सूर्य देव का आशीर्वाद - Natural leadership, royal nature, creative brilliance, generous heart' :
-           zodiac === 'Virgo' ? 'गणेश जी का आशीर्वाद - Analytical mind, problem-solving abilities, attention to detail, helpful nature' :
-           zodiac === 'Cancer' ? 'शिव जी का आशीर्वाद - Emotional wisdom, nurturing instincts, intuitive powers, protective nature' :
-           zodiac === 'Aries' ? 'हनुमान जी का आशीर्वाद - Courage, pioneering spirit, physical strength, quick action' :
-           zodiac === 'Taurus' ? 'लक्ष्मी जी का आशीर्वाद - Material stability, artistic appreciation, patient nature, loyalty' :
-           zodiac === 'Gemini' ? 'सरस्वती जी का आशीर्वाद - Communication skills, quick learning, adaptability, intellectual curiosity' :
-           zodiac === 'Libra' ? 'शुक्र देव का आशीर्वाद - Balance, diplomatic nature, aesthetic sense, partnership harmony' :
-           zodiac === 'Scorpio' ? 'काली माँ का आशीर्वाद - Transformative power, deep intuition, emotional intensity, spiritual strength' :
-           zodiac === 'Sagittarius' ? 'विष्णु जी का आशीर्वाद - Philosophical wisdom, truth-seeking, optimistic nature, spiritual growth' :
-           zodiac === 'Capricorn' ? 'शनि देव का आशीर्वाद - Disciplined approach, ambitious goals, practical wisdom, karmic lessons' :
-           zodiac === 'Aquarius' ? 'वरुण देव का आशीर्वाद - Innovative thinking, humanitarian values, independent spirit, progressive ideas' :
-           'राम जी का आशीर्वाद - Compassionate heart, spiritual connection, imaginative mind, selfless service'}</p>
+          <p class="blessing-text">Divine blessings based on ${zodiac} zodiac traits and spiritual guidance.</p>
         </div>
 
         <div class="section career-section">
           <h3>💼 Career Path Guidance</h3>
           <h4>🎯 Ideal Career Fields:</h4>
-          <p>${zodiac === 'Leo' ? 'Leadership roles, entertainment industry, government services, teaching, sports coaching' :
-           zodiac === 'Virgo' ? 'Healthcare, research, accounting, editing, quality control, nutrition' :
-           zodiac === 'Cancer' ? 'Psychology, counseling, hospitality, real estate, childcare, cooking' :
-           'Creative fields, innovative industries, and roles requiring natural talents'}</p>
+          <p>Career recommendations based on ${zodiac} characteristics and natural talents.</p>
           
           <h4>📚 Educational Recommendations:</h4>
           <p>Focus on subjects that align with ${user?.name}'s natural ${zodiac} traits. Encourage hands-on learning and practical applications of knowledge.</p>
@@ -239,48 +225,15 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
         <div class="section lucky-section">
           <h3>🍀 Lucky Elements & Remedies</h3>
           <h4>🌈 Lucky Colors:</h4>
-          <p>${zodiac === 'Aries' ? 'Red, Orange, Bright Yellow - Colors of Mars energy for courage and action' :
-           zodiac === 'Taurus' ? 'Green, Pink, Earth Brown - Venus colors for prosperity and stability' :
-           zodiac === 'Gemini' ? 'Yellow, Light Blue, Silver - Mercury colors for communication and learning' :
-           zodiac === 'Cancer' ? 'White, Silver, Sea Blue, Pearl - Moon colors for intuition and emotions' :
-           zodiac === 'Leo' ? 'Gold, Orange, Bright Red - Sun colors for leadership and confidence' :
-           zodiac === 'Virgo' ? 'Green, Brown, Navy Blue, Beige - Earth colors for grounding and focus' :
-           zodiac === 'Libra' ? 'Pink, Light Blue, Pastel Green - Venus colors for harmony and balance' :
-           zodiac === 'Scorpio' ? 'Deep Red, Maroon, Black - Mars colors for transformation and power' :
-           zodiac === 'Sagittarius' ? 'Purple, Turquoise, Royal Blue - Jupiter colors for wisdom and expansion' :
-           zodiac === 'Capricorn' ? 'Black, Dark Green, Brown - Saturn colors for discipline and success' :
-           zodiac === 'Aquarius' ? 'Electric Blue, Turquoise, Silver - Saturn/Uranus colors for innovation' :
-           'Sea Green, Turquoise, Lavender - Jupiter colors for spirituality and compassion'}</p>
+          <p>Colors that enhance ${zodiac} energy for success and prosperity.</p>
           
           <h4>💎 Beneficial Gemstones:</h4>
-          <p>${zodiac === 'Aries' ? 'Red Coral (मूंगा), Ruby, Carnelian - Strengthen Mars energy for courage and leadership' :
-           zodiac === 'Taurus' ? 'Diamond (हीरा), White Sapphire, Opal - Enhance Venus energy for creativity and wealth' :
-           zodiac === 'Gemini' ? 'Emerald (पन्ना), Peridot, Green Tourmaline - Boost Mercury for communication skills' :
-           zodiac === 'Cancer' ? 'Pearl (मोती), Moonstone, White Coral - Strengthen Moon energy for emotional balance' :
-           zodiac === 'Leo' ? 'Ruby (माणिक्य), Amber, Citrine, Sunstone - Enhance Sun energy for confidence and success' :
-           zodiac === 'Virgo' ? 'Emerald (पन्ना), Green Jade, Amazonite - Support Mercury for analytical abilities' :
-           zodiac === 'Libra' ? 'Diamond (हीरा), Rose Quartz, Pink Tourmaline - Strengthen Venus for relationships' :
-           zodiac === 'Scorpio' ? 'Red Coral (मूंगा), Garnet, Bloodstone - Boost Mars energy for transformation' :
-           zodiac === 'Sagittarius' ? 'Yellow Sapphire (पुखराज), Topaz, Citrine - Enhance Jupiter for wisdom and luck' :
-           zodiac === 'Capricorn' ? 'Blue Sapphire (नीलम), Amethyst, Garnet - Support Saturn for discipline and success' :
-           zodiac === 'Aquarius' ? 'Blue Sapphire (नीलम), Aquamarine, Lapis Lazuli - Strengthen Saturn for innovation' :
-           'Yellow Sapphire (पुखराज), Aquamarine, Amethyst - Enhance Jupiter for spiritual growth'}</p>
+          <p>Gemstones that support ${zodiac} characteristics and spiritual growth.</p>
 
           <h4>🧠 Intelligence Analysis Report:</h4>
-          <p><strong>Creative & Artistic Intelligence:</strong> ${zodiac === 'Leo' ? `${user?.name} shows exceptional creative potential with natural artistic flair. Leo energy enhances dramatic expression, visual arts, and performance abilities.` :
-           zodiac === 'Taurus' ? `Strong aesthetic sense and appreciation for beauty. Taurus influence supports visual arts, music, and crafts.` :
-           zodiac === 'Pisces' ? `Highly imaginative and intuitive creative abilities. Pisces energy supports music, poetry, photography, and spiritual arts.` :
-           `Creative traits include innovative thinking and unique artistic perspective.`}</p>
-          
-          <p><strong>Physical & Sports Intelligence:</strong> ${zodiac === 'Aries' ? `Exceptional physical coordination and competitive spirit. Natural athlete with quick reflexes.` :
-           zodiac === 'Leo' ? `Strong physical presence and team leadership abilities in sports requiring confidence.` :
-           zodiac === 'Scorpio' ? `Intense focus and determination in physical activities and martial arts.` :
-           `Shows natural physical intelligence traits matching their zodiac energy.`}</p>
-          
-          <p><strong>Logical & Analytical Intelligence:</strong> ${zodiac === 'Virgo' ? `Outstanding analytical and detail-oriented thinking. Perfect for STEM fields.` :
-           zodiac === 'Gemini' ? `Quick logical processing and excellent pattern recognition. Natural for mathematics and computer science.` :
-           zodiac === 'Capricorn' ? `Structured logical thinking with practical application focus.` :
-           `Demonstrates strong analytical abilities aligned with their zodiac traits.`}</p>
+          <p><strong>Creative & Artistic Intelligence:</strong> Analysis based on ${zodiac} creative potential and artistic abilities.</p>
+          <p><strong>Physical & Sports Intelligence:</strong> Physical coordination and sports abilities aligned with ${zodiac} energy.</p>
+          <p><strong>Logical & Analytical Intelligence:</strong> Analytical thinking patterns characteristic of ${zodiac} traits.</p>
         </div>
 
         <div class="footer">
@@ -362,7 +315,7 @@ AstroAlign AI Team`;
       <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-6 rounded-lg border-l-4 border-orange-500">
         <div className="flex items-center mb-4">
           <span className="text-3xl mr-3">🕉️</span>
-          <h3 className="text-xl font-bold text-orange-800">{zodiac} राशि (Rashi) का पूर्ण विश्लेषण</h3>
+          <h3 className="text-xl font-bold text-orange-800">{zodiac} Zodiac Complete Analysis</h3>
         </div>
         <div className="flex flex-col md:flex-row gap-4">
           <div className="md:w-1/3">
@@ -374,99 +327,125 @@ AstroAlign AI Team`;
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 rounded-b-lg">
                 <p className="text-white text-xs font-medium text-center">
-                  {zodiac} का दिव्य तेज
+                  {zodiac} Divine Energy
                 </p>
               </div>
             </div>
           </div>
           <div className="md:w-2/3">
             <div className="bg-gradient-to-r from-yellow-100 to-orange-100 p-4 rounded-lg mb-3 border border-yellow-300">
-              <h4 className="font-semibold text-orange-900 text-sm mb-2">🙏 आराध्य देव (Ruling Deity):</h4>
+              <h4 className="font-semibold text-orange-900 text-sm mb-2">🙏 Ruling Deity:</h4>
               <p className="text-orange-800 text-sm">{zodiacDeities[zodiac]}</p>
             </div>
             <p className="text-gray-700 text-sm leading-relaxed mb-3">
-              {user?.name} को {zodiacDeities[zodiac].split(' - ')[0]} का दिव्य आशीर्वाद प्राप्त है। 
-              {zodiac} राशि और {nakshatra} नक्षत्र में जन्म लेने से इनमें प्राकृतिक प्रतिभा (natural talents) और 
-              आध्यात्मिक विकास के संस्कार हैं।
+              {user?.name} receives divine blessings from {zodiacDeities[zodiac].split(' - ')[0]}. 
+              Born under {zodiac} zodiac with {nakshatra} nakshatra, they carry natural talents and 
+              spiritual development potential.
             </p>
             <div className="bg-purple-100 p-3 rounded-md">
-              <h4 className="font-semibold text-purple-900 text-sm">🌟 दिव्य आशीर्वाद (Divine Blessings):</h4>
+              <h4 className="font-semibold text-purple-900 text-sm">🌟 Divine Blessings:</h4>
               <p className="text-purple-800 text-xs">
-                {zodiac === 'Leo' ? 'सूर्य देव का आशीर्वाद - नेतृत्व क्षमता, राजसी स्वभाव, रचनात्मक प्रतिभा' :
-                 zodiac === 'Virgo' ? 'गणेश जी का आशीर्वाद - विश्लेषणात्मक बुद्धि, समस्या समाधान, सेवा भावना' :
-                 zodiac === 'Cancer' ? 'शिव जी का आशीर्वाद - भावनात्मक बुद्धि, पोषण वृत्ति, अंतर्दृष्टि शक्ति' :
-                 zodiac === 'Aries' ? 'हनुमान जी का आशीर्वाद - साहस, अग्रणी भावना, शारीरिक शक्ति' :
-                 zodiac === 'Taurus' ? 'लक्ष्मी जी का आशीर्वाद - भौतिक स्थिरता, कलात्मक रुचि, धैर्य' :
-                 zodiac === 'Gemini' ? 'सरस्वती जी का आशीर्वाद - वाणी कौशल, त्वरित सीखना, बुद्धि चातुर्य' :
-                 zodiac === 'Libra' ? 'शुक्र देव का आशीर्वाद - संतुलन, कूटनीतिक स्वभाव, सुंदरता प्रेम' :
-                 zodiac === 'Scorpio' ? 'काली माँ का आशीर्वाद - परिवर्तन शक्ति, गहरी अंतर्दृष्टि, आध्यात्मिक बल' :
-                 zodiac === 'Sagittarius' ? 'विष्णु जी का आशीर्वाद - दार्शनिक बुद्धि, सत्य खोज, आशावादी प्रकृति' :
-                 zodiac === 'Capricorn' ? 'शनि देव का आशीर्वाद - अनुशासित दृष्टिकोण, लक्ष्य निष्ठा, व्यावहारिक बुद्धि' :
-                 zodiac === 'Aquarius' ? 'वरुण देव का आशीर्वाद - नवाचार सोच, मानवतावादी मूल्य, स्वतंत्र आत्मा' :
-                 'राम जी का आशीर्वाद - करुणामय हृदय, आध्यात्मिक संबंध, कल्पनाशील मन'}
+                {zodiac === 'Leo' ? 'Sun God\'s blessing - Leadership ability, royal nature, creative talent' :
+                 zodiac === 'Virgo' ? 'Lord Ganesha\'s blessing - Analytical mind, problem solving, service attitude' :
+                 zodiac === 'Cancer' ? 'Lord Shiva\'s blessing - Emotional intelligence, nurturing instinct, intuitive power' :
+                 zodiac === 'Aries' ? 'Lord Hanuman\'s blessing - Courage, pioneering spirit, physical strength' :
+                 zodiac === 'Taurus' ? 'Goddess Lakshmi\'s blessing - Material stability, artistic interest, patience' :
+                 zodiac === 'Gemini' ? 'Goddess Saraswati\'s blessing - Communication skills, quick learning, intellectual wisdom' :
+                 zodiac === 'Libra' ? 'Lord Shukra\'s blessing - Balance, diplomatic nature, love for beauty' :
+                 zodiac === 'Scorpio' ? 'Goddess Kali\'s blessing - Transformation power, deep insight, spiritual strength' :
+                 zodiac === 'Sagittarius' ? 'Lord Vishnu\'s blessing - Philosophical wisdom, truth seeking, optimistic nature' :
+                 zodiac === 'Capricorn' ? 'Lord Shani\'s blessing - Disciplined approach, goal dedication, practical wisdom' :
+                 zodiac === 'Aquarius' ? 'Lord Varuna\'s blessing - Innovative thinking, humanitarian values, independent spirit' :
+                 'Lord Rama\'s blessing - Compassionate heart, spiritual connection, imaginative mind'}
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Lucky Elements Section - HINDI ENHANCED */}
-      <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg border-l-4 border-purple-500">
+      {/* Career Guidance Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 rounded-lg border-l-4 border-blue-500">
         <div className="flex items-center mb-4">
-          <span className="text-2xl mr-3">🍀</span>
-          <h3 className="text-xl font-bold text-purple-800">शुभ तत्व और उपाय (Lucky Elements & Remedies)</h3>
+          <span className="text-2xl mr-3">💼</span>
+          <h3 className="text-xl font-bold text-blue-800">Career Path Guidance</h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-3">
           <div className="bg-white p-4 rounded-md">
-            <h4 className="font-semibold text-purple-900 mb-2">🌈 शुभ रंग (Lucky Colors):</h4>
+            <h4 className="font-semibold text-blue-900 mb-2">🎯 Ideal Career Fields:</h4>
             <p className="text-gray-700 text-sm">
-              {zodiac === 'Aries' ? 'लाल, नारंगी, चमकीला पीला - मंगल की शक्ति के लिए साहस और कार्य' :
-               zodiac === 'Taurus' ? 'हरा, गुलाबी, मिट्टी भूरा - शुक्र के रंग समृद्धि और स्थिरता के लिए' :
-               zodiac === 'Gemini' ? 'पीला, हल्का नीला, चांदी - बुध के रंग संवाद और सीखने के लिए' :
-               zodiac === 'Cancer' ? 'सफेद, चांदी, समुद्री नीला - चंद्र के रंग अंतर्दृष्टि और भावनाओं के लिए' :
-               zodiac === 'Leo' ? 'सुनहरा, नारंगी, चमकीला लाल - सूर्य के रंग नेतृत्व और आत्मविश्वास के लिए' :
-               zodiac === 'Virgo' ? 'हरा, भूरा, गहरा नीला - पृथ्वी के रंग स्थिरता और फोकस के लिए' :
-               zodiac === 'Libra' ? 'गुलाबी, हल्का नीला, पेस्टल हरा - शुक्र के रंग सद्भावना और संतुलन के लिए' :
-               zodiac === 'Scorpio' ? 'गहरा लाल, मैरून, काला - मंगल के रंग परिवर्तन और शक्ति के लिए' :
-               zodiac === 'Sagittarius' ? 'बैंगनी, फिरोजी, शाही नीला - गुरु के रंग ज्ञान और विस्तार के लिए' :
-               zodiac === 'Capricorn' ? 'काला, गहरा हरा, भूरा - शनि के रंग अनुशासन और सफलता के लिए' :
-               zodiac === 'Aquarius' ? 'बिजली नीला, फिरोजी, चांदी - शनि के रंग नवाचार के लिए' :
-               'समुद्री हरा, फिरोजी, लैवेंडर - गुरु के रंग आध्यात्मिकता के लिए'}
+              {zodiac === 'Leo' ? 'Leadership roles, entertainment industry, government services, teaching, sports coaching' :
+               zodiac === 'Virgo' ? 'Healthcare, research, accounting, editing, quality control, nutrition science' :
+               zodiac === 'Cancer' ? 'Psychology, counseling, hospitality, real estate, childcare, culinary arts' :
+               'Creative fields, innovative industries, and roles requiring natural talents'}
             </p>
           </div>
           <div className="bg-white p-4 rounded-md">
-            <h4 className="font-semibold text-purple-900 mb-2">💎 लाभकारी रत्न (Beneficial Gemstones):</h4>
+            <h4 className="font-semibold text-blue-900 mb-2">📚 Educational Recommendations:</h4>
             <p className="text-gray-700 text-sm">
-              {zodiac === 'Aries' ? 'मूंगा (Red Coral), माणिक्य, कार्नेलियन - मंगल की शक्ति बढ़ाने के लिए' :
-               zodiac === 'Taurus' ? 'हीरा (Diamond), सफेद पुखराज, ओपल - शुक्र की शक्ति रचनात्मकता के लिए' :
-               zodiac === 'Gemini' ? 'पन्ना (Emerald), पेरिडॉट, हरा टूर्मलाइन - बुध की शक्ति संवाद के लिए' :
-               zodiac === 'Cancer' ? 'मोती (Pearl), चांद्रकांत मणि, सफेद मूंगा - चंद्र की शक्ति भावनात्मक संतुलन के लिए' :
-               zodiac === 'Leo' ? 'माणिक्य (Ruby), एम्बर, सुनहला - सूर्य की शक्ति आत्मविश्वास के लिए' :
-               zodiac === 'Virgo' ? 'पन्ना (Emerald), हरा जेड, अमेज़ोनाइट - बुध की शक्ति विश्लेषण के लिए' :
-               zodiac === 'Libra' ? 'हीरा (Diamond), गुलाब क्वार्ट्ज, गुलाबी टूर्मलाइन - शुक्र की शक्ति रिश्तों के लिए' :
-               zodiac === 'Scorpio' ? 'मूंगा (Red Coral), गार्नेट, ब्लडस्टोन - मंगल की शक्ति परिवर्तन के लिए' :
-               zodiac === 'Sagittarius' ? 'पुखराज (Yellow Sapphire), टोपाज़, सुनहला - गुरु की शक्ति ज्ञान के लिए' :
-               zodiac === 'Capricorn' ? 'नीलम (Blue Sapphire), एमेथिस्ट, गार्नेट - शनि की शक्ति अनुशासन के लिए' :
-               zodiac === 'Aquarius' ? 'नीलम (Blue Sapphire), एक्वामरीन, लापिस लाजुली - शनि की शक्ति नवाचार के लिए' :
-               'पुखराज (Yellow Sapphire), एक्वामरीन, एमेथिस्ट - गुरु की शक्ति आध्यात्मिक विकास के लिए'}
+              Choose subjects according to {user?.name}'s natural {zodiac} qualities. Encourage hands-on learning 
+              and application-based knowledge.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Lucky Elements Section */}
+      <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg border-l-4 border-purple-500">
+        <div className="flex items-center mb-4">
+          <span className="text-2xl mr-3">🍀</span>
+          <h3 className="text-xl font-bold text-purple-800">Lucky Elements & Remedies</h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-white p-4 rounded-md">
+            <h4 className="font-semibold text-purple-900 mb-2">🌈 Lucky Colors:</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Aries' ? 'Red, Orange, Bright Yellow - Mars energy colors for courage and action' :
+               zodiac === 'Taurus' ? 'Green, Pink, Earth Brown - Venus colors for prosperity and stability' :
+               zodiac === 'Gemini' ? 'Yellow, Light Blue, Silver - Mercury colors for communication and learning' :
+               zodiac === 'Cancer' ? 'White, Silver, Sea Blue - Moon colors for intuition and emotions' :
+               zodiac === 'Leo' ? 'Golden, Orange, Bright Red - Sun colors for leadership and confidence' :
+               zodiac === 'Virgo' ? 'Green, Brown, Deep Blue - Earth colors for stability and focus' :
+               zodiac === 'Libra' ? 'Pink, Light Blue, Pastel Green - Venus colors for harmony and balance' :
+               zodiac === 'Scorpio' ? 'Deep Red, Maroon, Black - Mars colors for transformation and power' :
+               zodiac === 'Sagittarius' ? 'Purple, Turquoise, Royal Blue - Jupiter colors for wisdom and expansion' :
+               zodiac === 'Capricorn' ? 'Black, Dark Green, Brown - Saturn colors for discipline and success' :
+               zodiac === 'Aquarius' ? 'Electric Blue, Turquoise, Silver - Saturn colors for innovation' :
+               'Sea Green, Turquoise, Lavender - Jupiter colors for spirituality'}
+            </p>
+          </div>
+          <div className="bg-white p-4 rounded-md">
+            <h4 className="font-semibold text-purple-900 mb-2">💎 Beneficial Gemstones:</h4>
+            <p className="text-gray-700 text-sm">
+              {zodiac === 'Aries' ? 'Red Coral, Ruby, Carnelian - To strengthen Mars energy' :
+               zodiac === 'Taurus' ? 'Diamond, White Sapphire, Opal - To enhance Venus energy for creativity' :
+               zodiac === 'Gemini' ? 'Emerald, Peridot, Green Tourmaline - To boost Mercury for communication' :
+               zodiac === 'Cancer' ? 'Pearl, Moonstone, White Coral - To strengthen Moon energy for emotional balance' :
+               zodiac === 'Leo' ? 'Ruby, Amber, Citrine - To enhance Sun energy for confidence' :
+               zodiac === 'Virgo' ? 'Emerald, Green Jade, Amazonite - To support Mercury for analysis' :
+               zodiac === 'Libra' ? 'Diamond, Rose Quartz, Pink Tourmaline - To strengthen Venus for relationships' :
+               zodiac === 'Scorpio' ? 'Red Coral, Garnet, Bloodstone - To boost Mars energy for transformation' :
+               zodiac === 'Sagittarius' ? 'Yellow Sapphire, Topaz, Citrine - To enhance Jupiter for wisdom' :
+               zodiac === 'Capricorn' ? 'Blue Sapphire, Amethyst, Garnet - To support Saturn for discipline' :
+               zodiac === 'Aquarius' ? 'Blue Sapphire, Aquamarine, Lapis Lazuli - To strengthen Saturn for innovation' :
+               'Yellow Sapphire, Aquamarine, Amethyst - To enhance Jupiter for spiritual growth'}
             </p>
           </div>
         </div>
         <div className="mt-4 bg-yellow-50 p-3 rounded-lg border border-yellow-200">
-          <h4 className="font-semibold text-yellow-900 mb-2">🙏 दैनिक मंत्र (Daily Mantra):</h4>
+          <h4 className="font-semibold text-yellow-900 mb-2">🙏 Daily Mantra:</h4>
           <p className="text-yellow-800 text-sm text-center font-medium">
-            {zodiac === 'Aries' ? '"ॐ भौमाय नमः" - प्रतिदिन 21 बार (मंगलवार को 108 बार)' :
-             zodiac === 'Taurus' ? '"ॐ शुक्राय नमः" - प्रतिदिन 21 बार (शुक्रवार को 108 बार)' :
-             zodiac === 'Gemini' ? '"ॐ बुधाय नमः" - प्रतिदिन 21 बार (बुधवार को 108 बार)' :
-             zodiac === 'Cancer' ? '"ॐ सोमाय नमः" - प्रतिदिन 21 बार (सोमवार को 108 बार)' :
-             zodiac === 'Leo' ? '"ॐ सूर्याय नमः" - प्रतिदिन 21 बार (रविवार को 108 बार)' :
-             zodiac === 'Virgo' ? '"ॐ बुधाय नमः" - प्रतिदिन 21 बार (बुधवार को 108 बार)' :
-             zodiac === 'Libra' ? '"ॐ शुक्राय नमः" - प्रतिदिन 21 बार (शुक्रवार को 108 बार)' :
-             zodiac === 'Scorpio' ? '"ॐ भौमाय नमः" - प्रतिदिन 21 बार (मंगलवार को 108 बार)' :
-             zodiac === 'Sagittarius' ? '"ॐ गुरवे नमः" - प्रतिदिन 21 बार (गुरुवार को 108 बार)' :
-             zodiac === 'Capricorn' ? '"ॐ शनैश्चराय नमः" - प्रतिदिन 21 बार (शनिवार को 108 बार)' :
-             zodiac === 'Aquarius' ? '"ॐ शनैश्चराय नमः" - प्रतिदिन 21 बार (शनिवार को 108 बार)' :
-             '"ॐ गुरवे नमः" - प्रतिदिन 21 बार (गुरुवार को 108 बार)'}
+            {zodiac === 'Aries' ? '"ॐ भौमाय नमः" - Daily 21 times (108 times on Tuesday)' :
+             zodiac === 'Taurus' ? '"ॐ शुक्राय नमः" - Daily 21 times (108 times on Friday)' :
+             zodiac === 'Gemini' ? '"ॐ बुधाय नमः" - Daily 21 times (108 times on Wednesday)' :
+             zodiac === 'Cancer' ? '"ॐ सोमाय नमः" - Daily 21 times (108 times on Monday)' :
+             zodiac === 'Leo' ? '"ॐ सूर्याय नमः" - Daily 21 times (108 times on Sunday)' :
+             zodiac === 'Virgo' ? '"ॐ बुधाय नमः" - Daily 21 times (108 times on Wednesday)' :
+             zodiac === 'Libra' ? '"ॐ शुक्राय नमः" - Daily 21 times (108 times on Friday)' :
+             zodiac === 'Scorpio' ? '"ॐ भौमाय नमः" - Daily 21 times (108 times on Tuesday)' :
+             zodiac === 'Sagittarius' ? '"ॐ गुरवे नमः" - Daily 21 times (108 times on Thursday)' :
+             zodiac === 'Capricorn' ? '"ॐ शनैश्चराय नमः" - Daily 21 times (108 times on Saturday)' :
+             zodiac === 'Aquarius' ? '"ॐ शनैश्चराय नमः" - Daily 21 times (108 times on Saturday)' :
+             '"ॐ गुरवे नमः" - Daily 21 times (108 times on Thursday)'}
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
@@ -474,8 +453,8 @@ AstroAlign AI Team`;
             <h4 className="font-semibold text-purple-900 mb-2">⏰ Best Time for Worship:</h4>
             <p className="text-gray-700 text-sm">
               {zodiac === 'Capricorn' ? 'Evening (6-8 PM), Saturn worship on Saturdays' :
-               zodiac === 'Aquarius' ? 'Saturday (शनिवार), Afternoon (2-4 PM), Saturn mantras on Saturdays' :
-               'Thursday (गुरुवार), Evening (7-9 PM), Jupiter worship on Thursdays'}
+               zodiac === 'Aquarius' ? 'Saturday, Afternoon (2-4 PM), Saturn mantras on Saturdays' :
+               'Thursday, Evening (7-9 PM), Jupiter worship on Thursdays'}
             </p>
           </div>
           <div className="bg-white p-4 rounded-md">
@@ -498,7 +477,7 @@ AstroAlign AI Team`;
         </div>
       </div>
 
-      {/* IQ Category Analysis Section - NEW */}
+      {/* IQ Category Analysis Section */}
       <div className="bg-gradient-to-r from-indigo-50 to-blue-50 p-6 rounded-lg border-l-4 border-indigo-500">
         <div className="flex items-center mb-4">
           <span className="text-2xl mr-3">🧠</span>
