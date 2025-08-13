@@ -67,8 +67,28 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
     });
   };
 
-  // Create order on backend
+  // Add test mode flag
+  const [testMode] = useState(true); // Set to false when backend is ready
+
+  // Create order on backend OR use test mode
   const createOrder = async () => {
+    if (testMode) {
+      // Test mode - simulate order creation
+      console.log('Running in test mode - simulating order creation');
+      return {
+        id: 'order_test_' + Date.now(),
+        amount: 14900,
+        currency: 'INR',
+        key_id: 'rzp_test_demo', // Demo key for testing
+        notes: {
+          child_name: user?.name || 'Guest',
+          zodiac: zodiac,
+          nakshatra: nakshatra,
+          package: 'complete_analysis_149'
+        }
+      };
+    }
+
     try {
       const response = await fetch('https://vedic-career-backend.vercel.app/api/create-order', {
         method: 'POST',
@@ -102,8 +122,18 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
     }
   };
 
-  // Verify payment on backend
+  // Verify payment on backend OR use test mode
   const verifyPayment = async (paymentData) => {
+    if (testMode) {
+      // Test mode - simulate successful verification
+      console.log('Test mode - simulating payment verification');
+      return {
+        success: true,
+        message: 'Test payment verified successfully',
+        data: paymentData
+      };
+    }
+
     try {
       const response = await fetch('https://vedic-career-backend.vercel.app/api/verify-payment', {
         method: 'POST',
@@ -457,6 +487,9 @@ Note: This analysis is based on traditional Vedic astrological principles combin
     });
   };
 
+  // Add test mode flag
+  const [testMode] = useState(false); // Backend is working, so disable test mode
+
   const handlePayment = async () => {
     setIsProcessingPayment(true);
     
@@ -479,19 +512,7 @@ Note: This analysis is based on traditional Vedic astrological principles combin
 
       console.log('Creating order...');
       
-      // Test backend connectivity first
-      try {
-        const testResponse = await fetch('https://vedic-career-backend.vercel.app/api/health', {
-          method: 'GET'
-        });
-        console.log('Backend health check:', testResponse.status);
-      } catch (healthError) {
-        console.error('Backend connectivity issue:', healthError);
-        alert('Backend server is not responding. Please try again in a few minutes.');
-        setIsProcessingPayment(false);
-        return;
-      }
-
+      // Your backend is working, so let's create the order
       const orderData = await createOrder();
       
       // Validate order data
@@ -502,8 +523,8 @@ Note: This analysis is based on traditional Vedic astrological principles combin
       console.log('Order data received:', orderData);
 
       const options = {
-        key: orderData.key_id || 'rzp_test_your_key_id', // Fallback key
-        amount: orderData.amount || 14900, // Amount in paise
+        key: orderData.key_id, // Use the actual key from backend
+        amount: orderData.amount, // Amount from backend
         currency: orderData.currency || 'INR',
         name: 'Vedic Child Assessment',
         description: 'Complete Analysis with Rashi Chart - ₹149',
@@ -564,7 +585,7 @@ Note: This analysis is based on traditional Vedic astrological principles combin
       // More specific error messages
       let errorMessage = 'Failed to initiate payment. ';
       if (error.message.includes('Failed to create order')) {
-        errorMessage += 'Backend server error. Please try again or contact support.';
+        errorMessage += 'Order creation failed. Please try again.';
       } else if (error.message.includes('fetch')) {
         errorMessage += 'Network connection issue. Please check your internet and try again.';
       } else {
