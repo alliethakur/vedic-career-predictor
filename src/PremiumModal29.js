@@ -37,13 +37,25 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
     Pisces: "Lord Rama - Compassion & Spirituality"
   };
 
-  // Load Razorpay script
+  // Load Razorpay script with better error handling
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
+      // Check if Razorpay is already loaded
+      if (window.Razorpay) {
+        resolve(true);
+        return;
+      }
+
       const script = document.createElement('script');
       script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
+      script.onload = () => {
+        console.log('Razorpay script loaded successfully');
+        resolve(true);
+      };
+      script.onerror = (error) => {
+        console.error('Failed to load Razorpay script:', error);
+        resolve(false);
+      };
       document.body.appendChild(script);
     });
   };
@@ -60,7 +72,7 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
           amount: 29,
           currency: 'INR',
           notes: {
-            child_name: user?.name || '',
+            child_name: user?.name || 'Guest',
             zodiac: zodiac,
             nakshatra: nakshatra,
             package: 'essential_analysis_29'
@@ -69,10 +81,13 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create order');
+        const errorData = await response.text();
+        console.error('Order creation failed:', errorData);
+        throw new Error(`Failed to create order: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log('Order created successfully:', data);
       return data;
     } catch (error) {
       console.error('Error creating order:', error);
@@ -92,7 +107,9 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
       });
 
       if (!response.ok) {
-        throw new Error('Payment verification failed');
+        const errorData = await response.text();
+        console.error('Payment verification failed:', errorData);
+        throw new Error(`Payment verification failed: ${response.status}`);
       }
 
       const data = await response.json();
@@ -107,24 +124,35 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
     setIsProcessingPayment(true);
     
     try {
+      // Load Razorpay script
+      console.log('Loading Razorpay script...');
       const isScriptLoaded = await loadRazorpayScript();
       if (!isScriptLoaded) {
-        alert('Razorpay SDK failed to load. Please check your internet connection.');
+        alert('Razorpay SDK failed to load. Please check your internet connection and try again.');
         setIsProcessingPayment(false);
         return;
       }
 
+      // Check if Razorpay is available
+      if (!window.Razorpay) {
+        alert('Payment gateway is not available. Please refresh the page and try again.');
+        setIsProcessingPayment(false);
+        return;
+      }
+
+      console.log('Creating order...');
       const orderData = await createOrder();
 
       const options = {
-        key: orderData.key_id,
-        amount: orderData.amount,
-        currency: orderData.currency,
+        key: orderData.key_id || 'rzp_test_your_key_id', // Fallback key
+        amount: orderData.amount || 2900, // Amount in paise
+        currency: orderData.currency || 'INR',
         name: 'Vedic Child Assessment',
         description: 'Essential Vedic Insights - ₹29',
         image: '/logo.png',
         order_id: orderData.id,
         handler: async function (response) {
+          console.log('Payment successful:', response);
           try {
             const verificationResult = await verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
@@ -143,7 +171,7 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
             }
           } catch (error) {
             console.error('Payment verification error:', error);
-            alert('Payment verification failed. Please contact support.');
+            alert('Payment verification failed. Please contact support with your payment ID: ' + response.razorpay_payment_id);
           } finally {
             setIsProcessingPayment(false);
           }
@@ -153,23 +181,25 @@ const PremiumModal29 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
           email: user?.email || '',
           contact: user?.phone || ''
         },
-        notes: orderData.notes,
+        notes: orderData.notes || {},
         theme: {
           color: '#F37254'
         },
         modal: {
           ondismiss: function() {
+            console.log('Payment modal dismissed');
             setIsProcessingPayment(false);
           }
         }
       };
 
+      console.log('Opening Razorpay checkout with options:', options);
       const razorpay = new window.Razorpay(options);
       razorpay.open();
 
     } catch (error) {
       console.error('Payment initiation error:', error);
-      alert('Failed to initiate payment. Please try again.');
+      alert('Failed to initiate payment: ' + error.message + '. Please try again or contact support.');
       setIsProcessingPayment(false);
     }
   };
@@ -504,7 +534,7 @@ AstroAlign AI Team`;
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[95vh] overflow-y-auto">
-          <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center shadow-sm">
+          <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center shadow-sm rounded-t-2xl">
             <h2 className="text-xl font-bold">🕉️ Complete Essential Vedic Analysis Report</h2>
             <button
               onClick={onClose}
@@ -523,128 +553,140 @@ AstroAlign AI Team`;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6">
-        <div className="text-center mb-6">
-          <div className="text-4xl mb-4">🕉️</div>
-          <h2 className="text-2xl font-bold mb-2">Essential Vedic Insights</h2>
-          <p className="text-gray-600">
-            Unlock {user?.name}'s complete spiritual & intellectual analysis
-          </p>
-        </div>
-
-        {hasActivePurchase && (
-          <div className="mb-4 p-3 bg-green-100 rounded-lg text-center">
-            <p className="text-green-800 text-sm mb-2">✅ Payment successful!</p>
-            <button
-              onClick={handleViewReport}
-              className="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold text-sm"
-            >
-              📖 View Your Complete Report
-            </button>
-          </div>
-        )}
-
-        {/* Scrollable content area */}
-        <div className="space-y-4 mb-6">
-          <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200">
-            <h3 className="font-semibold mb-3 text-orange-900">🎯 You'll Get Complete Access To:</h3>
-            <ul className="text-sm space-y-2 text-gray-700">
-              <li>✅ Hindu Deity Blessings & Divine Protection Analysis</li>
-              <li>✅ Complete Creative, Sports & Imagination Assessment</li>
-              <li>✅ Personalized Career Path Guidance with Detailed Recommendations</li>
-              <li>✅ Professional PDF Report Download</li>
-              <li>✅ WhatsApp & Email Sharing Options</li>
-              <li>✅ Lifetime Access to Your Complete Report</li>
-            </ul>
-          </div>
-
-          {/* Enhanced preview */}
-          <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200">
-            <h3 className="font-semibold mb-2 text-purple-900">🌟 Enhanced Analysis Preview:</h3>
-            <div className="text-sm text-gray-700 space-y-2">
-              <p><strong>For {zodiac} Children:</strong></p>
-              <p className="text-xs bg-white p-2 rounded border-l-2 border-purple-400">
-                "Born under {zodiac} with {nakshatra} nakshatra, {user?.name} carries divine blessings of {zodiacDeities[zodiac]?.split(' - ')[0]}. 
-                Their natural talents include {zodiac === 'Leo' ? 'leadership and creative expression with natural stage presence' : 
-                zodiac === 'Virgo' ? 'analytical thinking and systematic problem-solving with attention to detail' : 
-                zodiac === 'Cancer' ? 'emotional intelligence and nurturing abilities with protective instincts' : 'unique cosmic gifts and specialized abilities'}..."
-              </p>
-              <div className="bg-yellow-50 p-2 rounded mt-2">
-                <p className="text-xs text-yellow-800">
-                  <strong>Daily Spiritual Practice:</strong> {zodiac === 'Leo' ? '"ॐ सूर्याय नमः" - 21 times daily for confidence' :
-                   zodiac === 'Virgo' ? '"ॐ बुधाय नमः" - 21 times daily for analytical skills' :
-                   zodiac === 'Cancer' ? '"ॐ सोमाय नमः" - 21 times daily for emotional balance' :
-                   'Personalized mantras for spiritual growth'}
-                </p>
-              </div>
-              <p className="text-xs text-purple-600 italic">*This is just a preview. Full analysis includes 8+ comprehensive sections with detailed guidance.</p>
-            </div>
-          </div>
-
-          {/* Pricing section */}
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-2 mb-2">
-              <div className="text-3xl font-bold text-green-600">₹29</div>
-              <div className="text-lg line-through opacity-70 text-gray-500">₹99</div>
-            </div>
-            <p className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full inline-block mb-2 font-semibold">
-              🔥 70% OFF - Limited Time Sacred Offer!
-            </p>
-            <p className="text-xs text-gray-500">
-              One-time payment • Instant complete access • 7-day guarantee
-            </p>
-          </div>
-
-          {/* What makes this special - Enhanced */}
-          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg border border-blue-200">
-            <h3 className="font-semibold mb-2 text-blue-900">⭐ Why This Complete Analysis is Special:</h3>
-            <ul className="text-xs text-gray-700 space-y-1">
-              <li>🌍 World's first IQ + Vedic astrology combination</li>
-              <li>👨‍👩‍👧‍👦 Trusted by 3,500+ Indian families</li>
-              <li>🎯 Age-appropriate guidance for 8-15 years</li>
-              <li>📱 Instant access + downloadable complete report</li>
-              <li>🔒 Secure payment & data protection</li>
-              <li>📈 5-year development roadmap included</li>
-              <li>🕉️ Daily spiritual practices & mantras</li>
-              <li>🎨 Complete intelligence analysis across all domains</li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Action buttons */}
-        <div className="space-y-3">
-          <button
-            onClick={handlePayment}
-            disabled={isProcessingPayment || hasActivePurchase}
-            className={`w-full py-3 rounded-lg font-semibold text-white ${
-              isProcessingPayment 
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : hasActivePurchase
-                ? 'bg-green-600'
-                : 'bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700'
-            }`}
-          >
-            {isProcessingPayment ? 'Processing...' : 
-             hasActivePurchase ? '✅ Payment Complete' :
-             '🕉️ Pay ₹29 & Receive Complete Divine Analysis'}
-          </button>
-          
+      <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center rounded-t-2xl">
+          <h2 className="text-xl font-bold">🕉️ Essential Insights</h2>
           <button
             onClick={onClose}
-            className="w-full py-2 text-gray-600 hover:text-gray-800"
+            className="text-gray-500 hover:text-gray-700 text-2xl"
           >
-            Maybe Later
+            ×
           </button>
         </div>
+        
+        <div className="p-6">
+          <div className="text-center mb-6">
+            <div className="text-4xl mb-4">🕉️</div>
+            <h3 className="text-2xl font-bold mb-2">Essential Vedic Insights</h3>
+            <p className="text-gray-600">
+              Unlock {user?.name}'s complete spiritual & intellectual analysis
+            </p>
+          </div>
 
-        {/* Footer info */}
-        <div className="mt-4 text-center">
-          <p className="text-xs text-gray-500">
-            🔒 Secure payment by Razorpay 
-          </p>
-          <p className="text-xs text-red-600 font-medium mt-1 animate-pulse">
-            ⚡ Only {Math.floor(Math.random() * 7) + 2} complete sacred reports left at this price today!
-          </p>
+          {hasActivePurchase && (
+            <div className="mb-4 p-3 bg-green-100 rounded-lg text-center">
+              <p className="text-green-800 text-sm mb-2">✅ Payment successful!</p>
+              <button
+                onClick={handleViewReport}
+                className="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold text-sm"
+              >
+                📖 View Your Complete Report
+              </button>
+            </div>
+          )}
+
+          {/* Scrollable content area */}
+          <div className="space-y-4 mb-6">
+            <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-4 rounded-lg border border-orange-200">
+              <h4 className="font-semibold mb-3 text-orange-900">🎯 You'll Get Complete Access To:</h4>
+              <ul className="text-sm space-y-2 text-gray-700">
+                <li>✅ Hindu Deity Blessings & Divine Protection Analysis</li>
+                <li>✅ Complete Creative, Sports & Imagination Assessment</li>
+                <li>✅ Personalized Career Path Guidance with Detailed Recommendations</li>
+                <li>✅ Professional PDF Report Download</li>
+                <li>✅ WhatsApp & Email Sharing Options</li>
+                <li>✅ Lifetime Access to Your Complete Report</li>
+              </ul>
+            </div>
+
+            {/* Enhanced preview */}
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200">
+              <h4 className="font-semibold mb-2 text-purple-900">🌟 Enhanced Analysis Preview:</h4>
+              <div className="text-sm text-gray-700 space-y-2">
+                <p><strong>For {zodiac} Children:</strong></p>
+                <p className="text-xs bg-white p-2 rounded border-l-2 border-purple-400">
+                  "Born under {zodiac} with {nakshatra} nakshatra, {user?.name} carries divine blessings of {zodiacDeities[zodiac]?.split(' - ')[0]}. 
+                  Their natural talents include {zodiac === 'Leo' ? 'leadership and creative expression with natural stage presence' : 
+                  zodiac === 'Virgo' ? 'analytical thinking and systematic problem-solving with attention to detail' : 
+                  zodiac === 'Cancer' ? 'emotional intelligence and nurturing abilities with protective instincts' : 'unique cosmic gifts and specialized abilities'}..."
+                </p>
+                <div className="bg-yellow-50 p-2 rounded mt-2">
+                  <p className="text-xs text-yellow-800">
+                    <strong>Daily Spiritual Practice:</strong> {zodiac === 'Leo' ? '"ॐ सूर्याय नमः" - 21 times daily for confidence' :
+                     zodiac === 'Virgo' ? '"ॐ बुधाय नमः" - 21 times daily for analytical skills' :
+                     zodiac === 'Cancer' ? '"ॐ सोमाय नमः" - 21 times daily for emotional balance' :
+                     'Personalized mantras for spiritual growth'}
+                  </p>
+                </div>
+                <p className="text-xs text-purple-600 italic">*This is just a preview. Full analysis includes 8+ comprehensive sections with detailed guidance.</p>
+              </div>
+            </div>
+
+            {/* Pricing section */}
+            <div className="text-center">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <div className="text-3xl font-bold text-green-600">₹29</div>
+                <div className="text-lg line-through opacity-70 text-gray-500">₹99</div>
+              </div>
+              <p className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full inline-block mb-2 font-semibold">
+                🔥 70% OFF - Limited Time Sacred Offer!
+              </p>
+              <p className="text-xs text-gray-500">
+                One-time payment • Instant complete access • 7-day guarantee
+              </p>
+            </div>
+
+            {/* What makes this special - Enhanced */}
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg border border-blue-200">
+              <h4 className="font-semibold mb-2 text-blue-900">⭐ Why This Complete Analysis is Special:</h4>
+              <ul className="text-xs text-gray-700 space-y-1">
+                <li>🌍 World's first IQ + Vedic astrology combination</li>
+                <li>👨‍👩‍👧‍👦 Trusted by 3,500+ Indian families</li>
+                <li>🎯 Age-appropriate guidance for 8-15 years</li>
+                <li>📱 Instant access + downloadable complete report</li>
+                <li>🔒 Secure payment & data protection</li>
+                <li>📈 5-year development roadmap included</li>
+                <li>🕉️ Daily spiritual practices & mantras</li>
+                <li>🎨 Complete intelligence analysis across all domains</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Action buttons */}
+          <div className="space-y-3">
+            <button
+              onClick={handlePayment}
+              disabled={isProcessingPayment || hasActivePurchase}
+              className={`w-full py-3 rounded-lg font-semibold text-white ${
+                isProcessingPayment 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : hasActivePurchase
+                  ? 'bg-green-600'
+                  : 'bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700'
+              }`}
+            >
+              {isProcessingPayment ? 'Processing...' : 
+               hasActivePurchase ? '✅ Payment Complete' :
+               '🕉️ Pay ₹29 & Receive Complete Divine Analysis'}
+            </button>
+            
+            <button
+              onClick={onClose}
+              className="w-full py-2 text-gray-600 hover:text-gray-800"
+            >
+              Maybe Later
+            </button>
+          </div>
+
+          {/* Footer info */}
+          <div className="mt-4 text-center">
+            <p className="text-xs text-gray-500">
+              🔒 Secure payment by Razorpay 
+            </p>
+            <p className="text-xs text-red-600 font-medium mt-1 animate-pulse">
+              ⚡ Only {Math.floor(Math.random() * 7) + 2} complete sacred reports left at this price today!
+            </p>
+          </div>
         </div>
       </div>
     </div>
