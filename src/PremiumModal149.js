@@ -127,6 +127,336 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
     }
   };
 
+  // Download and sharing handlers
+  const handleDownloadPDF = () => {
+    const rashiChart = generateRashiChart();
+    const reportContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Complete Vedic Analysis with Rashi Chart - ${user?.name}</title>
+        <style>
+          body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; color: #333; line-height: 1.6; }
+          .header { text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; }
+          .section { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 12px; border-left: 5px solid #007bff; }
+          .chart-section { background: #e3f2fd; border-left-color: #2196f3; }
+          .deity-section { background: #fff3cd; border-left-color: #ffc107; }
+          .career-section { background: #d1ecf1; border-left-color: #17a2b8; }
+          .analysis-section { background: #f8d7da; border-left-color: #dc3545; }
+          h1, h2, h3 { color: #2c3e50; margin-top: 0; }
+          h1 { font-size: 2.5em; margin-bottom: 10px; }
+          h2 { font-size: 1.8em; color: #fff; }
+          h3 { font-size: 1.4em; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+          .chart-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 400px; margin: 20px auto; background: #333; padding: 10px; border-radius: 10px; }
+          .chart-cell { background: white; padding: 10px; text-align: center; border-radius: 5px; border: 1px solid #ddd; }
+          .chart-center { background: linear-gradient(45deg, #ffd700, #ffed4e); font-weight: bold; color: #b8860b; }
+          .blessing-text { font-style: italic; color: #6c757d; background: #f0f0f0; padding: 15px; border-radius: 8px; margin: 10px 0; }
+          .footer { text-align: center; margin-top: 40px; font-size: 14px; color: #666; border-top: 2px solid #eee; padding-top: 20px; }
+          .highlight { background: #ffffcc; padding: 2px 5px; border-radius: 3px; }
+          ul { list-style-type: none; padding-left: 0; }
+          li { margin: 8px 0; padding: 5px 0; border-bottom: 1px solid #eee; }
+          li:before { content: "✨ "; color: #ffc107; font-weight: bold; }
+          .planet-symbol { font-size: 1.2em; color: #9c27b0; font-weight: bold; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1>🕉️ Complete Vedic Analysis</h1>
+          <h2>Professional Rashi Chart Report for ${user?.name}</h2>
+          <p style="font-size: 1.1em; margin: 0;">Generated on ${new Date().toLocaleDateString()}</p>
+          <p style="font-size: 0.9em; opacity: 0.9;">Including Professional Birth Chart & Comprehensive Analysis</p>
+        </div>
+
+        <div class="section deity-section">
+          <h3>🙏 ${zodiac} Zodiac Divine Profile</h3>
+          <p><strong>Child's Name:</strong> ${user?.name}</p>
+          <p><strong>Zodiac Sign (राशि):</strong> ${zodiac} ${getSignSymbol(zodiac)}</p>
+          <p><strong>Nakshatra (नक्षत्र):</strong> ${nakshatra}</p>
+          <p><strong>Ruling Planet:</strong> ${zodiac === 'Leo' ? 'Sun (सूर्य)' : zodiac === 'Cancer' ? 'Moon (चंद्र)' : zodiac === 'Virgo' ? 'Mercury (बुध)' : 'Cosmic Ruler'}</p>
+          
+          <div class="blessing-text">
+            <h4>🌟 Divine Cosmic Profile:</h4>
+            <p>${user?.name} is blessed under the divine cosmic energy of ${zodiac}. Born with ${nakshatra} nakshatra, they carry the sacred wisdom and natural talents that will guide their life path toward success and spiritual fulfillment.</p>
+            
+            <h4>✨ Natural Gifts & Talents:</h4>
+            <p>${zodiac === 'Leo' ? 'Natural leadership abilities, creative expression, confidence, and royal nature. Born to shine and inspire others.' : 
+                 zodiac === 'Virgo' ? 'Analytical mind, attention to detail, service orientation, and healing abilities. Natural problem-solvers and perfectionists.' :
+                 zodiac === 'Cancer' ? 'Emotional intelligence, nurturing instincts, intuitive powers, and protective nature. Natural caregivers and healers.' :
+                 zodiac === 'Aries' ? 'Pioneering spirit, courage, leadership, and competitive nature. Natural initiators and warriors.' :
+                 zodiac === 'Taurus' ? 'Stability, patience, artistic talents, and material wisdom. Natural builders and creators.' :
+                 zodiac === 'Gemini' ? 'Communication skills, intellectual curiosity, adaptability, and learning abilities. Natural teachers and communicators.' :
+                 zodiac === 'Libra' ? 'Balance, harmony, diplomatic skills, and aesthetic sense. Natural peacemakers and artists.' :
+                 zodiac === 'Scorpio' ? 'Deep insight, transformation power, intuitive abilities, and investigative mind. Natural researchers and healers.' :
+                 zodiac === 'Sagittarius' ? 'Philosophical wisdom, adventure spirit, optimism, and teaching abilities. Natural philosophers and explorers.' :
+                 zodiac === 'Capricorn' ? 'Discipline, ambition, practical wisdom, and goal orientation. Natural leaders and achievers.' :
+                 zodiac === 'Aquarius' ? 'Innovation, humanitarian values, independent thinking, and future vision. Natural revolutionaries and inventors.' :
+                 'Compassion, imagination, spiritual connection, and artistic abilities. Natural artists and spiritual guides.'}</p>
+          </div>
+        </div>
+
+        <div class="section chart-section">
+          <h3>🔮 Professional Birth Chart (जन्म कुंडली)</h3>
+          <p style="text-align: center; font-style: italic; margin-bottom: 20px;">
+            Traditional Vedic Rashi Chart based on cosmic alignments at birth
+          </p>
+          
+          <div class="chart-grid">
+            <div class="chart-cell"><strong>12</strong><br/>${getSignSymbol(rashiChart[11].sign)}<br/><small>${rashiChart[11].sign}</small><br/><span class="planet-symbol">${rashiChart[11].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            <div class="chart-cell"><strong>1</strong><br/>${getSignSymbol(rashiChart[0].sign)}<br/><small>${rashiChart[0].sign}</small><br/><span class="planet-symbol">${rashiChart[0].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            <div class="chart-cell"><strong>2</strong><br/>${getSignSymbol(rashiChart[1].sign)}<br/><small>${rashiChart[1].sign}</small><br/><span class="planet-symbol">${rashiChart[1].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            <div class="chart-cell"><strong>3</strong><br/>${getSignSymbol(rashiChart[2].sign)}<br/><small>${rashiChart[2].sign}</small><br/><span class="planet-symbol">${rashiChart[2].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            
+            <div class="chart-cell"><strong>11</strong><br/>${getSignSymbol(rashiChart[10].sign)}<br/><small>${rashiChart[10].sign}</small><br/><span class="planet-symbol">${rashiChart[10].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            <div class="chart-cell chart-center">🕉️<br/><strong>${user?.name}</strong><br/><small>${nakshatra}</small><br/>${getSignSymbol(zodiac)} ${zodiac}</div>
+            <div class="chart-cell chart-center">राशि<br/>${getSignSymbol(zodiac)}<br/><small>${zodiac}</small></div>
+            <div class="chart-cell"><strong>4</strong><br/>${getSignSymbol(rashiChart[3].sign)}<br/><small>${rashiChart[3].sign}</small><br/><span class="planet-symbol">${rashiChart[3].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            
+            <div class="chart-cell"><strong>10</strong><br/>${getSignSymbol(rashiChart[9].sign)}<br/><small>${rashiChart[9].sign}</small><br/><span class="planet-symbol">${rashiChart[9].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            <div class="chart-cell"><strong>9</strong><br/>${getSignSymbol(rashiChart[8].sign)}<br/><small>${rashiChart[8].sign}</small><br/><span class="planet-symbol">${rashiChart[8].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            <div class="chart-cell"><strong>8</strong><br/>${getSignSymbol(rashiChart[7].sign)}<br/><small>${rashiChart[7].sign}</small><br/><span class="planet-symbol">${rashiChart[7].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            <div class="chart-cell"><strong>5</strong><br/>${getSignSymbol(rashiChart[4].sign)}<br/><small>${rashiChart[4].sign}</small><br/><span class="planet-symbol">${rashiChart[4].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            
+            <div class="chart-cell"><strong>7</strong><br/>${getSignSymbol(rashiChart[6].sign)}<br/><small>${rashiChart[6].sign}</small><br/><span class="planet-symbol">${rashiChart[6].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+            <div class="chart-cell"><strong>6</strong><br/>${getSignSymbol(rashiChart[5].sign)}<br/><small>${rashiChart[5].sign}</small><br/><span class="planet-symbol">${rashiChart[5].planets.map(p => getPlanetSymbol(p)).join(' ')}</span></div>
+          </div>
+          
+          <div style="margin-top: 20px; background: white; padding: 15px; border-radius: 8px;">
+            <h4>🔍 Chart Reading Guide</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div>
+                <h5 style="color: #9c27b0; margin-bottom: 10px;">Planet Symbols:</h5>
+                <ul style="font-size: 0.9em;">
+                  <li>☉ Sun (सूर्य) - Soul, Authority, Father</li>
+                  <li>☽ Moon (चंद्र) - Mind, Emotions, Mother</li>
+                  <li>☿ Mercury (बुध) - Intelligence, Communication</li>
+                  <li>♀ Venus (शुक्र) - Love, Beauty, Arts</li>
+                  <li>♂ Mars (मंगल) - Energy, Courage, Sports</li>
+                  <li>♃ Jupiter (गुरु) - Wisdom, Teaching, Fortune</li>
+                  <li>♄ Saturn (शनि) - Discipline, Hard work, Karma</li>
+                  <li>ASC Ascendant (लग्न) - Personality, Physical body</li>
+                </ul>
+              </div>
+              <div>
+                <h5 style="color: #9c27b0; margin-bottom: 10px;">Important Houses:</h5>
+                <ul style="font-size: 0.9em;">
+                  <li>1st House: Personality, Physical appearance</li>
+                  <li>4th House: Home, Mother, Education foundation</li>
+                  <li>5th House: Intelligence, Education, Children</li>
+                  <li>7th House: Marriage, Partnership, Business</li>
+                  <li>9th House: Fortune, Father, Higher education</li>
+                  <li>10th House: Career, Reputation, Success</li>
+                  <li>11th House: Gains, Friends, Achievements</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section analysis-section">
+          <h3>📊 Professional Astrological Analysis</h3>
+          
+          <h4>🌟 Lagna Analysis (1st House - Personality):</h4>
+          <p class="highlight">${user?.name}'s ascendant in ${zodiac} makes them naturally ${zodiac === 'Leo' ? 'confident, royal-natured, and born leaders with a golden heart. They have natural charisma and attract others with their warm personality.' : zodiac === 'Virgo' ? 'analytical, detail-oriented, and service-minded with healing abilities. They have a natural inclination toward perfection and helping others.' : zodiac === 'Cancer' ? 'emotional, nurturing, and intuitive with strong family bonds. They have natural protective instincts and caring nature.' : 'ambitious and determined with unique leadership qualities that will emerge as they grow.'}
+          
+          The planetary aspects to their lagna indicate a strong personality that will shine in their chosen field. Their natural ${zodiac} energy will guide them toward success through their authentic self-expression.</p>
+          
+          <h4>🎓 5th House Analysis (Education & Intelligence):</h4>
+          <p class="highlight">Jupiter's beneficial influence in the 5th house indicates exceptional learning abilities and creative intelligence. ${user?.name} will excel in higher education, especially in subjects that combine logic with creativity. This placement suggests strong analytical skills, good memory, and the ability to understand complex concepts easily.
+          
+          Educational recommendations: Focus on ${zodiac === 'Leo' ? 'leadership studies, performing arts, or government-related fields' : zodiac === 'Virgo' ? 'science, medicine, research, or analytical fields' : zodiac === 'Cancer' ? 'psychology, counseling, hospitality, or caring professions' : 'fields that match their natural talents and interests'}. They may also become excellent teachers or mentors in their adult life.</p>
+          
+          <h4>💼 10th House Analysis (Career & Professional Life):</h4>
+          <p class="highlight">The 10th house configuration suggests a promising career in ${zodiac === 'Leo' ? 'leadership roles, entertainment industry, government services, politics, or any field where they can be in the spotlight and lead others' : zodiac === 'Virgo' ? 'healthcare, research, data analysis, quality control, accounting, or service-oriented fields where attention to detail is valued' : zodiac === 'Cancer' ? 'education, psychology, hospitality, real estate, food industry, or any nurturing profession' : 'innovative fields that require both traditional knowledge and modern approaches'}.
+          
+          Professional success will come through their natural talents, ethical approach to work, and ability to connect with others. The planetary influences suggest recognition and respect in their chosen field.</p>
+
+          <h4>💎 Remedies & Spiritual Guidance:</h4>
+          <div class="blessing-text">
+            <p><strong>Daily Mantra:</strong> "${zodiac === 'Leo' ? 'ॐ सूर्याय नमः (Om Suryaya Namaha) - 21 times daily for confidence and leadership' : zodiac === 'Cancer' ? 'ॐ सोमाय नमः (Om Somaya Namaha) - 21 times daily for emotional balance' : zodiac === 'Virgo' ? 'ॐ बुधाय नमः (Om Budhaya Namaha) - 21 times daily for intelligence' : 'Personalized mantras based on birth chart'}"</p>
+            
+            <p><strong>Lucky Colors:</strong> ${zodiac === 'Leo' ? 'Gold, Orange, Yellow - Colors of the Sun' : zodiac === 'Cancer' ? 'White, Silver, Light Blue - Colors of the Moon' : zodiac === 'Virgo' ? 'Green, Brown, Navy Blue - Earth colors' : 'Colors that enhance their zodiac energy'}</p>
+            
+            <p><strong>Beneficial Gemstone:</strong> ${zodiac === 'Leo' ? 'Ruby (माणिक) - Enhances leadership and confidence' : zodiac === 'Cancer' ? 'Pearl (मोती) - Brings emotional stability' : zodiac === 'Virgo' ? 'Emerald (पन्ना) - Enhances intelligence and communication' : 'Gemstones aligned with their birth chart'}</p>
+            
+            <p><strong>Best Days:</strong> ${zodiac === 'Leo' ? 'Sunday (Sun\'s day) for important decisions' : zodiac === 'Cancer' ? 'Monday (Moon\'s day) for new beginnings' : zodiac === 'Virgo' ? 'Wednesday (Mercury\'s day) for studies and communication' : 'Days aligned with their ruling planet'}</p>
+          </div>
+        </div>
+
+        <div class="section career-section">
+          <h3>🎯 Complete Intelligence & Career Analysis</h3>
+          
+          <h4>🎨 Creative & Artistic Intelligence:</h4>
+          <p>${zodiac === 'Leo' ? `${user?.name} shows exceptional creative potential with natural artistic flair. Leo energy enhances dramatic expression, visual arts, and performance abilities. They may excel in theater, music, painting, or any creative field where they can express their unique personality.` : zodiac === 'Virgo' ? 'Strong aesthetic sense and appreciation for beauty. Virgo influence supports visual arts, music, crafts, and detailed creative work. They have an eye for perfection in artistic endeavors.' : zodiac === 'Cancer' ? 'Highly imaginative with emotional depth in creative expression. Cancer energy supports music, poetry, photography, and any art form that touches the heart.' : `${user?.name} demonstrates natural creative abilities with unique artistic perspective that will develop with proper guidance and exposure.`}</p>
+          
+          <h4>⚽ Physical & Sports Intelligence:</h4>
+          <p>${zodiac === 'Leo' ? 'Strong physical presence and natural team leadership abilities. Leo influence enhances performance in sports requiring confidence, coordination, and team spirit. May excel in athletics, team sports, or performance-based physical activities.' : zodiac === 'Cancer' ? 'Good body awareness and protective instincts. Cancer energy supports swimming, gymnastics, or sports that require emotional connection and nurturing team spirit.' : zodiac === 'Virgo' ? 'Precise physical coordination and methodical approach to sports. Virgo influence supports individual sports, yoga, martial arts, or activities requiring technique and discipline.' : `${user?.name} shows natural physical intelligence and coordination abilities that will benefit from structured physical activities and sports training.`}</p>
+          
+          <h4>🔬 Logical & Analytical Intelligence:</h4>
+          <p>${zodiac === 'Virgo' ? 'Outstanding analytical and detail-oriented thinking. Virgo energy enhances scientific reasoning, research abilities, and systematic problem-solving. Natural talent for mathematics, science, and logical analysis.' : zodiac === 'Cancer' ? 'Intuitive logical processing with emotional intelligence. Cancer influence supports psychology, counseling, and fields where logical thinking combines with human understanding.' : zodiac === 'Leo' ? 'Strong reasoning abilities with natural leadership perspective. Leo energy enhances strategic thinking and ability to see the big picture while making logical decisions.' : `${user?.name} demonstrates strong analytical thinking and problem-solving abilities that will develop well with proper educational support.`}</p>
+          
+          <h4>💭 Imagination & Abstract Intelligence:</h4>
+          <p>${zodiac === 'Cancer' ? 'Exceptional imaginative and intuitive abilities. Cancer energy supports abstract thinking, spiritual understanding, and ability to grasp concepts beyond the physical realm.' : zodiac === 'Leo' ? 'Creative imagination with visionary thinking. Leo energy supports ability to imagine grand possibilities and inspire others with their vision.' : zodiac === 'Virgo' ? 'Practical imagination focused on improvement and innovation. Virgo energy supports ability to imagine better systems and practical solutions.' : `${user?.name} shows natural imaginative thinking and creative problem-solving abilities that indicate strong abstract intelligence.`}</p>
+        </div>
+
+        <div class="footer">
+          <h3>🕉️ Summary & Final Blessings</h3>
+          <p><strong>${user?.name}</strong> is blessed with a unique combination of cosmic energies that make them special. Their ${zodiac} nature, combined with ${nakshatra} nakshatra, creates a powerful foundation for success in life.</p>
+          
+          <p><strong>Key Strengths:</strong> Natural ${zodiac.toLowerCase()} qualities, strong intelligence across multiple domains, and divine cosmic support for their life journey.</p>
+          
+          <p><strong>Life Path:</strong> Success through authentic self-expression, continuous learning, and service to others using their natural talents.</p>
+          
+          <div style="margin-top: 30px; text-align: center; font-style: italic;">
+            <p style="font-size: 1.2em; color: #9c27b0;">
+              "May the cosmic energies guide ${user?.name} to achieve their highest potential and find happiness, success, and spiritual fulfillment in all aspects of life."
+            </p>
+            <p style="margin-top: 20px;">
+              <strong>🌟 Generated by AstroAlign AI - World's First IQ + Vedic Astrology Platform 🌟</strong><br/>
+              <em>Professional Astrological Analysis • Report Date: ${new Date().toLocaleDateString()}</em>
+            </p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    const blob = new Blob([reportContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Complete_Vedic_Analysis_${user?.name?.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+
+    alert('📄 Complete 20-page analysis downloaded successfully! This professional HTML report contains your full Rashi chart and can be viewed in any browser or converted to PDF.');
+  };
+
+  const handleSendWhatsApp = () => {
+    const rashiChart = generateRashiChart();
+    const reportText = `🕉️ COMPLETE VEDIC ANALYSIS FOR ${user?.name}
+    
+🔮 BIRTH CHART SUMMARY:
+Zodiac: ${zodiac} ${getSignSymbol(zodiac)}
+Nakshatra: ${nakshatra}
+Lagna: ${zodiac} (1st House)
+
+🏠 KEY HOUSES:
+• 1st House (Personality): ${getSignSymbol(zodiac)} ${zodiac}
+• 5th House (Education): ${getSignSymbol(rashiChart[4].sign)} ${rashiChart[4].sign} - ♃ Jupiter
+• 10th House (Career): ${getSignSymbol(rashiChart[9].sign)} ${rashiChart[9].sign}
+
+🌟 PROFESSIONAL ANALYSIS:
+✨ Natural Leadership: ${zodiac === 'Leo' ? 'Exceptional' : zodiac === 'Virgo' ? 'Through Service' : zodiac === 'Cancer' ? 'Through Nurturing' : 'Emerging'}
+✨ Academic Potential: Strong in ${zodiac === 'Leo' ? 'Creative & Leadership Studies' : zodiac === 'Virgo' ? 'Sciences & Research' : zodiac === 'Cancer' ? 'Psychology & Arts' : 'Multiple Fields'}
+✨ Career Path: ${zodiac === 'Leo' ? 'Leadership, Entertainment, Government' : zodiac === 'Virgo' ? 'Healthcare, Research, Analysis' : zodiac === 'Cancer' ? 'Education, Counseling, Hospitality' : 'Innovative Fields'}
+
+🧠 INTELLIGENCE ANALYSIS:
+• Creative Intelligence: ${zodiac === 'Leo' ? 'Exceptional dramatic & artistic abilities' : zodiac === 'Virgo' ? 'Strong aesthetic sense & craftsmanship' : zodiac === 'Cancer' ? 'Highly imaginative & emotional depth' : 'Natural creative potential'}
+• Logical Intelligence: ${zodiac === 'Virgo' ? 'Outstanding analytical thinking' : zodiac === 'Cancer' ? 'Intuitive problem solving' : zodiac === 'Leo' ? 'Strategic thinking abilities' : 'Strong reasoning skills'}
+• Physical Intelligence: Good coordination and ${zodiac === 'Leo' ? 'team leadership' : zodiac === 'Cancer' ? 'protective instincts' : zodiac === 'Virgo' ? 'precise technique' : 'natural athletic ability'}
+
+💎 REMEDIES & GUIDANCE:
+🔸 Daily Mantra: ${zodiac === 'Leo' ? 'ॐ सूर्याय नमः (21 times)' : zodiac === 'Cancer' ? 'ॐ सोमाय नमः (21 times)' : zodiac === 'Virgo' ? 'ॐ बुधाय नमः (21 times)' : 'Cosmic mantras for growth'}
+🔸 Lucky Colors: ${zodiac === 'Leo' ? 'Gold, Orange, Yellow' : zodiac === 'Cancer' ? 'White, Silver, Light Blue' : zodiac === 'Virgo' ? 'Green, Brown, Navy' : 'Personalized colors'}
+🔸 Best Days: ${zodiac === 'Leo' ? 'Sunday (Sun\'s day)' : zodiac === 'Cancer' ? 'Monday (Moon\'s day)' : zodiac === 'Virgo' ? 'Wednesday (Mercury\'s day)' : 'Auspicious planetary days'}
+🔸 Gemstone: ${zodiac === 'Leo' ? 'Ruby for confidence' : zodiac === 'Cancer' ? 'Pearl for emotional balance' : zodiac === 'Virgo' ? 'Emerald for intelligence' : 'Birth chart specific stones'}
+
+📈 FUTURE PREDICTIONS:
+${user?.name} has exceptional potential for success through their natural ${zodiac.toLowerCase()} qualities. The planetary positions indicate recognition, achievement, and fulfillment in their chosen path.
+
+🎯 EDUCATION FOCUS:
+Encourage ${zodiac === 'Leo' ? 'leadership development, public speaking, creative arts' : zodiac === 'Virgo' ? 'scientific method, research skills, attention to detail' : zodiac === 'Cancer' ? 'emotional intelligence, caring professions, intuitive development' : 'balanced development across multiple intelligence areas'}.
+
+🕉️ This is a comprehensive analysis based on traditional Vedic astrology combined with modern intelligence assessment.
+
+Complete 20-page detailed report with professional Rashi chart available.
+
+Powered by AstroAlign AI - World's First IQ + Vedic Astrology Platform
+📱 Share this divine guidance with family and friends!`;
+    
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(reportText)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  const handleSendEmail = () => {
+    const subject = `🕉️ Complete Vedic Analysis with Professional Rashi Chart - ${user?.name}`;
+    const body = `Dear Parent,
+
+Your child's complete professional Vedic analysis is ready with full birth chart!
+
+CHILD'S PROFILE:
+Name: ${user?.name}
+Zodiac: ${zodiac} ${getSignSymbol(zodiac)}
+Nakshatra: ${nakshatra}
+
+PROFESSIONAL ANALYSIS INCLUDES:
+✨ Complete Birth Chart (जन्म कुंडली) with all 12 houses
+✨ Detailed planetary positions and their effects
+✨ Professional astrological analysis by certified methods
+✨ Intelligence assessment across 4 major domains
+✨ Career guidance based on cosmic alignments
+✨ Daily mantras and spiritual remedies
+✨ Lucky colors, gemstones, and auspicious days
+✨ Educational recommendations for optimal development
+
+KEY INSIGHTS:
+• Natural Talents: ${zodiac === 'Leo' ? 'Leadership, creativity, confidence' : zodiac === 'Virgo' ? 'Analysis, precision, service' : zodiac === 'Cancer' ? 'Nurturing, intuition, protection' : 'Unique cosmic gifts'}
+• Best Career Fields: ${zodiac === 'Leo' ? 'Leadership, entertainment, government' : zodiac === 'Virgo' ? 'Healthcare, research, analysis' : zodiac === 'Cancer' ? 'Education, psychology, hospitality' : 'Innovation and creativity'}
+• Educational Strengths: Strong potential in subjects that align with their ${zodiac.toLowerCase()} nature
+
+SPIRITUAL GUIDANCE:
+Daily Mantra: ${zodiac === 'Leo' ? 'ॐ सूर्याय नमः' : zodiac === 'Cancer' ? 'ॐ सोमाय नमः' : zodiac === 'Virgo' ? 'ॐ बुधाय नमः' : 'Personalized mantras'}
+Lucky Colors: ${zodiac === 'Leo' ? 'Gold, Orange, Yellow' : zodiac === 'Cancer' ? 'White, Silver, Light Blue' : zodiac === 'Virgo' ? 'Green, Brown, Navy' : 'Cosmic colors'}
+Beneficial Gemstone: ${zodiac === 'Leo' ? 'Ruby' : zodiac === 'Cancer' ? 'Pearl' : zodiac === 'Virgo' ? 'Emerald' : 'Birth chart specific'}
+
+This comprehensive analysis combines traditional Vedic wisdom with modern intelligence assessment to provide complete guidance for your child's development and future success.
+
+The complete 20-page detailed report with professional charts is available for download and provides in-depth analysis for long-term reference.
+
+May ${user?.name} achieve great success and happiness guided by cosmic wisdom!
+
+Best regards,
+AstroAlign AI Team
+🌟 World's First IQ + Vedic Astrology Platform 🌟
+
+Note: This analysis is based on traditional Vedic astrological principles combined with modern educational psychology for comprehensive child development guidance.`;
+
+    const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoUrl;
+  };
+
+  const handleGenerateShareableLink = () => {
+    // Generate a shareable link with encoded data
+    const reportData = {
+      name: user?.name,
+      zodiac: zodiac,
+      nakshatra: nakshatra,
+      timestamp: new Date().toISOString(),
+      package: 'complete_analysis_149'
+    };
+    
+    // Encode the data
+    const encodedData = btoa(JSON.stringify(reportData));
+    const shareableUrl = `${window.location.origin}/shared-report/${encodedData}`;
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(shareableUrl).then(() => {
+      alert(`🔗 Shareable link copied to clipboard!\n\nAnyone with this link can view ${user?.name}'s complete Vedic analysis:\n\n${shareableUrl}\n\nShare with family, teachers, or astrologers for guidance!`);
+    }).catch(() => {
+      // Fallback if clipboard API fails
+      const textArea = document.createElement('textarea');
+      textArea.value = shareableUrl;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      alert(`🔗 Shareable link generated!\n\n${shareableUrl}\n\nLink has been copied to clipboard. Share with family, teachers, or astrologers!`);
+    });
+  };
+
   const handlePayment = async () => {
     setIsProcessingPayment(true);
     
@@ -444,16 +774,28 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
           <div className="bg-indigo-50 p-6 rounded-lg border border-indigo-200">
             <h4 className="font-semibold text-indigo-800 mb-4">📱 Get Your Complete Analysis</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <button className="bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 font-semibold">
+              <button 
+                onClick={handleDownloadPDF}
+                className="bg-red-600 text-white py-3 px-4 rounded-lg hover:bg-red-700 font-semibold transition-colors"
+              >
                 📄 Download 20-Page PDF Report
               </button>
-              <button className="bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 font-semibold">
+              <button 
+                onClick={handleSendWhatsApp}
+                className="bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 font-semibold transition-colors"
+              >
                 📱 Send Complete Report to WhatsApp
               </button>
-              <button className="bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 font-semibold">
+              <button 
+                onClick={handleSendEmail}
+                className="bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 font-semibold transition-colors"
+              >
                 📧 Email Full Analysis + Charts
               </button>
-              <button className="bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 font-semibold">
+              <button 
+                onClick={handleGenerateShareableLink}
+                className="bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 font-semibold transition-colors"
+              >
                 🔗 Generate Shareable Link
               </button>
             </div>
