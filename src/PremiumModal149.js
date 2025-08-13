@@ -478,7 +478,28 @@ Note: This analysis is based on traditional Vedic astrological principles combin
       }
 
       console.log('Creating order...');
+      
+      // Test backend connectivity first
+      try {
+        const testResponse = await fetch('https://vedic-career-backend.vercel.app/api/health', {
+          method: 'GET'
+        });
+        console.log('Backend health check:', testResponse.status);
+      } catch (healthError) {
+        console.error('Backend connectivity issue:', healthError);
+        alert('Backend server is not responding. Please try again in a few minutes.');
+        setIsProcessingPayment(false);
+        return;
+      }
+
       const orderData = await createOrder();
+      
+      // Validate order data
+      if (!orderData || !orderData.id) {
+        throw new Error('Invalid order data received from backend');
+      }
+
+      console.log('Order data received:', orderData);
 
       const options = {
         key: orderData.key_id || 'rzp_test_your_key_id', // Fallback key
@@ -529,13 +550,28 @@ Note: This analysis is based on traditional Vedic astrological principles combin
         }
       };
 
-      console.log('Opening Razorpay checkout with options:', options);
+      console.log('Opening Razorpay checkout with options:', {
+        ...options,
+        key: options.key ? `${options.key.substring(0, 8)}...` : 'NOT_PROVIDED'
+      });
+      
       const razorpay = new window.Razorpay(options);
       razorpay.open();
 
     } catch (error) {
       console.error('Payment initiation error:', error);
-      alert('Failed to initiate payment: ' + error.message + '. Please try again or contact support.');
+      
+      // More specific error messages
+      let errorMessage = 'Failed to initiate payment. ';
+      if (error.message.includes('Failed to create order')) {
+        errorMessage += 'Backend server error. Please try again or contact support.';
+      } else if (error.message.includes('fetch')) {
+        errorMessage += 'Network connection issue. Please check your internet and try again.';
+      } else {
+        errorMessage += error.message + '. Please try again or contact support.';
+      }
+      
+      alert(errorMessage);
       setIsProcessingPayment(false);
     }
   };
