@@ -44,13 +44,25 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
     return symbols[planet] || planet;
   };
 
-  // Load Razorpay script
+  // Load Razorpay script with better error handling
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
+      // Check if Razorpay is already loaded
+      if (window.Razorpay) {
+        resolve(true);
+        return;
+      }
+
       const script = document.createElement('script');
       script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
+      script.onload = () => {
+        console.log('Razorpay script loaded successfully');
+        resolve(true);
+      };
+      script.onerror = (error) => {
+        console.error('Failed to load Razorpay script:', error);
+        resolve(false);
+      };
       document.body.appendChild(script);
     });
   };
@@ -67,7 +79,7 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
           amount: 149,
           currency: 'INR',
           notes: {
-            child_name: user?.name || '',
+            child_name: user?.name || 'Guest',
             zodiac: zodiac,
             nakshatra: nakshatra,
             package: 'complete_analysis_149'
@@ -76,10 +88,13 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create order');
+        const errorData = await response.text();
+        console.error('Order creation failed:', errorData);
+        throw new Error(`Failed to create order: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log('Order created successfully:', data);
       return data;
     } catch (error) {
       console.error('Error creating order:', error);
@@ -99,7 +114,9 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
       });
 
       if (!response.ok) {
-        throw new Error('Payment verification failed');
+        const errorData = await response.text();
+        console.error('Payment verification failed:', errorData);
+        throw new Error(`Payment verification failed: ${response.status}`);
       }
 
       const data = await response.json();
@@ -114,24 +131,35 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
     setIsProcessingPayment(true);
     
     try {
+      // Load Razorpay script
+      console.log('Loading Razorpay script...');
       const isScriptLoaded = await loadRazorpayScript();
       if (!isScriptLoaded) {
-        alert('Razorpay SDK failed to load. Please check your internet connection.');
+        alert('Razorpay SDK failed to load. Please check your internet connection and try again.');
         setIsProcessingPayment(false);
         return;
       }
 
+      // Check if Razorpay is available
+      if (!window.Razorpay) {
+        alert('Payment gateway is not available. Please refresh the page and try again.');
+        setIsProcessingPayment(false);
+        return;
+      }
+
+      console.log('Creating order...');
       const orderData = await createOrder();
 
       const options = {
-        key: orderData.key_id,
-        amount: orderData.amount,
-        currency: orderData.currency,
+        key: orderData.key_id || 'rzp_test_your_key_id', // Fallback key
+        amount: orderData.amount || 14900, // Amount in paise
+        currency: orderData.currency || 'INR',
         name: 'Vedic Child Assessment',
         description: 'Complete Analysis with Rashi Chart - ₹149',
         image: '/logo.png',
         order_id: orderData.id,
         handler: async function (response) {
+          console.log('Payment successful:', response);
           try {
             const verificationResult = await verifyPayment({
               razorpay_order_id: response.razorpay_order_id,
@@ -149,7 +177,7 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
             }
           } catch (error) {
             console.error('Payment verification error:', error);
-            alert('Payment verification failed. Please contact support.');
+            alert('Payment verification failed. Please contact support with your payment ID: ' + response.razorpay_payment_id);
           } finally {
             setIsProcessingPayment(false);
           }
@@ -159,23 +187,25 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
           email: user?.email || '',
           contact: user?.phone || ''
         },
-        notes: orderData.notes,
+        notes: orderData.notes || {},
         theme: {
           color: '#F37254'
         },
         modal: {
           ondismiss: function() {
+            console.log('Payment modal dismissed');
             setIsProcessingPayment(false);
           }
         }
       };
 
+      console.log('Opening Razorpay checkout with options:', options);
       const razorpay = new window.Razorpay(options);
       razorpay.open();
 
     } catch (error) {
       console.error('Payment initiation error:', error);
-      alert('Failed to initiate payment. Please try again.');
+      alert('Failed to initiate payment: ' + error.message + '. Please try again or contact support.');
       setIsProcessingPayment(false);
     }
   };
@@ -463,81 +493,90 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6">
-        <div className="text-center mb-6">
-          <div className="text-4xl mb-4">🌟</div>
-          <h2 className="text-2xl font-bold mb-2">Complete Vedic Analysis</h2>
-          <p className="text-gray-600">
-            Professional astrologer-level report for {user?.name}
-          </p>
-        </div>
-
-        <div className="space-y-4 mb-6">
-          <div className="bg-gradient-to-r from-purple-50 to-gold-50 p-4 rounded-lg border-2 border-purple-300">
-            <h3 className="font-semibold mb-3 text-purple-900">🏆 Complete Package Includes:</h3>
-            <ul className="text-sm space-y-1 text-gray-700">
-              <li>✅ <strong>Professional Rashi Chart</strong> (जन्म कुंडली) like online pandits</li>
-              <li>✅ Detailed House-by-House Analysis (12 Houses)</li>
-              <li>✅ Planetary Positions & Their Effects</li>
-              <li>✅ Complete Creative, Sports & Imagination Assessment</li>
-              <li>✅ Personalized Sanskrit Mantras & Remedies</li>
-              <li>✅ Lucky Colors, Sacred Days & Gemstone Guidance</li>
-              <li>✅ Professional Career Path Analysis</li>
-              <li>✅ <strong>BONUS: 15-min Personal Consultation(Coming Soon!)</strong> (₹299 value)</li>
-              <li>✅ Premium PDF Report</li>
-              <li>✅ VIP Monthly Email Tips (Refer 3 friends)</li>
-            </ul>
-          </div>
-
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-2 mb-2">
-              <div className="text-3xl font-bold text-purple-600">₹149</div>
-              <div className="text-lg line-through opacity-70 text-gray-500">₹299</div>
-            </div>
-            <p className="text-xs bg-red-100 text-red-800 px-3 py-1 rounded-full inline-block mb-2 font-semibold animate-pulse">
-              🔥 50% OFF - Only Today!
-            </p>
-            <p className="text-xs text-gray-500">
-              One-time payment • Complete professional analysis • 7-day guarantee
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <button
-            onClick={handlePayment}
-            disabled={isProcessingPayment}
-            className={`w-full py-3 rounded-lg font-semibold text-white ${
-              isProcessingPayment 
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-gradient-to-r from-purple-600 to-gold-600 hover:from-purple-700 hover:to-gold-700'
-            }`}
-          >
-            {isProcessingPayment ? 'Processing...' : '🌟 Pay ₹149 & Get Complete Analysis'}
-          </button>
-          
+      <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center rounded-t-2xl">
+          <h2 className="text-xl font-bold">🌟 Complete Analysis</h2>
           <button
             onClick={onClose}
-            className="w-full py-2 text-gray-600 hover:text-gray-800"
+            className="text-gray-500 hover:text-gray-700 text-2xl"
           >
-            Maybe Later
+            ×
           </button>
         </div>
+        
+        <div className="p-6">
+          <div className="text-center mb-6">
+            <div className="text-4xl mb-4">🌟</div>
+            <h3 className="text-2xl font-bold mb-2">Complete Vedic Analysis</h3>
+            <p className="text-gray-600">
+              Professional astrologer-level report for {user?.name}
+            </p>
+          </div>
 
-        <div className="mt-4 text-center">
-          <p className="text-xs text-gray-500">
-            🔒 Secure payment by Razorpay • Trusted by 5,000+ Hindu families
-          </p>
-          <p className="text-xs text-purple-600 font-medium mt-1 animate-pulse">
-            ⚡ Only {Math.floor(Math.random() * 5) + 1} complete analysis reports left today!
-          </p>
+          <div className="space-y-4 mb-6">
+            <div className="bg-gradient-to-r from-purple-50 to-gold-50 p-4 rounded-lg border-2 border-purple-300">
+              <h4 className="font-semibold mb-3 text-purple-900">🏆 Complete Package Includes:</h4>
+              <ul className="text-sm space-y-1 text-gray-700">
+                <li>✅ <strong>Professional Rashi Chart</strong> (जन्म कुंडली) like online pandits</li>
+                <li>✅ Detailed House-by-House Analysis (12 Houses)</li>
+                <li>✅ Planetary Positions & Their Effects</li>
+                <li>✅ Complete Creative, Sports & Imagination Assessment</li>
+                <li>✅ Personalized Sanskrit Mantras & Remedies</li>
+                <li>✅ Lucky Colors, Sacred Days & Gemstone Guidance</li>
+                <li>✅ Professional Career Path Analysis</li>
+                <li>✅ <strong>BONUS: 15-min Personal Consultation(Coming Soon!)</strong> (₹299 value)</li>
+                <li>✅ Premium PDF Report</li>
+                <li>✅ VIP Monthly Email Tips (Refer 3 friends)</li>
+              </ul>
+            </div>
+
+            <div className="text-center">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <div className="text-3xl font-bold text-purple-600">₹149</div>
+                <div className="text-lg line-through opacity-70 text-gray-500">₹299</div>
+              </div>
+              <p className="text-xs bg-red-100 text-red-800 px-3 py-1 rounded-full inline-block mb-2 font-semibold animate-pulse">
+                🔥 50% OFF - Only Today!
+              </p>
+              <p className="text-xs text-gray-500">
+                One-time payment • Complete professional analysis • 7-day guarantee
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <button
+              onClick={handlePayment}
+              disabled={isProcessingPayment}
+              className={`w-full py-3 rounded-lg font-semibold text-white ${
+                isProcessingPayment 
+                  ? 'bg-gray-400 cursor-not-allowed' 
+                  : 'bg-gradient-to-r from-purple-600 to-gold-600 hover:from-purple-700 hover:to-gold-700'
+              }`}
+            >
+              {isProcessingPayment ? 'Processing...' : '🌟 Pay ₹149 & Get Complete Analysis'}
+            </button>
+            
+            <button
+              onClick={onClose}
+              className="w-full py-2 text-gray-600 hover:text-gray-800"
+            >
+              Maybe Later
+            </button>
+          </div>
+
+          <div className="mt-4 text-center">
+            <p className="text-xs text-gray-500">
+              🔒 Secure payment by Razorpay • Trusted by 5,000+ Hindu families
+            </p>
+            <p className="text-xs text-purple-600 font-medium mt-1 animate-pulse">
+              ⚡ Only {Math.floor(Math.random() * 5) + 1} complete analysis reports left today!
+            </p>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-
 export default PremiumModal149;
-
-
