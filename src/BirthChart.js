@@ -543,8 +543,7 @@ function BirthChart({ user, result, onBack }) {
                 {[
                   { icon: "🔒", text: "Secure Payment" },
                   { icon: "⚡", text: "Instant Delivery" },
-                  { icon: "💯", text: "Money-back Guarantee" },
-                  { icon: "🏆", text: "50,000+ Happy Families" }
+                  { icon: "🏆", text: "10,000+ Happy Families" }
                 ].map((badge, index) => (
                   <div key={index} className="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-full">
                     <span className="text-xl">{badge.icon}</span>
@@ -618,5 +617,6 @@ function BirthChart({ user, result, onBack }) {
     </div>
   );
 }
+
 
 export default BirthChart;
