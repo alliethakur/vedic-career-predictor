@@ -36,194 +36,118 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
     Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂', Jupiter: '♃', Saturn: '♄', Lagna: 'ASC'
   })[planet] || planet;
 
-  // Functional PDF Generation
+  // Simplified PDF Generation (fallback without dependencies)
   const generatePDF = async () => {
     setIsGeneratingPDF(true);
     try {
-      // Create PDF content as HTML string for better formatting
-      const pdfContent = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="UTF-8">
-          <title>${user?.name}'s Complete Vedic Analysis</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
-            .header { background: #8B5CF6; color: white; padding: 20px; text-align: center; margin-bottom: 20px; }
-            .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
-            .chart-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; max-width: 400px; margin: 20px auto; }
-            .chart-cell { border: 1px solid #333; padding: 10px; text-align: center; min-height: 60px; }
-            .center-cell { background: #FFD700; font-weight: bold; }
-            h1, h2, h3 { color: #8B5CF6; }
-            .remedy-box { background: #FFF7ED; padding: 15px; margin: 10px 0; border-left: 4px solid #F59E0B; }
-            .prediction-box { background: #EFF6FF; padding: 15px; margin: 10px 0; border-left: 4px solid #3B82F6; }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1>🌟 Complete Vedic Analysis Report</h1>
-            <h2>For ${user?.name}</h2>
-            <p>Professional Astrological Assessment - Worth ₹149</p>
-          </div>
-          
-          <div class="section">
-            <h2>📊 Birth Chart Details</h2>
-            <p><strong>Name:</strong> ${user?.name}</p>
-            <p><strong>Zodiac Sign:</strong> ${zodiac} ${getSignSymbol(zodiac)}</p>
-            <p><strong>Nakshatra:</strong> ${nakshatra}</p>
-            <p><strong>Intelligence Score:</strong> ${iqScore}/150 (Above Average)</p>
-            <p><strong>Report Generated:</strong> ${new Date().toLocaleDateString()}</p>
-          </div>
-
-          <div class="section">
-            <h2>🔮 Professional Birth Chart (जन्म कुंडली)</h2>
-            <div class="chart-grid">
-              <div class="chart-cell">12<br>${getSignSymbol(generateRashiChart()[11].sign)}<br>♄</div>
-              <div class="chart-cell">1<br>${getSignSymbol(zodiac)}<br>ASC</div>
-              <div class="chart-cell">2<br>${getSignSymbol(generateRashiChart()[1].sign)}<br>☿</div>
-              <div class="chart-cell">3<br>${getSignSymbol(generateRashiChart()[2].sign)}</div>
-              <div class="chart-cell">11<br>${getSignSymbol(generateRashiChart()[10].sign)}<br>♂</div>
-              <div class="chart-cell center-cell">${user?.name}<br>${nakshatra}</div>
-              <div class="chart-cell center-cell">${zodiac}<br>${getSignSymbol(zodiac)}</div>
-              <div class="chart-cell">4<br>${getSignSymbol(generateRashiChart()[3].sign)}<br>☽</div>
-              <div class="chart-cell">10<br>${getSignSymbol(generateRashiChart()[9].sign)}</div>
-              <div class="chart-cell">9<br>${getSignSymbol(generateRashiChart()[8].sign)}<br>☉</div>
-              <div class="chart-cell">8<br>${getSignSymbol(generateRashiChart()[7].sign)}</div>
-              <div class="chart-cell">5<br>${getSignSymbol(generateRashiChart()[4].sign)}<br>♃</div>
-            </div>
-          </div>
-
-          <div class="prediction-box">
-            <h2>🎯 Career & Professional Predictions</h2>
-            <p><strong>Primary Career Fields:</strong> ${zodiac === 'Leo' ? 'Leadership, Government, Entertainment, Public Speaking' : zodiac === 'Cancer' ? 'Education, Psychology, Hospitality, Caregiving' : 'Technology, Innovation, Research, Analytics'}</p>
-            <p><strong>Success Timeline:</strong> Ages 24-32 show maximum career growth with leadership opportunities emerging after age 35.</p>
-            <p><strong>Peak Earning Period:</strong> Ages 36-45 will bring significant financial growth and business success.</p>
-            <p><strong>Professional Recognition:</strong> After age 45, ${user?.name} will be established as a respected figure in their chosen field.</p>
-          </div>
-
-          <div class="prediction-box">
-            <h2>📚 Education & Learning Path</h2>
-            <p><strong>Ages 16-18:</strong> Exceptional academic performance, especially in ${zodiac === 'Leo' ? 'leadership studies and creative arts' : zodiac === 'Cancer' ? 'humanities and psychology' : 'science and analytical subjects'}.</p>
-            <p><strong>Ages 19-25:</strong> Higher education brings recognition, awards, and opens doors to prestigious opportunities.</p>
-            <p><strong>Recommended Streams:</strong> ${zodiac === 'Leo' ? 'Management, Political Science, Mass Communication, Theatre' : zodiac === 'Cancer' ? 'Psychology, Education, Medicine, Social Work' : 'Engineering, Computer Science, Research, Innovation'}</p>
-            <p><strong>Learning Style:</strong> ${user?.name} learns best through ${zodiac === 'Leo' ? 'visual presentations and group discussions' : zodiac === 'Cancer' ? 'hands-on experience and emotional connection' : 'logical analysis and systematic approach'}.</p>
-          </div>
-
-          <div class="remedy-box">
-            <h2>🔱 Personalized Remedies & Sacred Practices</h2>
-            <h3>🕉️ Daily Mantras:</h3>
-            <p><strong>Morning Ritual:</strong> "Om Ganapataye Namaha" (21 times) - for removing obstacles</p>
-            <p><strong>Before Studies:</strong> "Om Saraswatyai Namaha" (11 times) - for wisdom and knowledge</p>
-            <p><strong>For Success:</strong> "${zodiac === 'Leo' ? 'Om Suryaya Namaha' : zodiac === 'Cancer' ? 'Om Chandraya Namaha' : 'Om Gurave Namaha'}" (108 times on auspicious days)</p>
-            
-            <h3>🎨 Lucky Elements:</h3>
-            <p><strong>Colors:</strong> ${zodiac === 'Leo' ? 'Gold, Orange, Red - wear these colors for confidence and success' : zodiac === 'Cancer' ? 'White, Silver, Blue - these colors enhance intuition and emotional balance' : 'Yellow, Green, Purple - these colors boost wisdom and creativity'}</p>
-            <p><strong>Lucky Days:</strong> ${zodiac === 'Leo' ? 'Sunday - best day for important decisions and new beginnings' : zodiac === 'Cancer' ? 'Monday - ideal for emotional healing and family matters' : 'Thursday - perfect for education and spiritual growth'}</p>
-            <p><strong>Lucky Numbers:</strong> ${zodiac === 'Leo' ? '1, 3, 9 - use these numbers for important dates and decisions' : zodiac === 'Cancer' ? '2, 7, 11 - these numbers bring emotional harmony and success' : '5, 6, 8 - these numbers enhance learning and material growth'}</p>
-            
-            <h3>💎 Gemstone Recommendations:</h3>
-            <p><strong>Primary Gemstone:</strong> ${zodiac === 'Leo' ? 'Ruby (माणिक) - enhances leadership and confidence' : zodiac === 'Cancer' ? 'Pearl (मोती) - brings emotional balance and intuition' : 'Yellow Sapphire (पुखराज) - increases wisdom and prosperity'}</p>
-            <p><strong>Alternative:</strong> ${zodiac === 'Leo' ? 'Sunstone - for vitality and success' : zodiac === 'Cancer' ? 'Moonstone - for emotional healing' : 'Citrine - for abundance and clarity'}</p>
-            <p><strong>How to Wear:</strong> Ring finger, preferably on ${zodiac === 'Leo' ? 'Sunday morning' : zodiac === 'Cancer' ? 'Monday evening' : 'Thursday morning'}</p>
-          </div>
-
-          <div class="prediction-box">
-            <h2>💰 Wealth & Financial Predictions</h2>
-            <p><strong>Age 25-30:</strong> Foundation building period with steady income growth</p>
-            <p><strong>Age 30-38:</strong> Major financial breakthrough, property acquisition, and investment opportunities</p>
-            <p><strong>Age 40-50:</strong> Peak wealth accumulation period with multiple income sources</p>
-            <p><strong>Best Investments:</strong> ${zodiac === 'Leo' ? 'Gold, real estate, and luxury goods' : zodiac === 'Cancer' ? 'Land, water-related projects, and traditional investments' : 'Technology stocks, mutual funds, and innovative ventures'}</p>
-          </div>
-
-          <div class="section">
-            <h2>🌟 Personality & Life Purpose</h2>
-            <p>${user?.name} possesses a naturally ${zodiac === 'Leo' ? 'confident and royal personality with innate leadership qualities. They are generous, creative, and destined to inspire others through their actions and achievements.' : zodiac === 'Cancer' ? 'nurturing and intuitive nature with deep emotional intelligence. They excel in caring for others and have a natural ability to heal and comfort those around them.' : 'balanced personality that combines analytical thinking with creative expression. They are natural problem-solvers who can bridge traditional wisdom with modern innovation.'}</p>
-            <p><strong>Life Purpose:</strong> ${user?.name} is destined to ${zodiac === 'Leo' ? 'lead and inspire others, bringing positive change through their natural charisma and vision' : zodiac === 'Cancer' ? 'nurture and guide others, creating safe spaces and emotional healing for their community' : 'innovate and teach, helping society progress through their unique insights and discoveries'}.</p>
-          </div>
-
-          <div class="section">
-            <h2>⚡ Important Life Periods & Recommendations</h2>
-            <p><strong>Ages 6-12:</strong> Foundation years - focus on building strong study habits and moral values</p>
-            <p><strong>Ages 13-18:</strong> Growth phase - encourage exploration of talents and interests</p>
-            <p><strong>Ages 19-25:</strong> Education & skill development - invest in higher learning and specialization</p>
-            <p><strong>Ages 26-35:</strong> Career establishment - focus on professional growth and networking</p>
-            <p><strong>Ages 36-50:</strong> Peak performance - leadership roles and major achievements</p>
-            <p><strong>Ages 51+:</strong> Wisdom sharing - mentoring others and spiritual growth</p>
-          </div>
-
-          <div class="section">
-            <h2>🎯 Specific Guidance for Parents</h2>
-            <p><strong>Encourage:</strong> ${zodiac === 'Leo' ? 'Leadership activities, public speaking, creative arts, and confidence-building exercises' : zodiac === 'Cancer' ? 'Emotional expression, family activities, caregiving opportunities, and intuitive development' : 'Analytical thinking, technology exposure, problem-solving games, and innovative projects'}</p>
-            <p><strong>Be Mindful Of:</strong> ${zodiac === 'Leo' ? 'Tendency toward ego - teach humility and service to others' : zodiac === 'Cancer' ? 'Over-sensitivity - help build emotional resilience and boundaries' : 'Over-thinking - encourage action and practical application of ideas'}</p>
-            <p><strong>Best Parenting Approach:</strong> ${zodiac === 'Leo' ? 'Celebrate their achievements while teaching responsibility and empathy' : zodiac === 'Cancer' ? 'Provide emotional security while encouraging independence and confidence' : 'Balance structure with freedom to explore and experiment'}</p>
-          </div>
-
-          <div class="section" style="background: #F0FDF4; border-color: #22C55E;">
-            <h2>✨ Summary & Final Thoughts</h2>
-            <p>This comprehensive analysis reveals that ${user?.name} has exceptional potential for success in life. Their ${zodiac} nature, combined with the beneficial planetary positions, indicates a bright future filled with achievements, recognition, and positive impact on others.</p>
-            <p><strong>Key Strengths:</strong> ${zodiac === 'Leo' ? 'Natural leadership, creativity, confidence, and ability to inspire others' : zodiac === 'Cancer' ? 'Emotional intelligence, nurturing nature, intuition, and ability to heal others' : 'Analytical mind, innovation, balance, and ability to solve complex problems'}</p>
-            <p><strong>Success Mantra:</strong> With proper guidance, regular spiritual practices, and focused effort, ${user?.name} will achieve remarkable success and contribute meaningfully to society.</p>
-          </div>
-
-          <div style="text-align: center; margin-top: 30px; padding: 20px; background: #8B5CF6; color: white;">
-            <p><strong>This professional Vedic analysis was generated on ${new Date().toLocaleDateString()}</strong></p>
-            <p>Complete 20-page report worth ₹149 - Thank you for trusting our professional astrology service</p>
-            <p>For questions or consultations, contact our certified Vedic astrologers</p>
-          </div>
-        </body>
-        </html>
-      `;
-
-      // Create and download PDF
-      const element = document.createElement('div');
-      element.innerHTML = pdfContent;
-      element.style.width = '210mm';
-      element.style.minHeight = '297mm';
-      element.style.padding = '20mm';
-      element.style.fontSize = '12px';
-      element.style.lineHeight = '1.6';
-      document.body.appendChild(element);
-
-      // Try to use html2pdf if available, otherwise use jsPDF
-      if (window.html2pdf) {
-        const opt = {
-          margin: 10,
-          filename: `${user?.name}_Complete_Vedic_Analysis.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-        await window.html2pdf().set(opt).from(element).save();
-      } else {
-        // Fallback to basic PDF creation
-        const canvas = await html2canvas(element, { scale: 2 });
-        const imgData = canvas.toDataURL('image/png');
+      // Try dynamic imports first
+      try {
+        const jsPDF = (await import('jspdf')).default;
+        const html2canvas = (await import('html2canvas')).default;
+        
+        // Create simple PDF with text content
         const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgWidth = 210;
-        const pageHeight = 295;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        let yPosition = 20;
 
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+        // Add content to PDF
+        pdf.setFontSize(20);
+        pdf.setTextColor(139, 92, 246);
+        pdf.text('Complete Vedic Analysis Report', 20, yPosition);
+        yPosition += 15;
 
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
+        pdf.setFontSize(16);
+        pdf.text(`For ${user?.name}`, 20, yPosition);
+        yPosition += 10;
+
+        pdf.setFontSize(12);
+        pdf.setTextColor(0, 0, 0);
+        pdf.text(`Zodiac: ${zodiac} | Nakshatra: ${nakshatra}`, 20, yPosition);
+        yPosition += 10;
+        pdf.text(`Intelligence Score: ${iqScore}/150`, 20, yPosition);
+        yPosition += 15;
+
+        // Add career predictions
+        pdf.setFontSize(14);
+        pdf.setTextColor(139, 92, 246);
+        pdf.text('Career Predictions:', 20, yPosition);
+        yPosition += 10;
+
+        pdf.setFontSize(10);
+        pdf.setTextColor(0, 0, 0);
+        const careerText = `Best suited for: ${zodiac === 'Leo' ? 'Leadership & Government roles' : zodiac === 'Cancer' ? 'Education & Healthcare' : 'Technology & Innovation'}`;
+        const lines = pdf.splitTextToSize(careerText, pageWidth - 40);
+        lines.forEach(line => {
+          pdf.text(line, 20, yPosition);
+          yPosition += 5;
+        });
 
         pdf.save(`${user?.name}_Complete_Vedic_Analysis.pdf`);
-      }
+        alert('📄 PDF downloaded successfully!');
+        
+      } catch (importError) {
+        // Fallback: Create downloadable text file
+        const reportContent = `
+🌟 COMPLETE VEDIC ANALYSIS REPORT 🌟
+For ${user?.name}
 
-      document.body.removeChild(element);
-      alert('📄 20-page PDF downloaded successfully!');
+📊 BIRTH DETAILS:
+• Zodiac Sign: ${zodiac}
+• Nakshatra: ${nakshatra}
+• Intelligence Score: ${iqScore}/150
+• Report Generated: ${new Date().toLocaleDateString()}
+
+🎯 CAREER PREDICTIONS:
+• Primary Fields: ${zodiac === 'Leo' ? 'Leadership, Government, Entertainment' : zodiac === 'Cancer' ? 'Education, Healthcare, Psychology' : 'Technology, Innovation, Research'}
+• Success Period: Ages 24-32 (Major growth)
+• Peak Earning: Ages 36-45
+• Leadership Roles: After age 35
+
+📚 EDUCATION GUIDANCE:
+• Academic Excellence: Ages 16-18
+• Higher Education Success: Ages 19-25
+• Recommended Streams: ${zodiac === 'Leo' ? 'Management, Political Science' : zodiac === 'Cancer' ? 'Psychology, Medicine' : 'Engineering, Computer Science'}
+
+🔱 DAILY REMEDIES:
+• Morning Mantra: "Om Ganapataye Namaha" (21 times)
+• Study Mantra: "Om Saraswatyai Namaha" (11 times)
+• Success Mantra: "${zodiac === 'Leo' ? 'Om Suryaya Namaha' : zodiac === 'Cancer' ? 'Om Chandraya Namaha' : 'Om Gurave Namaha'}" (weekly)
+
+🎨 LUCKY ELEMENTS:
+• Colors: ${zodiac === 'Leo' ? 'Gold, Orange, Red' : zodiac === 'Cancer' ? 'White, Silver, Blue' : 'Yellow, Green, Purple'}
+• Lucky Day: ${zodiac === 'Leo' ? 'Sunday' : zodiac === 'Cancer' ? 'Monday' : 'Thursday'}
+• Lucky Numbers: ${zodiac === 'Leo' ? '1, 3, 9' : zodiac === 'Cancer' ? '2, 7, 11' : '5, 6, 8'}
+• Gemstone: ${zodiac === 'Leo' ? 'Ruby or Sunstone' : zodiac === 'Cancer' ? 'Pearl or Moonstone' : 'Yellow Sapphire or Citrine'}
+
+💰 WEALTH TIMELINE:
+• Age 25-30: Foundation building with steady growth
+• Age 30-38: Major financial breakthrough
+• Age 36-45: Peak earning period
+• Best Investments: ${zodiac === 'Leo' ? 'Gold & Real Estate' : zodiac === 'Cancer' ? 'Land & Traditional assets' : 'Technology & Innovation'}
+
+✨ This professional analysis is worth ₹149
+Generated on: ${new Date().toLocaleDateString()}
+
+🔗 For complete birth chart and additional features, visit our website.
+        `.trim();
+
+        // Create and download text file
+        const blob = new Blob([reportContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${user?.name}_Complete_Vedic_Analysis.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert('📄 Report downloaded as text file! (PDF libraries not available)');
+      }
       
     } catch (error) {
-      console.error('PDF generation failed:', error);
-      alert('PDF generation failed. Please try the email option instead.');
+      console.error('Download failed:', error);
+      alert('Download failed. Please try the email option instead.');
     } finally {
       setIsGeneratingPDF(false);
     }
