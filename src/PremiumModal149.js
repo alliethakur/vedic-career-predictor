@@ -470,32 +470,32 @@ Thank you for trusting our Vedic astrology service!`);
     };
 
     return (
-      <div id="premium-content" className="space-y-6">
-        {/* Success Header */}
-        <div className="bg-gradient-to-r from-purple-100 to-gold-100 p-6 rounded-xl border-2 border-gold-300 text-center">
-          <h2 className="text-3xl font-bold text-purple-800 mb-2">🌟 Complete Professional Analysis Unlocked!</h2>
-          <p className="text-purple-700">Full Vedic Report for {user?.name}</p>
-          <div className="mt-3 bg-gold-200 px-4 py-2 rounded-full inline-block">
-            <span className="text-gold-800 font-bold">✨ Includes Birth Chart + 20-Page PDF ✨</span>
+      <div id="premium-content" className="space-y-4 md:space-y-6">
+        {/* Success Header - Mobile Optimized */}
+        <div className="bg-gradient-to-r from-purple-100 to-gold-100 p-4 md:p-6 rounded-xl border-2 border-gold-300 text-center">
+          <h2 className="text-xl md:text-3xl font-bold text-purple-800 mb-2">🌟 Complete Professional Analysis Unlocked!</h2>
+          <p className="text-purple-700 text-sm md:text-base">Full Vedic Report for {user?.name}</p>
+          <div className="mt-3 bg-gold-200 px-3 py-2 md:px-4 md:py-2 rounded-full inline-block">
+            <span className="text-gold-800 font-bold text-xs md:text-sm">✨ Includes Birth Chart + 20-Page PDF ✨</span>
           </div>
         </div>
 
-        {/* Professional Rashi Chart */}
-        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-xl border-2 border-indigo-300">
-          <h3 className="text-2xl font-bold text-indigo-800 text-center mb-4">🔮 Professional Birth Chart (जन्म कुंडली)</h3>
+        {/* Professional Rashi Chart - Mobile Optimized */}
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-4 md:p-6 rounded-xl border-2 border-indigo-300">
+          <h3 className="text-lg md:text-2xl font-bold text-indigo-800 text-center mb-4">🔮 Professional Birth Chart (जन्म कुंडली)</h3>
           
-          <div className="max-w-lg mx-auto mb-6">
-            <div className="grid grid-cols-4 gap-1 bg-indigo-900 p-3 rounded-lg">
+          <div className="max-w-sm md:max-w-lg mx-auto mb-4 md:mb-6">
+            <div className="grid grid-cols-4 gap-1 bg-indigo-900 p-2 md:p-3 rounded-lg">
               {[11, 0, 1, 2, 10, null, null, 3, 9, 8, 7, 4].map((houseIndex, i) => (
-                <div key={i} className={`p-3 text-center rounded ${
+                <div key={i} className={`p-2 md:p-3 text-center rounded text-xs md:text-sm ${
                   houseIndex === null ? 'bg-gradient-to-r from-gold-200 to-yellow-200 border-2 border-gold-400' : 
                   'bg-white border border-indigo-200'
                 }`}>
                   {houseIndex !== null ? (
                     <>
                       <div className="text-xs font-bold text-indigo-800">{rashiChart[houseIndex].number}</div>
-                      <div className="text-lg">{getSignSymbol(rashiChart[houseIndex].sign)}</div>
-                      <div className="text-xs text-gray-600">{rashiChart[houseIndex].sign}</div>
+                      <div className="text-sm md:text-lg">{getSignSymbol(rashiChart[houseIndex].sign)}</div>
+                      <div className="text-xs text-gray-600 hidden md:block">{rashiChart[houseIndex].sign}</div>
                       <div className="text-xs text-purple-600 font-semibold">
                         {rashiChart[houseIndex].planets.map(p => getPlanetSymbol(p)).join(' ')}
                       </div>
@@ -504,14 +504,14 @@ Thank you for trusting our Vedic astrology service!`);
                     i === 5 ? (
                       <>
                         <div className="text-sm font-bold text-gold-800">🕉️</div>
-                        <div className="text-xs text-gold-700 font-bold">{user?.name}</div>
-                        <div className="text-xs text-gold-600">{nakshatra}</div>
+                        <div className="text-xs text-gold-700 font-bold truncate">{user?.name}</div>
+                        <div className="text-xs text-gold-600 hidden md:block">{nakshatra}</div>
                       </>
                     ) : (
                       <>
                         <div className="text-sm font-bold text-gold-800">राशि</div>
-                        <div className="text-lg">{getSignSymbol(zodiac)}</div>
-                        <div className="text-xs text-gold-700">{zodiac}</div>
+                        <div className="text-sm md:text-lg">{getSignSymbol(zodiac)}</div>
+                        <div className="text-xs text-gold-700 hidden md:block">{zodiac}</div>
                       </>
                     )
                   )}
@@ -520,10 +520,10 @@ Thank you for trusting our Vedic astrology service!`);
             </div>
           </div>
 
-          {/* Chart Analysis */}
-          <div className="bg-white p-4 rounded-lg border border-indigo-200">
-            <h4 className="font-bold text-indigo-800 mb-3">🔍 Professional Chart Reading</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          {/* Chart Analysis - Mobile Optimized */}
+          <div className="bg-white p-3 md:p-4 rounded-lg border border-indigo-200">
+            <h4 className="font-bold text-indigo-800 mb-3 text-sm md:text-base">🔍 Professional Chart Reading</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 text-xs md:text-sm">
               <div>
                 <h5 className="font-semibold text-purple-700 mb-2">Planetary Strengths:</h5>
                 {rashiChart.slice(0, 6).map(house => (
@@ -556,56 +556,56 @@ Thank you for trusting our Vedic astrology service!`);
           </div>
         </div>
 
-        {/* Detailed Professional Analysis */}
-        <div className="space-y-4">
-          <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg border-l-4 border-purple-500">
-            <h3 className="text-xl font-bold text-purple-800 mb-4">📊 Complete Professional Analysis</h3>
+        {/* Detailed Professional Analysis - Mobile Optimized */}
+        <div className="space-y-3 md:space-y-4">
+          <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 md:p-6 rounded-lg border-l-4 border-purple-500">
+            <h3 className="text-lg md:text-xl font-bold text-purple-800 mb-3 md:mb-4">📊 Complete Professional Analysis</h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h4 className="font-bold text-purple-900 mb-2">🎯 Career Destiny:</h4>
-                <p className="text-sm text-gray-700 mb-2">
+            <div className="grid grid-cols-1 gap-3 md:gap-4">
+              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
+                <h4 className="font-bold text-purple-900 mb-2 text-sm md:text-base">🎯 Career Destiny:</h4>
+                <p className="text-xs md:text-sm text-gray-700 mb-2">
                   <strong>Primary Fields:</strong> {careerPredictions[zodiac]}
                 </p>
-                <p className="text-sm text-gray-700">
+                <p className="text-xs md:text-sm text-gray-700">
                   <strong>Success Timeline:</strong> Age 24-32 shows maximum career growth. 
                   <strong>Leadership Role:</strong> After age 35.
                 </p>
               </div>
               
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h4 className="font-bold text-purple-900 mb-2">🧠 Intelligence Profile:</h4>
-                <p className="text-sm text-gray-700 mb-2">
+              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
+                <h4 className="font-bold text-purple-900 mb-2 text-sm md:text-base">🧠 Intelligence Profile:</h4>
+                <p className="text-xs md:text-sm text-gray-700 mb-2">
                   <strong>IQ Assessment:</strong> {iqScore}/150 (Above Average)
                 </p>
-                <p className="text-sm text-gray-700">
+                <p className="text-xs md:text-sm text-gray-700">
                   <strong>Learning Style:</strong> {zodiac === 'Leo' ? 'Visual & Dramatic' : zodiac === 'Virgo' ? 'Analytical & Methodical' : 'Creative & Intuitive'}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Premium Remedies & Guidance */}
-          <div className="bg-gradient-to-r from-gold-50 to-yellow-50 p-6 rounded-lg border-2 border-gold-400">
-            <h3 className="text-xl font-bold text-gold-800 mb-4">🔱 Personalized Remedies & Mantras</h3>
+          {/* Premium Remedies & Guidance - Mobile Optimized */}
+          <div className="bg-gradient-to-r from-gold-50 to-yellow-50 p-4 md:p-6 rounded-lg border-2 border-gold-400">
+            <h3 className="text-lg md:text-xl font-bold text-gold-800 mb-3 md:mb-4">🔱 Personalized Remedies & Mantras</h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-gold-900 mb-2">🕉️ Sacred Mantras:</h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
+                <h4 className="font-semibold text-gold-900 mb-2 text-sm md:text-base">🕉️ Sacred Mantras:</h4>
                 <p className="text-xs text-gray-700 mb-1"><strong>Daily:</strong> "Om Ganapataye Namaha" (21 times)</p>
                 <p className="text-xs text-gray-700 mb-1"><strong>Before Study:</strong> "Om Saraswatyai Namaha"</p>
                 <p className="text-xs text-gray-700"><strong>For Success:</strong> "{zodiac === 'Leo' ? 'Om Suryaya Namaha' : zodiac === 'Cancer' ? 'Om Chandraya Namaha' : 'Om Gurave Namaha'}"</p>
               </div>
               
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-gold-900 mb-2">🎨 Lucky Elements:</h4>
+              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
+                <h4 className="font-semibold text-gold-900 mb-2 text-sm md:text-base">🎨 Lucky Elements:</h4>
                 <p className="text-xs text-gray-700 mb-1"><strong>Colors:</strong> {zodiac === 'Leo' ? 'Gold, Orange, Red' : zodiac === 'Cancer' ? 'White, Silver, Blue' : 'Purple, Yellow, Green'}</p>
                 <p className="text-xs text-gray-700 mb-1"><strong>Days:</strong> {zodiac === 'Leo' ? 'Sunday' : zodiac === 'Cancer' ? 'Monday' : 'Thursday'}</p>
                 <p className="text-xs text-gray-700"><strong>Numbers:</strong> {zodiac === 'Leo' ? '1, 3, 9' : zodiac === 'Cancer' ? '2, 7, 11' : '5, 6, 8'}</p>
               </div>
               
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-gold-900 mb-2">💎 Gemstone Guide:</h4>
+              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
+                <h4 className="font-semibold text-gold-900 mb-2 text-sm md:text-base">💎 Gemstone Guide:</h4>
                 <p className="text-xs text-gray-700 mb-1"><strong>Primary:</strong> {zodiac === 'Leo' ? 'Ruby (माणिक)' : zodiac === 'Cancer' ? 'Pearl (मोती)' : 'Yellow Sapphire'}</p>
                 <p className="text-xs text-gray-700 mb-1"><strong>Alternative:</strong> {zodiac === 'Leo' ? 'Sunstone' : zodiac === 'Cancer' ? 'Moonstone' : 'Citrine'}</p>
                 <p className="text-xs text-gray-700"><strong>Wear on:</strong> Ring finger, {zodiac === 'Leo' ? 'Sunday' : zodiac === 'Cancer' ? 'Monday' : 'Thursday'}</p>
@@ -613,23 +613,23 @@ Thank you for trusting our Vedic astrology service!`);
             </div>
           </div>
 
-          {/* Advanced Predictions */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg border-2 border-blue-300">
-            <h3 className="text-xl font-bold text-blue-800 mb-4">🔮 Advanced Life Predictions</h3>
+          {/* Advanced Predictions - Mobile Optimized */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 md:p-6 rounded-lg border-2 border-blue-300">
+            <h3 className="text-lg md:text-xl font-bold text-blue-800 mb-3 md:mb-4">🔮 Advanced Life Predictions</h3>
             
             <div className="space-y-3">
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-blue-900 mb-2">📚 Education Timeline:</h4>
-                <div className="text-sm text-gray-700 space-y-1">
+              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
+                <h4 className="font-semibold text-blue-900 mb-2 text-sm md:text-base">📚 Education Timeline:</h4>
+                <div className="text-xs md:text-sm text-gray-700 space-y-1">
                   <p><strong>Ages 16-18:</strong> Excellent academic performance, especially in {zodiac === 'Leo' ? 'leadership & arts' : zodiac === 'Cancer' ? 'humanities & psychology' : 'science & technology'}</p>
                   <p><strong>Ages 22-25:</strong> Higher education brings recognition and awards</p>
                   <p><strong>Best Stream:</strong> {zodiac === 'Leo' ? 'Management, Political Science, Theatre' : zodiac === 'Cancer' ? 'Psychology, Teaching, Medicine' : 'Engineering, Research, Innovation'}</p>
                 </div>
               </div>
               
-              <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-blue-900 mb-2">💰 Wealth & Success Periods:</h4>
-                <div className="text-sm text-gray-700 space-y-1">
+              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
+                <h4 className="font-semibold text-blue-900 mb-2 text-sm md:text-base">💰 Wealth & Success Periods:</h4>
+                <div className="text-xs md:text-sm text-gray-700 space-y-1">
                   <p><strong>Age 28-35:</strong> Major financial growth, property acquisition</p>
                   <p><strong>Age 40-50:</strong> Peak earning period, business success</p>
                   <p><strong>Lucky Investment:</strong> {zodiac === 'Leo' ? 'Gold, Real Estate' : zodiac === 'Cancer' ? 'Land, Water Projects' : 'Technology, Mutual Funds'}</p>
@@ -639,14 +639,14 @@ Thank you for trusting our Vedic astrology service!`);
           </div>
         </div>
 
-        {/* Download & Share Options - FULLY FUNCTIONAL */}
-        <div className="bg-indigo-50 p-6 rounded-lg border border-indigo-200 text-center">
-          <h4 className="font-bold text-indigo-800 mb-4">📱 Get Your Complete Analysis</h4>
-          <div className="grid grid-cols-2 gap-3">
+        {/* Download & Share Options - Mobile Optimized */}
+        <div className="bg-indigo-50 p-4 md:p-6 rounded-lg border border-indigo-200 text-center">
+          <h4 className="font-bold text-indigo-800 mb-3 md:mb-4 text-sm md:text-base">📱 Get Your Complete Analysis</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <button 
               onClick={generatePDF}
               disabled={isGeneratingPDF}
-              className={`py-3 px-4 rounded-lg font-semibold text-sm ${
+              className={`py-3 px-4 rounded-lg font-semibold text-xs md:text-sm ${
                 isGeneratingPDF 
                   ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
                   : 'bg-red-600 text-white hover:bg-red-700'
@@ -657,7 +657,7 @@ Thank you for trusting our Vedic astrology service!`);
             
             <button 
               onClick={shareToWhatsApp}
-              className="bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 font-semibold text-sm"
+              className="bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 font-semibold text-xs md:text-sm"
             >
               📱 WhatsApp Report
             </button>
@@ -665,7 +665,7 @@ Thank you for trusting our Vedic astrology service!`);
             <button 
               onClick={sendEmail}
               disabled={isSendingEmail}
-              className={`py-3 px-4 rounded-lg font-semibold text-sm ${
+              className={`py-3 px-4 rounded-lg font-semibold text-xs md:text-sm ${
                 isSendingEmail 
                   ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
                   : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -676,14 +676,14 @@ Thank you for trusting our Vedic astrology service!`);
             
             <button 
               onClick={copyShareLink}
-              className="bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 font-semibold text-sm"
+              className="bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 font-semibold text-xs md:text-sm"
             >
               🔗 Share with Family
             </button>
           </div>
           
           <div className="mt-4 bg-green-100 p-3 rounded-lg">
-            <p className="text-green-800 text-sm font-semibold">
+            <p className="text-green-800 text-xs md:text-sm font-semibold">
               ✨ Congratulations! You now have the most comprehensive Vedic analysis available.
             </p>
           </div>
@@ -694,50 +694,50 @@ Thank you for trusting our Vedic astrology service!`);
 
   if (showPremiumContent) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
-          <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center shadow-sm">
-            <h2 className="text-xl font-bold">🌟 Complete Professional Analysis</h2>
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4">
+        <div className="bg-white rounded-xl md:rounded-2xl max-w-6xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
+          <div className="sticky top-0 bg-white border-b p-3 md:p-4 flex justify-between items-center shadow-sm rounded-t-xl md:rounded-t-2xl">
+            <h2 className="text-lg md:text-xl font-bold">🌟 Complete Professional Analysis</h2>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-xl md:text-2xl">×</button>
           </div>
-          <div className="p-6">{renderPremiumContent()}</div>
+          <div className="p-3 md:p-6">{renderPremiumContent()}</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center rounded-t-2xl">
-          <h2 className="text-xl font-bold">🌟 Professional Analysis</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">×</button>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 md:p-4">
+      <div className="bg-white rounded-xl md:rounded-2xl max-w-sm md:max-w-md w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b p-3 md:p-4 flex justify-between items-center rounded-t-xl md:rounded-t-2xl">
+          <h2 className="text-lg md:text-xl font-bold">🌟 Professional Analysis</h2>
+          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-xl md:text-2xl">×</button>
         </div>
         
-        <div className="p-6">
-          <div className="text-center mb-6">
-            <div className="text-4xl mb-4">🌟</div>
-            <h3 className="text-2xl font-bold mb-2">Complete Professional Analysis</h3>
-            <p className="text-gray-600">Astrologer-level report for {user?.name}</p>
+        <div className="p-4 md:p-6">
+          <div className="text-center mb-4 md:mb-6">
+            <div className="text-3xl md:text-4xl mb-3 md:mb-4">🌟</div>
+            <h3 className="text-xl md:text-2xl font-bold mb-2">Complete Professional Analysis</h3>
+            <p className="text-gray-600 text-sm md:text-base">Astrologer-level report for {user?.name}</p>
           </div>
 
-          <div className="bg-gradient-to-r from-purple-50 to-gold-50 p-5 rounded-lg border-2 border-purple-300 mb-6">
-            <h4 className="font-bold mb-3 text-purple-900">🏆 Complete Professional Package:</h4>
-            <div className="grid grid-cols-1 gap-2 text-sm text-gray-700">
-              <div className="flex items-center"><span className="text-green-500 mr-2">✅</span><strong>Professional Birth Chart</strong> with planetary analysis</div>
-              <div className="flex items-center"><span className="text-green-500 mr-2">✅</span>Detailed 12-House analysis & predictions</div>
-              <div className="flex items-center"><span className="text-green-500 mr-2">✅</span>Career timeline & success periods</div>
-              <div className="flex items-center"><span className="text-green-500 mr-2">✅</span>Personalized mantras & sacred remedies</div>
-              <div className="flex items-center"><span className="text-green-500 mr-2">✅</span>Lucky colors, gems & auspicious timings</div>
-              <div className="flex items-center"><span className="text-green-500 mr-2">✅</span>Advanced education & wealth predictions</div>
-              <div className="flex items-center"><span className="text-green-500 mr-2">✅</span><strong>20-page Premium PDF report</strong></div>
-              <div className="flex items-center"><span className="text-green-500 mr-2">✅</span>WhatsApp/Email delivery options</div>
+          <div className="bg-gradient-to-r from-purple-50 to-gold-50 p-4 md:p-5 rounded-lg border-2 border-purple-300 mb-4 md:mb-6">
+            <h4 className="font-bold mb-3 text-purple-900 text-sm md:text-base">🏆 Complete Professional Package:</h4>
+            <div className="grid grid-cols-1 gap-2 text-xs md:text-sm text-gray-700">
+              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span><strong>Professional Birth Chart</strong> with planetary analysis</div>
+              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Detailed 12-House analysis & predictions</div>
+              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Career timeline & success periods</div>
+              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Personalized mantras & sacred remedies</div>
+              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Lucky colors, gems & auspicious timings</div>
+              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Advanced education & wealth predictions</div>
+              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span><strong>20-page Premium PDF report</strong></div>
+              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>WhatsApp/Email delivery options</div>
             </div>
           </div>
 
-          <div className="text-center mb-6">
+          <div className="text-center mb-4 md:mb-6">
             <div className="flex items-center justify-center space-x-2 mb-2">
-              <div className="text-3xl font-bold text-purple-600">₹149</div>
+              <div className="text-2xl md:text-3xl font-bold text-purple-600">₹149</div>
               <div className="text-lg line-through opacity-70 text-gray-500">₹399</div>
               <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">62% OFF</div>
             </div>
@@ -751,7 +751,7 @@ Thank you for trusting our Vedic astrology service!`);
             <button
               onClick={handlePayment}
               disabled={isProcessingPayment}
-              className={`w-full py-3 rounded-lg font-bold text-white ${
+              className={`w-full py-3 md:py-4 rounded-lg font-bold text-white text-sm md:text-base ${
                 isProcessingPayment 
                   ? 'bg-gray-400 cursor-not-allowed' 
                   : 'bg-gradient-to-r from-purple-600 to-gold-600 hover:from-purple-700 hover:to-gold-700'
@@ -760,7 +760,7 @@ Thank you for trusting our Vedic astrology service!`);
               {isProcessingPayment ? 'Processing Payment...' : '🌟 Get Complete Analysis for ₹149'}
             </button>
             
-            <button onClick={onClose} className="w-full py-2 text-gray-600 hover:text-gray-800">
+            <button onClick={onClose} className="w-full py-2 text-gray-600 hover:text-gray-800 text-sm md:text-base">
               Maybe Later
             </button>
           </div>
