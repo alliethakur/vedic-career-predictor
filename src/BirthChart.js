@@ -518,7 +518,7 @@ function BirthChart({ user, result, onBack }) {
                         "Professional birth chart",
                         "12-house detailed analysis",
                         "Planetary positions & effects",
-                        "15-min consultation call",
+                        "15-min consultation call(Coming Soon)",
                         "20-page premium PDF"
                       ].map((feature, index) => (
                         <li key={index} className="flex items-center text-slate-700 text-sm md:text-base">
@@ -619,3 +619,4 @@ function BirthChart({ user, result, onBack }) {
 }
 
 export default BirthChart;
+
