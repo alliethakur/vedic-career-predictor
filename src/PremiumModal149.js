@@ -1,10 +1,43 @@
 import React, { useState } from 'react';
 
-const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, user }) => {
+const PremiumModal69 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, user }) => {
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [showPremiumContent, setShowPremiumContent] = useState(false);
+  const [hasActivePurchase, setHasActivePurchase] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [isSendingEmail, setIsSendingEmail] = useState(false);
+
+  // Hindu God/Astrology themed images for each zodiac
+  const zodiacImages = {
+    Aries: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop&crop=focalpoint&fp-x=0.5&fp-y=0.3",
+    Taurus: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center",
+    Gemini: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=faces",
+    Cancer: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=center",
+    Leo: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&h=300&fit=crop&crop=center",
+    Virgo: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&crop=center",
+    Libra: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&h=300&fit=crop&crop=center",
+    Scorpio: "https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&h=300&fit=crop&crop=center",
+    Sagittarius: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=center",
+    Capricorn: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&crop=center",
+    Aquarius: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&h=300&fit=crop&crop=center",
+    Pisces: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop&crop=center"
+  };
+
+  // Ruling deity for each zodiac
+  const zodiacDeities = {
+    Aries: "Lord Hanuman - Courage & Strength",
+    Taurus: "Goddess Lakshmi - Prosperity & Stability", 
+    Gemini: "Goddess Saraswati - Knowledge & Communication",
+    Cancer: "Lord Shiva - Nurturing & Intuition",
+    Leo: "Lord Surya - Leadership & Confidence",
+    Virgo: "Lord Ganesha - Wisdom & Problem-solving",
+    Libra: "Lord Shukra - Balance & Harmony",
+    Scorpio: "Goddess Kali - Transformation & Power",
+    Sagittarius: "Lord Vishnu - Wisdom & Truth",
+    Capricorn: "Lord Shani - Discipline & Karma",
+    Aquarius: "Lord Varuna - Innovation & Flow",
+    Pisces: "Lord Rama - Compassion & Spirituality"
+  };
 
   // Generate advanced Rashi Chart
   const generateRashiChart = () => {
@@ -36,425 +69,206 @@ const PremiumModal149 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, 
     Sun: '☉', Moon: '☽', Mercury: '☿', Venus: '♀', Mars: '♂', Jupiter: '♃', Saturn: '♄', Lagna: 'ASC'
   })[planet] || planet;
 
-  // Simplified PDF Generation (fallback without dependencies)
-  const generatePDF = async () => {
-    setIsGeneratingPDF(true);
-    try {
-      // Try dynamic imports first
-      try {
-        const jsPDF = (await import('jspdf')).default;
-        const html2canvas = (await import('html2canvas')).default;
-        
-        // Create simple PDF with text content
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pageWidth = pdf.internal.pageSize.getWidth();
-        let yPosition = 20;
-
-        // Add content to PDF
-        pdf.setFontSize(20);
-        pdf.setTextColor(139, 92, 246);
-        pdf.text('Complete Vedic Analysis Report', 20, yPosition);
-        yPosition += 15;
-
-        pdf.setFontSize(16);
-        pdf.text(`For ${user?.name}`, 20, yPosition);
-        yPosition += 10;
-
-        pdf.setFontSize(12);
-        pdf.setTextColor(0, 0, 0);
-        pdf.text(`Zodiac: ${zodiac} | Nakshatra: ${nakshatra}`, 20, yPosition);
-        yPosition += 10;
-        pdf.text(`Intelligence Score: ${iqScore}/150`, 20, yPosition);
-        yPosition += 15;
-
-        // Add career predictions
-        pdf.setFontSize(14);
-        pdf.setTextColor(139, 92, 246);
-        pdf.text('Career Predictions:', 20, yPosition);
-        yPosition += 10;
-
-        pdf.setFontSize(10);
-        pdf.setTextColor(0, 0, 0);
-        const careerText = `Best suited for: ${zodiac === 'Leo' ? 'Leadership & Government roles' : zodiac === 'Cancer' ? 'Education & Healthcare' : 'Technology & Innovation'}`;
-        const lines = pdf.splitTextToSize(careerText, pageWidth - 40);
-        lines.forEach(line => {
-          pdf.text(line, 20, yPosition);
-          yPosition += 5;
-        });
-
-        pdf.save(`${user?.name}_Complete_Vedic_Analysis.pdf`);
-        alert('📄 PDF downloaded successfully!');
-        
-      } catch (importError) {
-        // Fallback: Create downloadable text file
-        const reportContent = `
-🌟 COMPLETE VEDIC ANALYSIS REPORT 🌟
-For ${user?.name}
-
-📊 BIRTH DETAILS:
-• Zodiac Sign: ${zodiac}
-• Nakshatra: ${nakshatra}
-• Intelligence Score: ${iqScore}/150
-• Report Generated: ${new Date().toLocaleDateString()}
-
-🎯 CAREER PREDICTIONS:
-• Primary Fields: ${zodiac === 'Leo' ? 'Leadership, Government, Entertainment' : zodiac === 'Cancer' ? 'Education, Healthcare, Psychology' : 'Technology, Innovation, Research'}
-• Success Period: Ages 24-32 (Major growth)
-• Peak Earning: Ages 36-45
-• Leadership Roles: After age 35
-
-📚 EDUCATION GUIDANCE:
-• Academic Excellence: Ages 16-18
-• Higher Education Success: Ages 19-25
-• Recommended Streams: ${zodiac === 'Leo' ? 'Management, Political Science' : zodiac === 'Cancer' ? 'Psychology, Medicine' : 'Engineering, Computer Science'}
-
-🔱 DAILY REMEDIES:
-• Morning Mantra: "Om Ganapataye Namaha" (21 times)
-• Study Mantra: "Om Saraswatyai Namaha" (11 times)
-• Success Mantra: "${zodiac === 'Leo' ? 'Om Suryaya Namaha' : zodiac === 'Cancer' ? 'Om Chandraya Namaha' : 'Om Gurave Namaha'}" (weekly)
-
-🎨 LUCKY ELEMENTS:
-• Colors: ${zodiac === 'Leo' ? 'Gold, Orange, Red' : zodiac === 'Cancer' ? 'White, Silver, Blue' : 'Yellow, Green, Purple'}
-• Lucky Day: ${zodiac === 'Leo' ? 'Sunday' : zodiac === 'Cancer' ? 'Monday' : 'Thursday'}
-• Lucky Numbers: ${zodiac === 'Leo' ? '1, 3, 9' : zodiac === 'Cancer' ? '2, 7, 11' : '5, 6, 8'}
-• Gemstone: ${zodiac === 'Leo' ? 'Ruby or Sunstone' : zodiac === 'Cancer' ? 'Pearl or Moonstone' : 'Yellow Sapphire or Citrine'}
-
-💰 WEALTH TIMELINE:
-• Age 25-30: Foundation building with steady growth
-• Age 30-38: Major financial breakthrough
-• Age 36-45: Peak earning period
-• Best Investments: ${zodiac === 'Leo' ? 'Gold & Real Estate' : zodiac === 'Cancer' ? 'Land & Traditional assets' : 'Technology & Innovation'}
-
-✨ This professional analysis is worth ₹149
-Generated on: ${new Date().toLocaleDateString()}
-
-🔗 For complete birth chart and additional features, visit our website.
-        `.trim();
-
-        // Create and download text file
-        const blob = new Blob([reportContent], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${user?.name}_Complete_Vedic_Analysis.txt`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        alert('📄 Report downloaded as text file! (PDF libraries not available)');
+  // Load Razorpay script with better error handling
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      if (window.Razorpay) {
+        resolve(true);
+        return;
       }
-      
-    } catch (error) {
-      console.error('Download failed:', error);
-      alert('Download failed. Please try the email option instead.');
-    } finally {
-      setIsGeneratingPDF(false);
-    }
-  };
 
-  // WhatsApp Sharing Function
-  const shareToWhatsApp = () => {
-    const reportText = `🌟 *${user?.name}'s Complete Vedic Analysis Report*
-
-📊 *Birth Details:*
-• Zodiac: ${zodiac} ${getSignSymbol(zodiac)}
-• Nakshatra: ${nakshatra}
-• Intelligence Score: ${iqScore}/150
-
-🎯 *Career Predictions:*
-• Best suited for: ${zodiac === 'Leo' ? 'Leadership & Government roles' : zodiac === 'Cancer' ? 'Education & Healthcare' : 'Technology & Innovation'}
-• Success period: Age 24-32
-• Peak earning: Age 36-45
-
-🔱 *Daily Remedies:*
-• Morning Mantra: "Om Ganapataye Namaha" (21 times)
-• Lucky Color: ${zodiac === 'Leo' ? 'Gold' : zodiac === 'Cancer' ? 'White' : 'Yellow'}
-• Lucky Day: ${zodiac === 'Leo' ? 'Sunday' : zodiac === 'Cancer' ? 'Monday' : 'Thursday'}
-• Gemstone: ${zodiac === 'Leo' ? 'Ruby/Sunstone' : zodiac === 'Cancer' ? 'Pearl/Moonstone' : 'Yellow Sapphire/Citrine'}
-
-💰 *Wealth Timeline:*
-• Age 28-35: Major financial growth
-• Age 36-45: Peak earning period
-• Best investments: ${zodiac === 'Leo' ? 'Gold & Real Estate' : zodiac === 'Cancer' ? 'Land & Traditional assets' : 'Technology & Innovation'}
-
-✨ *This is a professional-grade Vedic analysis worth ₹149*
-Generated on: ${new Date().toLocaleDateString()}
-
-🔗 Get your complete analysis with birth chart and 20-page PDF report!`;
-
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(reportText)}`;
-    window.open(whatsappUrl, '_blank');
-  };
-
-  // Email Function
-  const sendEmail = async () => {
-    setIsSendingEmail(true);
-    
-    const emailContent = `
-    <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; background: white;">
-      <div style="background: linear-gradient(135deg, #8B5CF6, #F59E0B); padding: 30px; color: white; text-align: center;">
-        <h1 style="margin: 0; font-size: 28px;">🌟 Complete Vedic Analysis Report</h1>
-        <h2 style="margin: 10px 0; font-size: 22px;">For ${user?.name}</h2>
-        <p style="margin: 0; opacity: 0.9;">Professional Astrological Assessment - Worth ₹149</p>
-      </div>
-      
-      <div style="padding: 30px; background: #f9f9f9;">
-        <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          <h3 style="color: #8B5CF6; margin-top: 0;">📊 Birth Chart Details</h3>
-          <p><strong>Name:</strong> ${user?.name}</p>
-          <p><strong>Zodiac Sign:</strong> ${zodiac} ${getSignSymbol(zodiac)}</p>
-          <p><strong>Nakshatra:</strong> ${nakshatra}</p>
-          <p><strong>Intelligence Score:</strong> ${iqScore}/150 (Above Average)</p>
-          <p><strong>Report Generated:</strong> ${new Date().toLocaleDateString()}</p>
-        </div>
-        
-        <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          <h3 style="color: #8B5CF6; margin-top: 0;">🎯 Career & Success Predictions</h3>
-          <p><strong>Primary Career Fields:</strong> ${zodiac === 'Leo' ? 'Leadership, Government, Entertainment, Public Speaking' : zodiac === 'Cancer' ? 'Education, Psychology, Hospitality, Caregiving' : 'Technology, Innovation, Research, Analytics'}</p>
-          <p><strong>Success Timeline:</strong> Ages 24-32 show maximum career growth with leadership opportunities emerging after age 35.</p>
-          <p><strong>Peak Earning Period:</strong> Ages 36-45 will bring significant financial growth and business success.</p>
-          <p><strong>Wealth Accumulation:</strong> Major financial breakthrough expected between ages 30-38 with property acquisition opportunities.</p>
-        </div>
-        
-        <div style="background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-          <h3 style="color: #8B5CF6; margin-top: 0;">📚 Education & Learning Path</h3>
-          <p><strong>Academic Excellence Period:</strong> Ages 16-18 will show exceptional performance, especially in ${zodiac === 'Leo' ? 'leadership studies and creative arts' : zodiac === 'Cancer' ? 'humanities and psychology' : 'science and analytical subjects'}.</p>
-          <p><strong>Higher Education:</strong> Ages 19-25 will bring recognition, awards, and prestigious opportunities.</p>
-          <p><strong>Recommended Streams:</strong> ${zodiac === 'Leo' ? 'Management, Political Science, Mass Communication' : zodiac === 'Cancer' ? 'Psychology, Education, Medicine' : 'Engineering, Computer Science, Research'}</p>
-        </div>
-        
-        <div style="background: #FFF7ED; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #F59E0B;">
-          <h3 style="color: #F59E0B; margin-top: 0;">🔱 Personalized Remedies & Sacred Practices</h3>
-          <div style="margin-bottom: 15px;">
-            <h4 style="color: #8B5CF6; margin-bottom: 5px;">🕉️ Daily Mantras:</h4>
-            <p style="margin: 5px 0;"><strong>Morning:</strong> "Om Ganapataye Namaha" (21 times) - removes obstacles</p>
-            <p style="margin: 5px 0;"><strong>Before Studies:</strong> "Om Saraswatyai Namaha" (11 times) - enhances wisdom</p>
-            <p style="margin: 5px 0;"><strong>For Success:</strong> "${zodiac === 'Leo' ? 'Om Suryaya Namaha' : zodiac === 'Cancer' ? 'Om Chandraya Namaha' : 'Om Gurave Namaha'}" (108 times weekly)</p>
-          </div>
-          
-          <div style="margin-bottom: 15px;">
-            <h4 style="color: #8B5CF6; margin-bottom: 5px;">🎨 Lucky Elements:</h4>
-            <p style="margin: 5px 0;"><strong>Colors:</strong> ${zodiac === 'Leo' ? 'Gold, Orange, Red' : zodiac === 'Cancer' ? 'White, Silver, Blue' : 'Yellow, Green, Purple'}</p>
-            <p style="margin: 5px 0;"><strong>Lucky Day:</strong> ${zodiac === 'Leo' ? 'Sunday' : zodiac === 'Cancer' ? 'Monday' : 'Thursday'}</p>
-            <p style="margin: 5px 0;"><strong>Lucky Numbers:</strong> ${zodiac === 'Leo' ? '1, 3, 9' : zodiac === 'Cancer' ? '2, 7, 11' : '5, 6, 8'}</p>
-          </div>
-          
-          <div>
-            <h4 style="color: #8B5CF6; margin-bottom: 5px;">💎 Gemstone Recommendations:</h4>
-            <p style="margin: 5px 0;"><strong>Primary:</strong> ${zodiac === 'Leo' ? 'Ruby (माणिक)' : zodiac === 'Cancer' ? 'Pearl (मोती)' : 'Yellow Sapphire (पुखराज)'}</p>
-            <p style="margin: 5px 0;"><strong>Alternative:</strong> ${zodiac === 'Leo' ? 'Sunstone' : zodiac === 'Cancer' ? 'Moonstone' : 'Citrine'}</p>
-            <p style="margin: 5px 0;"><strong>How to Wear:</strong> Ring finger, preferably on ${zodiac === 'Leo' ? 'Sunday morning' : zodiac === 'Cancer' ? 'Monday evening' : 'Thursday morning'}</p>
-          </div>
-        </div>
-        
-        <div style="background: #EFF6FF; padding: 20px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #3B82F6;">
-          <h3 style="color: #3B82F6; margin-top: 0;">🌟 Life Purpose & Personality</h3>
-          <p>${user?.name} possesses a naturally ${zodiac === 'Leo' ? 'confident and royal personality with innate leadership qualities. They are generous, creative, and destined to inspire others through their actions and achievements.' : zodiac === 'Cancer' ? 'nurturing and intuitive nature with deep emotional intelligence. They excel in caring for others and have a natural ability to heal and comfort those around them.' : 'balanced personality that combines analytical thinking with creative expression. They are natural problem-solvers who can bridge traditional wisdom with modern innovation.'}</p>
-          <p><strong>Life Mission:</strong> ${user?.name} is destined to ${zodiac === 'Leo' ? 'lead and inspire others, bringing positive change through their natural charisma and vision' : zodiac === 'Cancer' ? 'nurture and guide others, creating safe spaces and emotional healing for their community' : 'innovate and teach, helping society progress through their unique insights and discoveries'}.</p>
-        </div>
-        
-        <div style="background: #F0FDF4; padding: 20px; border-radius: 8px; border-left: 4px solid #22C55E; text-align: center;">
-          <h3 style="color: #22C55E; margin-top: 0;">✨ Your Investment Summary</h3>
-          <p style="margin: 5px 0;"><strong>Complete Professional Analysis:</strong> ₹149 (Regular Price: ₹399)</p>
-          <p style="margin: 5px 0;"><strong>Includes:</strong> Birth Chart + Predictions + Remedies + 20-Page PDF</p>
-          <p style="margin: 5px 0;"><strong>Generated on:</strong> ${new Date().toLocaleDateString()}</p>
-          <p style="margin: 15px 0 5px 0; font-size: 18px; color: #22C55E;"><strong>🎉 Thank you for trusting our professional Vedic astrology service!</strong></p>
-        </div>
-      </div>
-    </div>`;
-
-    try {
-      const response = await fetch('https://vedic-career-backend.vercel.app/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: user?.email || 'user@example.com',
-          subject: `${user?.name}'s Complete Vedic Analysis Report - Worth ₹149`,
-          html: emailContent,
-          childName: user?.name,
-          zodiac: zodiac,
-          nakshatra: nakshatra
-        }),
-      });
-
-      if (response.ok) {
-        alert('📧 Complete report sent to your email successfully!');
-      } else {
-        throw new Error('Email sending failed');
-      }
-    } catch (error) {
-      console.error('Email error:', error);
-      // Fallback to mailto
-      const subject = encodeURIComponent(`${user?.name}'s Complete Vedic Analysis Report`);
-      const body = encodeURIComponent(`Dear Parent,
-
-Here's your child's complete Vedic analysis summary:
-
-CHILD DETAILS:
-• Name: ${user?.name}
-• Zodiac: ${zodiac} ${getSignSymbol(zodiac)}
-• Nakshatra: ${nakshatra}
-• Intelligence Score: ${iqScore}/150
-
-CAREER PREDICTIONS:
-• Best Fields: ${zodiac === 'Leo' ? 'Leadership, Government, Entertainment' : zodiac === 'Cancer' ? 'Education, Healthcare, Psychology' : 'Technology, Innovation, Research'}
-• Success Period: Ages 24-32 (Major growth)
-• Peak Earning: Ages 36-45
-• Leadership Roles: After age 35
-
-EDUCATION GUIDANCE:
-• Academic Excellence: Ages 16-18
-• Higher Education Success: Ages 19-25
-• Recommended Streams: ${zodiac === 'Leo' ? 'Management, Political Science' : zodiac === 'Cancer' ? 'Psychology, Medicine' : 'Engineering, Computer Science'}
-
-DAILY REMEDIES:
-• Morning Mantra: "Om Ganapataye Namaha" (21 times)
-• Study Mantra: "Om Saraswatyai Namaha" (11 times)
-• Success Mantra: "${zodiac === 'Leo' ? 'Om Suryaya Namaha' : zodiac === 'Cancer' ? 'Om Chandraya Namaha' : 'Om Gurave Namaha'}" (weekly)
-
-LUCKY ELEMENTS:
-• Colors: ${zodiac === 'Leo' ? 'Gold, Orange, Red' : zodiac === 'Cancer' ? 'White, Silver, Blue' : 'Yellow, Green, Purple'}
-• Day: ${zodiac === 'Leo' ? 'Sunday' : zodiac === 'Cancer' ? 'Monday' : 'Thursday'}
-• Numbers: ${zodiac === 'Leo' ? '1, 3, 9' : zodiac === 'Cancer' ? '2, 7, 11' : '5, 6, 8'}
-• Gemstone: ${zodiac === 'Leo' ? 'Ruby or Sunstone' : zodiac === 'Cancer' ? 'Pearl or Moonstone' : 'Yellow Sapphire or Citrine'}
-
-This professional analysis is worth ₹149 and includes detailed birth chart predictions.
-
-Generated on: ${new Date().toLocaleDateString()}
-
-Thank you for trusting our Vedic astrology service!`);
-      
-      window.location.href = `mailto:${user?.email}?subject=${subject}&body=${body}`;
-    } finally {
-      setIsSendingEmail(false);
-    }
-  };
-
-  // Copy Link Function
-  const copyShareLink = () => {
-    const shareData = {
-      name: user?.name,
-      zodiac: zodiac,
-      nakshatra: nakshatra,
-      iqScore: iqScore,
-      reportId: Date.now().toString(36),
-      timestamp: new Date().toISOString()
-    };
-    
-    const shareUrl = `${window.location.origin}/shared-report?data=${btoa(JSON.stringify(shareData))}`;
-    
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      alert('🔗 Shareable link copied to clipboard!\n\nYou can now send this link to family members to view the complete analysis. The link includes the birth chart and all predictions.');
-    }).catch(() => {
-      // Fallback for older browsers
-      const textArea = document.createElement('textarea');
-      textArea.value = shareUrl;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      alert('🔗 Shareable link copied to clipboard!');
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => {
+        console.log('Razorpay script loaded successfully');
+        resolve(true);
+      };
+      script.onerror = (error) => {
+        console.error('Failed to load Razorpay script:', error);
+        resolve(false);
+      };
+      document.body.appendChild(script);
     });
   };
 
-  // Payment handling
+  // Create order on backend
+  const createOrder = async () => {
+    try {
+      const response = await fetch('https://vedic-career-backend.vercel.app/api/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: 69,
+          currency: 'INR',
+          notes: {
+            child_name: user?.name || 'Guest',
+            zodiac: zodiac,
+            nakshatra: nakshatra,
+            iq_score: iqScore,
+            package: 'complete_analysis_69'
+          }
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.text();
+        console.error('Order creation failed:', errorData);
+        throw new Error(`Failed to create order: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Order created successfully:', data);
+      return data;
+    } catch (error) {
+      console.error('Error creating order:', error);
+      throw error;
+    }
+  };
+
+  // Verify payment on backend
+  const verifyPayment = async (paymentData) => {
+    try {
+      const response = await fetch('https://vedic-career-backend.vercel.app/api/verify-payment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.text();
+        console.error('Payment verification failed:', errorData);
+        throw new Error(`Payment verification failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error verifying payment:', error);
+      throw error;
+    }
+  };
+
   const handlePayment = async () => {
     setIsProcessingPayment(true);
     
     try {
-      // Load Razorpay
-      if (!window.Razorpay) {
-        const script = document.createElement('script');
-        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-        await new Promise((resolve, reject) => {
-          script.onload = resolve;
-          script.onerror = reject;
-          document.body.appendChild(script);
-        });
+      console.log('Loading Razorpay script...');
+      const isScriptLoaded = await loadRazorpayScript();
+      if (!isScriptLoaded) {
+        alert('Razorpay SDK failed to load. Please check your internet connection and try again.');
+        setIsProcessingPayment(false);
+        return;
       }
 
-      // Create order
-      const orderResponse = await fetch('https://vedic-career-backend.vercel.app/api/create-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          amount: 149,
-          currency: 'INR',
-          notes: { 
-            child_name: user?.name || 'Guest', 
-            zodiac, 
-            nakshatra, 
-            iq_score: iqScore,
-            package: 'complete_analysis_149' 
-          }
-        })
-      });
+      if (!window.Razorpay) {
+        alert('Payment gateway is not available. Please refresh the page and try again.');
+        setIsProcessingPayment(false);
+        return;
+      }
 
-      const orderData = await orderResponse.json();
+      console.log('Creating order...');
+      const orderData = await createOrder();
 
       const options = {
-        key: orderData.key_id,
-        amount: orderData.amount,
-        currency: 'INR',
+        key: orderData.key_id || 'rzp_test_your_key_id',
+        amount: orderData.amount || 6900,
+        currency: orderData.currency || 'INR',
         name: 'Complete Vedic Analysis',
-        description: `Professional Birth Chart + 20-Page Report for ${user?.name} - ₹149`,
+        description: 'Professional Birth Chart + Complete Analysis - ₹69',
+        image: '/logo.png',
         order_id: orderData.id,
-        handler: async (response) => {
+        handler: async function (response) {
+          console.log('Payment successful:', response);
           try {
-            const verifyResponse = await fetch('https://vedic-career-backend.vercel.app/api/verify-payment', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                notes: orderData.notes
-              })
+            const verificationResult = await verifyPayment({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              notes: orderData.notes
             });
 
-            const verifyResult = await verifyResponse.json();
-            if (verifyResult.success) {
+            if (verificationResult.success) {
+              console.log('Payment successful and verified:', verificationResult);
               setShowPremiumContent(true);
-              alert('🎉 Payment successful! Your complete professional analysis is now ready with birth chart, predictions, and remedies.');
+              setHasActivePurchase(true);
+              alert('🎉 Payment successful! Your complete analysis with birth chart is now available.');
             } else {
               throw new Error('Payment verification failed');
             }
           } catch (error) {
+            console.error('Payment verification error:', error);
             alert('Payment verification failed. Please contact support with your payment ID: ' + response.razorpay_payment_id);
+          } finally {
+            setIsProcessingPayment(false);
           }
-          setIsProcessingPayment(false);
         },
-        prefill: { 
-          name: user?.name || '', 
+        prefill: {
+          name: user?.name || '',
           email: user?.email || '',
           contact: user?.phone || ''
         },
-        notes: orderData.notes,
-        theme: { color: '#8B5CF6' },
+        notes: orderData.notes || {},
+        theme: {
+          color: '#8B5CF6'
+        },
         modal: {
           ondismiss: function() {
+            console.log('Payment modal dismissed');
             setIsProcessingPayment(false);
           }
         }
       };
 
-      new window.Razorpay(options).open();
+      console.log('Opening Razorpay checkout with options:', options);
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+
     } catch (error) {
-      console.error('Payment error:', error);
-      alert('Payment failed: ' + error.message + '. Please try again.');
+      console.error('Payment initiation error:', error);
+      alert('Failed to initiate payment: ' + error.message + '. Please try again or contact support.');
       setIsProcessingPayment(false);
     }
   };
 
-  // Premium content worth ₹149
-  const renderPremiumContent = () => {
-    const rashiChart = generateRashiChart();
-    const careerPredictions = {
+  // Helper function to get zodiac-specific content
+  const getZodiacSpecificContent = (type, defaultValue = '') => {
+    const contentMap = {
+      creative: {
+        Leo: `${user?.name} shows exceptional creative potential with natural artistic flair. Leo energy enhances dramatic expression, visual arts, and performance abilities.`,
+        Virgo: `Strong aesthetic sense and appreciation for beauty. Virgo influence supports visual arts, music, and crafts.`,
+        Pisces: `Highly imaginative and intuitive creative abilities. Pisces energy supports music, poetry, photography.`,
+        default: `${user?.name} demonstrates natural creative abilities with unique artistic perspective.`
+      },
+      physical: {
+        Aries: `Exceptional physical coordination and competitive spirit. Aries energy supports leadership in sports and martial arts.`,
+        Leo: `Strong physical presence and team leadership abilities. Leo influence enhances performance in sports requiring confidence.`,
+        Scorpio: `Intense focus and determination in physical activities. Scorpio energy supports individual sports and martial arts.`,
+        default: `${user?.name} shows natural physical intelligence and coordination abilities.`
+      },
+      logical: {
+        Virgo: `Outstanding analytical and detail-oriented thinking. Virgo energy enhances scientific reasoning and research abilities.`,
+        Gemini: `Quick logical processing and excellent pattern recognition. Gemini influence supports mathematics and computer science.`,
+        Capricorn: `Structured logical thinking with practical application focus. Excellent for engineering and business analysis.`,
+        default: `${user?.name} demonstrates strong analytical thinking and problem-solving abilities.`
+      },
+      imagination: {
+        Pisces: `Exceptional imaginative and intuitive abilities. Pisces energy supports abstract thinking and spiritual understanding.`,
+        Sagittarius: `Expansive imagination with philosophical thinking. Natural ability to understand abstract concepts.`,
+        Aquarius: `Innovative imagination with futuristic thinking. Excellent abstract reasoning for technology concepts.`,
+        default: `${user?.name} shows natural imaginative thinking and creative problem-solving.`
+      }
+    };
+
+    return contentMap[type]?.[zodiac] || contentMap[type]?.default || defaultValue;
+  };
+
+  // Get career predictions
+  const getCareerPredictions = () => {
+    const careerMap = {
       Leo: 'Leadership, Government, Entertainment, Public Speaking',
       Virgo: 'Healthcare, Research, Analytics, Service Industry',
       Cancer: 'Education, Psychology, Hospitality, Caregiving',
@@ -468,50 +282,436 @@ Thank you for trusting our Vedic astrology service!`);
       Aquarius: 'Technology, Innovation, Social Work, Science',
       Pisces: 'Arts, Spirituality, Music, Healing'
     };
+    return careerMap[zodiac] || 'Multiple talent areas with leadership potential';
+  };
+
+  // Advanced PDF Generation - Complete HTML Report
+  const generateCompletePDF = async () => {
+    setIsGeneratingPDF(true);
+    try {
+      const rashiChart = generateRashiChart();
+      const reportContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>Complete Vedic Analysis - ${user?.name}</title>
+          <style>
+            body { font-family: 'Georgia', serif; margin: 20px; color: #333; line-height: 1.6; }
+            .header { text-align: center; background: linear-gradient(135deg, #8B5CF6, #F59E0B); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; }
+            .section { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 10px; border-left: 5px solid #8B5CF6; }
+            .rashi-section { background: #fff3cd; border-left-color: #ffc107; }
+            .career-section { background: #d1ecf1; border-left-color: #17a2b8; }
+            .remedy-section { background: #f8d7da; border-left-color: #dc3545; }
+            .deity-section { background: #d4edda; border-left-color: #28a745; }
+            h1, h2, h3 { color: #2c3e50; }
+            .chart-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin: 20px 0; }
+            .chart-cell { border: 2px solid #8B5CF6; padding: 8px; text-align: center; min-height: 60px; background: white; }
+            .chart-center { background: linear-gradient(45deg, #FFD700, #FFA500); font-weight: bold; }
+            .strength-excellent { color: #28a745; font-weight: bold; }
+            .strength-strong { color: #007bff; font-weight: bold; }
+            .strength-good { color: #ffc107; font-weight: bold; }
+            .strength-moderate { color: #fd7e14; font-weight: bold; }
+            .strength-weak { color: #dc3545; font-weight: bold; }
+            .footer { text-align: center; margin-top: 40px; font-size: 12px; color: #666; border-top: 2px solid #8B5CF6; padding-top: 20px; }
+            .timeline { background: #e7f3ff; padding: 15px; border-radius: 8px; margin: 10px 0; }
+            .mantra-box { background: #fff8e1; padding: 12px; border-radius: 8px; margin: 8px 0; border-left: 4px solid #ff9800; }
+            .blessing-box { background: linear-gradient(45deg, #FFD700, #FFA500); padding: 15px; border-radius: 10px; margin: 20px 0; text-align: center; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <h1>🌟 Complete Vedic Analysis Report</h1>
+            <h2>For ${user?.name}</h2>
+            <p>Professional Birth Chart + Intelligence Analysis + Career Guide</p>
+            <p>Generated on ${new Date().toLocaleDateString()}</p>
+          </div>
+
+          <div class="section deity-section">
+            <h3>🕉️ ${zodiac} Zodiac Complete Profile</h3>
+            <p><strong>Name:</strong> ${user?.name}</p>
+            <p><strong>Zodiac Sign:</strong> ${zodiac} ${getSignSymbol(zodiac)}</p>
+            <p><strong>Nakshatra:</strong> ${nakshatra}</p>
+            <p><strong>Ruling Deity:</strong> ${zodiacDeities[zodiac]}</p>
+            <p><strong>Intelligence Score:</strong> ${iqScore}/150 (Above Average)</p>
+            
+            <h4>🌟 Divine Blessings & Protection:</h4>
+            <p>${user?.name} is blessed under the divine protection of ${zodiacDeities[zodiac].split(' - ')[0]}. Born in ${zodiac} zodiac with ${nakshatra} nakshatra, they carry the sacred energy of cosmic wisdom that guides their natural talents and spiritual growth.</p>
+            
+            <div class="mantra-box">
+              <h4>Daily Spiritual Practice:</h4>
+              <p><strong>Morning Mantra:</strong> "ॐ गणपतये नमः" (Om Ganapataye Namaha) - 21 times</p>
+              <p><strong>Study Mantra:</strong> "ॐ सरस्वत्यै नमः" (Om Saraswatyai Namaha) - 11 times</p>
+              <p><strong>Success Mantra:</strong> "${zodiac === 'Leo' ? 'ॐ सूर्याय नमः' : zodiac === 'Cancer' ? 'ॐ सोमाय नमः' : zodiac === 'Virgo' ? 'ॐ बुधाय नमः' : 'ॐ गुरवे नमः'}" - Weekly 108 times</p>
+            </div>
+          </div>
+
+          <div class="section rashi-section">
+            <h3>🔮 Professional Birth Chart (जन्म कुंडली)</h3>
+            <p>This is ${user?.name}'s complete astrological birth chart showing planetary positions and their influence on different life areas:</p>
+            
+            <div style="text-align: center; margin: 20px 0;">
+              <div style="display: inline-block; border: 3px solid #8B5CF6; padding: 10px;">
+                <div class="chart-grid">
+                  ${[11, 0, 1, 2, 10, null, null, 3, 9, 8, 7, 4].map((houseIndex, i) => {
+                    if (houseIndex === null) {
+                      return i === 5 ? 
+                        `<div class="chart-cell chart-center">🕉️<br>${user?.name}<br>${nakshatra}</div>` :
+                        `<div class="chart-cell chart-center">राशि<br>${getSignSymbol(zodiac)}<br>${zodiac}</div>`;
+                    }
+                    const house = rashiChart[houseIndex];
+                    return `<div class="chart-cell">
+                      <strong>H${house.number}</strong><br>
+                      ${getSignSymbol(house.sign)}<br>
+                      <small>${house.sign}</small><br>
+                      <span style="color: #8B5CF6;">${house.planets.map(p => getPlanetSymbol(p)).join(' ')}</span>
+                    </div>`;
+                  }).join('')}
+                </div>
+              </div>
+            </div>
+
+            <h4>🔍 Chart Analysis:</h4>
+            ${rashiChart.map(house => `
+              <p><strong>House ${house.number} (${house.significance}):</strong> 
+              <span class="strength-${house.strength.toLowerCase().replace(' ', '-')}">${house.strength}</span> - 
+              ${house.planets.length > 0 ? `Contains ${house.planets.join(', ')}` : 'No major planets'}</p>
+            `).join('')}
+          </div>
+
+          <div class="section career-section">
+            <h3>💼 Complete Career Path Analysis</h3>
+            <h4>🎯 Primary Career Fields:</h4>
+            <p><strong>Best Suited For:</strong> ${getCareerPredictions()}</p>
+            
+            <div class="timeline">
+              <h4>📅 Career Timeline & Success Periods:</h4>
+              <p><strong>Ages 16-22:</strong> Educational excellence and skill development phase</p>
+              <p><strong>Ages 24-32:</strong> Career establishment and rapid growth period</p>
+              <p><strong>Ages 32-40:</strong> Leadership roles and major achievements</p>
+              <p><strong>Ages 40-50:</strong> Peak earning and business success period</p>
+              <p><strong>After 50:</strong> Mentorship and spiritual guidance phase</p>
+            </div>
+
+            <h4>📚 Educational Recommendations:</h4>
+            <p><strong>Best Academic Streams:</strong> ${zodiac === 'Leo' ? 'Management, Political Science, Mass Communication, Theatre' : zodiac === 'Cancer' ? 'Psychology, Education, Medicine, Social Work' : zodiac === 'Virgo' ? 'Engineering, Research, Healthcare, Analytics' : 'Technology, Innovation, Creative Arts'}</p>
+            
+            <h4>💰 Wealth Accumulation Timeline:</h4>
+            <p><strong>Age 25-30:</strong> Foundation building with steady savings</p>
+            <p><strong>Age 30-38:</strong> Major financial breakthrough and property acquisition</p>
+            <p><strong>Age 38-45:</strong> Peak earning period with business success</p>
+            <p><strong>Best Investments:</strong> ${zodiac === 'Leo' ? 'Gold, Real Estate, Government Securities' : zodiac === 'Cancer' ? 'Land, Water Projects, Traditional Assets' : zodiac === 'Virgo' ? 'Healthcare, Technology, Service Sector' : 'Education, Innovation, Technology Stocks'}</p>
+          </div>
+
+          <div class="section">
+            <h3>🧠 Complete Intelligence Analysis Report</h3>
+            <p><strong>Overall IQ Score:</strong> ${iqScore}/150 (Above Average Range)</p>
+            
+            <h4>🎨 Creative & Artistic Intelligence:</h4>
+            <p>${getZodiacSpecificContent('creative')}</p>
+            
+            <h4>⚽ Physical & Sports Intelligence:</h4>
+            <p>${getZodiacSpecificContent('physical')}</p>
+            
+            <h4>🔬 Logical & Analytical Intelligence:</h4>
+            <p>${getZodiacSpecificContent('logical')}</p>
+            
+            <h4>💭 Imagination & Abstract Intelligence:</h4>
+            <p>${getZodiacSpecificContent('imagination')}</p>
+
+            <h4>📖 Learning Style Recommendations:</h4>
+            <p>${user?.name} learns best through ${zodiac === 'Leo' ? 'visual demonstrations and group activities' : zodiac === 'Cancer' ? 'emotional connections and storytelling' : zodiac === 'Virgo' ? 'structured methods and detailed explanations' : 'hands-on experience and practical applications'}. Encourage ${zodiac === 'Leo' ? 'leadership roles in projects' : zodiac === 'Cancer' ? 'collaborative learning environments' : 'systematic study approaches'}.</p>
+          </div>
+
+          <div class="section remedy-section">
+            <h3>🔱 Personalized Remedies & Sacred Practices</h3>
+            
+            <h4>🕉️ Daily Spiritual Practices:</h4>
+            <div class="mantra-box">
+              <p><strong>Morning (6-7 AM):</strong> Chant "ॐ गणपतये नमः" 21 times for obstacle removal</p>
+              <p><strong>Before Studies:</strong> Chant "ॐ सरस्वत्यै नमः" 11 times for enhanced wisdom</p>
+              <p><strong>Evening Prayer:</strong> "${zodiac === 'Leo' ? 'ॐ सूर्याय नमः' : zodiac === 'Cancer' ? 'ॐ चन्द्राय नमः' : zodiac === 'Virgo' ? 'ॐ बुधाय नमः' : 'ॐ गुरवे नमः'}" for success and growth</p>
+            </div>
+
+            <h4>🎨 Lucky Elements & Auspicious Items:</h4>
+            <p><strong>Favorable Colors:</strong> ${zodiac === 'Leo' ? 'Gold, Orange, Red, Yellow' : zodiac === 'Cancer' ? 'White, Silver, Blue, Light Green' : zodiac === 'Virgo' ? 'Green, Brown, Yellow, White' : 'Purple, Blue, Yellow, White'}</p>
+            <p><strong>Lucky Days:</strong> ${zodiac === 'Leo' ? 'Sunday (Most powerful), Tuesday' : zodiac === 'Cancer' ? 'Monday (Most powerful), Thursday' : zodiac === 'Virgo' ? 'Wednesday (Most powerful), Friday' : 'Thursday (Most powerful), Wednesday'}</p>
+            <p><strong>Lucky Numbers:</strong> ${zodiac === 'Leo' ? '1, 3, 9, 19, 21' : zodiac === 'Cancer' ? '2, 7, 11, 16, 25' : zodiac === 'Virgo' ? '5, 6, 14, 15, 24' : '3, 6, 8, 12, 21'}</p>
+            <p><strong>Lucky Direction:</strong> ${zodiac === 'Leo' ? 'East (Sunrise direction)' : zodiac === 'Cancer' ? 'North (Moon direction)' : zodiac === 'Virgo' ? 'North (Mercury direction)' : 'Northeast (Jupiter direction)'}</p>
+
+            <h4>💎 Gemstone Recommendations:</h4>
+            <p><strong>Primary Gemstone:</strong> ${zodiac === 'Leo' ? 'Ruby (माणिक) - Enhances leadership and confidence' : zodiac === 'Cancer' ? 'Pearl (मोती) - Brings emotional balance and peace' : zodiac === 'Virgo' ? 'Emerald (पन्ना) - Enhances intelligence and communication' : 'Yellow Sapphire (पुखराज) - Brings wisdom and prosperity'}</p>
+            <p><strong>Alternative Stones:</strong> ${zodiac === 'Leo' ? 'Sunstone, Red Coral, Carnelian' : zodiac === 'Cancer' ? 'Moonstone, White Coral, Opal' : zodiac === 'Virgo' ? 'Peridot, Green Tourmaline, Jade' : 'Citrine, Topaz, Tiger Eye'}</p>
+            <p><strong>How to Wear:</strong> Ring finger of right hand, preferably on ${zodiac === 'Leo' ? 'Sunday morning after sunrise' : zodiac === 'Cancer' ? 'Monday evening during moonrise' : zodiac === 'Virgo' ? 'Wednesday morning' : 'Thursday morning'}. Consult a qualified astrologer before wearing.</p>
+
+            <h4>🏠 Home & Study Environment:</h4>
+            <p><strong>Study Direction:</strong> Face ${zodiac === 'Leo' ? 'East while studying for maximum concentration' : zodiac === 'Cancer' ? 'North for enhanced memory and focus' : zodiac === 'Virgo' ? 'North for analytical thinking' : 'Northeast for wisdom and insight'}</p>
+            <p><strong>Room Colors:</strong> Paint study room in ${zodiac === 'Leo' ? 'light yellow or cream' : zodiac === 'Cancer' ? 'light blue or white' : zodiac === 'Virgo' ? 'light green or beige' : 'light purple or cream'} for positive energy</p>
+            <p><strong>Sacred Items:</strong> Keep a small ${zodiac === 'Leo' ? 'Sun deity image' : zodiac === 'Cancer' ? 'Shiva lingam' : zodiac === 'Virgo' ? 'Ganesha idol' : 'Guru/Jupiter deity'} in study area for divine blessings</p>
+          </div>
+
+          <div class="section deity-section">
+            <h3>🌟 Life Purpose & Personality Analysis</h3>
+            <p><strong>Core Personality:</strong> ${user?.name} possesses a naturally ${zodiac === 'Leo' ? 'confident and royal personality with innate leadership qualities. They are generous, creative, and destined to inspire others through their actions and achievements.' : zodiac === 'Cancer' ? 'nurturing and intuitive nature with deep emotional intelligence. They excel in caring for others and have a natural ability to heal and comfort those around them.' : zodiac === 'Virgo' ? 'analytical and perfectionist nature with exceptional attention to detail. They have natural problem-solving abilities and desire to serve others.' : 'unique personality that combines various strengths making them naturally adaptable and innovative.'}</p>
+            
+            <p><strong>Life Mission:</strong> ${user?.name} is destined to ${zodiac === 'Leo' ? 'lead and inspire others, bringing positive change through their natural charisma and vision. They will likely hold positions of authority and influence.' : zodiac === 'Cancer' ? 'nurture and guide others, creating safe spaces and emotional healing for their community. They are natural caregivers and protectors.' : zodiac === 'Virgo' ? 'analyze, organize and improve systems around them. They will excel in service-oriented roles that require precision and dedication.' : 'innovate and contribute uniquely to society through their special talents and abilities.'}</p>
+
+            <h4>🎯 Strengths to Develop:</h4>
+            <ul>
+              <li>${zodiac === 'Leo' ? 'Natural leadership and public speaking abilities' : zodiac === 'Cancer' ? 'Emotional intelligence and empathetic understanding' : zodiac === 'Virgo' ? 'Analytical thinking and systematic approach' : 'Creative problem-solving and innovation'}</li>
+              <li>${zodiac === 'Leo' ? 'Creative expression and artistic talents' : zodiac === 'Cancer' ? 'Nurturing instincts and protective nature' : zodiac === 'Virgo' ? 'Attention to detail and quality consciousness' : 'Adaptability and communication skills'}</li>
+              <li>${zodiac === 'Leo' ? 'Confidence building and team motivation' : zodiac === 'Cancer' ? 'Intuitive insights and emotional healing' : zodiac === 'Virgo' ? 'Practical skills and service orientation' : 'Intellectual curiosity and learning agility'}</li>
+            </ul>
+
+            <h4>⚠️ Areas for Improvement:</h4>
+            <ul>
+              <li>${zodiac === 'Leo' ? 'Managing ego and practicing humility' : zodiac === 'Cancer' ? 'Emotional resilience and boundary setting' : zodiac === 'Virgo' ? 'Perfectionism and self-criticism' : 'Decision-making and focus'}</li>
+              <li>${zodiac === 'Leo' ? 'Patience with detailed work' : zodiac === 'Cancer' ? 'Assertiveness and self-advocacy' : zodiac === 'Virgo' ? 'Flexibility and adaptability' : 'Consistency and follow-through'}</li>
+            </ul>
+          </div>
+
+          <div class="section career-section">
+            <h3>📈 Advanced Success Predictions</h3>
+            
+            <h4>🏆 Achievement Timeline:</h4>
+            <div class="timeline">
+              <p><strong>Ages 8-15 (Current Phase):</strong> Foundation building, discovering natural talents, early academic success</p>
+              <p><strong>Ages 16-18:</strong> Academic excellence, leadership roles in school, competition victories</p>
+              <p><strong>Ages 19-25:</strong> Higher education achievements, scholarship opportunities, skill mastery</p>
+              <p><strong>Ages 26-32:</strong> Career breakthrough, recognition in chosen field, financial growth</p>
+              <p><strong>Ages 33-40:</strong> Leadership positions, major life achievements, property acquisition</p>
+              <p><strong>Ages 41-50:</strong> Peak success period, wealth accumulation, social recognition</p>
+              <p><strong>After 50:</strong> Mentorship phase, spiritual growth, legacy building</p>
+            </div>
+
+            <h4>💡 Innovation & Business Potential:</h4>
+            <p>${user?.name} shows ${zodiac === 'Leo' ? 'strong entrepreneurial potential with natural leadership skills. They could successfully lead startups or creative ventures.' : zodiac === 'Cancer' ? 'excellent potential in service-based businesses, especially those involving care, education, or hospitality.' : zodiac === 'Virgo' ? 'exceptional potential in analytical and service businesses, particularly in healthcare, technology, or quality-focused industries.' : 'unique innovation potential with ability to bridge different fields and create novel solutions.'}</p>
+
+            <h4>🌍 Global Opportunities:</h4>
+            <p>International success is likely in ${zodiac === 'Leo' ? 'entertainment, politics, or leadership consulting' : zodiac === 'Cancer' ? 'education, healthcare, or humanitarian work' : zodiac === 'Virgo' ? 'research, technology, or precision industries' : 'technology, innovation, or creative fields'}. Foreign connections will bring significant opportunities after age 28.</p>
+          </div>
+
+          <div class="blessing-box">
+            <h3>🙏 Divine Blessings for ${user?.name}</h3>
+            <p style="font-style: italic; color: #8B4513;">
+              "May ${zodiacDeities[zodiac]?.split(' - ')[0]} bless ${user?.name} with wisdom, success, and happiness. 
+              May this child grow to fulfill their highest potential and contribute positively to the world. 
+              May all obstacles be removed and all endeavors be successful."
+            </p>
+            <p style="font-weight: bold; color: #8B4513;">
+              🕉️ ॐ शान्ति शान्ति शान्ति: 🕉️
+            </p>
+          </div>
+
+          <div class="footer">
+            <h3>✨ Report Summary</h3>
+            <p><strong>Complete Professional Analysis:</strong> ₹69 (Regular Price: ₹299 - You Saved ₹230!)</p>
+            <p><strong>Includes:</strong> Birth Chart + Intelligence Assessment + Career Guidance + Remedial Measures + 25-Page PDF</p>
+            <p><strong>Validity:</strong> Lifetime access to your complete report</p>
+            <p><strong>Generated on:</strong> ${new Date().toLocaleDateString()} by AstroAlign AI Professional System</p>
+            
+            <p style="margin-top: 20px; text-align: center;">
+              <strong>Thank you for choosing AstroAlign AI - India's most trusted Vedic analysis platform.</strong><br>
+              🌟 Trusted by 5,000+ families across India 🌟
+            </p>
+          </div>
+        </body>
+        </html>
+      `;
+
+      // Create and download the complete HTML report
+      const blob = new Blob([reportContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Complete_Vedic_Analysis_${user?.name?.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.html`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      alert('📄 Complete 25-page analysis downloaded successfully! Open the HTML file in any browser or convert to PDF for printing.');
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('Download failed. Please try the email option instead.');
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
+  // WhatsApp sharing function
+  const handleSendWhatsApp = () => {
+    const reportText = `🌟 *${user?.name}'s Complete Vedic Analysis Report*
+
+📊 *Birth Details:*
+• Zodiac: ${zodiac} ${getSignSymbol(zodiac)}
+• Nakshatra: ${nakshatra}
+• Ruling Deity: ${zodiacDeities[zodiac]}
+• Intelligence Score: ${iqScore}/150
+
+🎯 *Career Predictions:*
+• Best Fields: ${getCareerPredictions()}
+• Success Period: Ages 24-32 (Major growth)
+• Peak Earning: Ages 36-45
+• Leadership Roles: After age 35
+
+🔱 *Daily Remedies:*
+• Morning Mantra: "Om Ganapataye Namaha" (21 times)
+• Study Mantra: "Om Saraswatyai Namaha" (11 times)
+• Success Mantra: "${zodiac === 'Leo' ? 'Om Suryaya Namaha' : zodiac === 'Cancer' ? 'Om Chandraya Namaha' : zodiac === 'Virgo' ? 'Om Budhaya Namaha' : 'Om Gurave Namaha'}" (weekly)
+
+🎨 *Lucky Elements:*
+• Colors: ${zodiac === 'Leo' ? 'Gold, Orange, Red' : zodiac === 'Cancer' ? 'White, Silver, Blue' : zodiac === 'Virgo' ? 'Green, Brown, Yellow' : 'Purple, Blue, Yellow'}
+• Day: ${zodiac === 'Leo' ? 'Sunday' : zodiac === 'Cancer' ? 'Monday' : zodiac === 'Virgo' ? 'Wednesday' : 'Thursday'}
+• Numbers: ${zodiac === 'Leo' ? '1, 3, 9' : zodiac === 'Cancer' ? '2, 7, 11' : zodiac === 'Virgo' ? '5, 6, 14' : '3, 6, 8'}
+• Gemstone: ${zodiac === 'Leo' ? 'Ruby/Sunstone' : zodiac === 'Cancer' ? 'Pearl/Moonstone' : zodiac === 'Virgo' ? 'Emerald/Peridot' : 'Yellow Sapphire/Citrine'}
+
+💰 *Wealth Timeline:*
+• Age 25-30: Foundation building
+• Age 30-38: Major financial breakthrough
+• Age 38-45: Peak earning period
+• Best Investments: ${zodiac === 'Leo' ? 'Gold & Real Estate' : zodiac === 'Cancer' ? 'Land & Traditional Assets' : zodiac === 'Virgo' ? 'Healthcare & Technology' : 'Education & Innovation'}
+
+✨ *Complete Professional Analysis (Worth ₹69)*
+Includes: Birth Chart + Intelligence Analysis + Career Guide + Remedies
+
+Generated on: ${new Date().toLocaleDateString()}
+
+🔗 Get your complete 25-page analysis with birth chart!`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(reportText)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  // Email function
+  const handleSendEmail = () => {
+    const subject = `🌟 Complete Vedic Analysis for ${user?.name} - Worth ₹69`;
+    const body = `Dear Parent,
+
+Your child's complete professional Vedic analysis is ready:
+
+CHILD DETAILS:
+• Name: ${user?.name}
+• Zodiac: ${zodiac} ${getSignSymbol(zodiac)}
+• Nakshatra: ${nakshatra}
+• Ruling Deity: ${zodiacDeities[zodiac]}
+• Intelligence Score: ${iqScore}/150
+
+CAREER GUIDANCE:
+• Best Fields: ${getCareerPredictions()}
+• Success Timeline: Ages 24-32 (Major growth period)
+• Peak Earning: Ages 36-45 (Financial prosperity)
+• Leadership Potential: After age 35
+
+EDUCATION RECOMMENDATIONS:
+• Academic Excellence: Ages 16-18
+• Higher Education Success: Ages 19-25
+• Best Streams: ${zodiac === 'Leo' ? 'Management, Political Science, Mass Communication' : zodiac === 'Cancer' ? 'Psychology, Education, Medicine' : zodiac === 'Virgo' ? 'Engineering, Research, Healthcare' : 'Technology, Innovation, Creative Arts'}
+
+DAILY SPIRITUAL PRACTICES:
+• Morning Mantra: "Om Ganapataye Namaha" (21 times)
+• Study Mantra: "Om Saraswatyai Namaha" (11 times)
+• Success Mantra: "${zodiac === 'Leo' ? 'Om Suryaya Namaha' : zodiac === 'Cancer' ? 'Om Chandraya Namaha' : zodiac === 'Virgo' ? 'Om Budhaya Namaha' : 'Om Gurave Namaha'}" (weekly 108 times)
+
+LUCKY ELEMENTS & REMEDIES:
+• Favorable Colors: ${zodiac === 'Leo' ? 'Gold, Orange, Red, Yellow' : zodiac === 'Cancer' ? 'White, Silver, Blue, Light Green' : zodiac === 'Virgo' ? 'Green, Brown, Yellow, White' : 'Purple, Blue, Yellow, White'}
+• Lucky Days: ${zodiac === 'Leo' ? 'Sunday (Most powerful), Tuesday' : zodiac === 'Cancer' ? 'Monday (Most powerful), Thursday' : zodiac === 'Virgo' ? 'Wednesday (Most powerful), Friday' : 'Thursday (Most powerful), Wednesday'}
+• Lucky Numbers: ${zodiac === 'Leo' ? '1, 3, 9, 19, 21' : zodiac === 'Cancer' ? '2, 7, 11, 16, 25' : zodiac === 'Virgo' ? '5, 6, 14, 15, 24' : '3, 6, 8, 12, 21'}
+• Recommended Gemstone: ${zodiac === 'Leo' ? 'Ruby (माणिक) or Sunstone' : zodiac === 'Cancer' ? 'Pearl (मोती) or Moonstone' : zodiac === 'Virgo' ? 'Emerald (पन्ना) or Peridot' : 'Yellow Sapphire (पुखराज) or Citrine'}
+
+WEALTH ACCUMULATION TIMELINE:
+• Age 25-30: Foundation building with steady savings
+• Age 30-38: Major financial breakthrough and property acquisition
+• Age 38-45: Peak earning period with business opportunities
+• Best Investment Areas: ${zodiac === 'Leo' ? 'Gold, Real Estate, Government Securities' : zodiac === 'Cancer' ? 'Land, Water Projects, Traditional Assets' : zodiac === 'Virgo' ? 'Healthcare, Technology, Service Sector' : 'Education, Innovation, Technology Stocks'}
+
+INTELLIGENCE ANALYSIS:
+• Overall IQ: ${iqScore}/150 (Above Average)
+• Learning Style: ${zodiac === 'Leo' ? 'Visual & Leadership-oriented' : zodiac === 'Cancer' ? 'Emotional & Story-based' : zodiac === 'Virgo' ? 'Analytical & Systematic' : 'Creative & Innovative'}
+• Best Study Environment: ${zodiac === 'Leo' ? 'Bright, inspiring spaces with group activities' : zodiac === 'Cancer' ? 'Comfortable, peaceful environments' : zodiac === 'Virgo' ? 'Organized, quiet spaces with proper planning' : 'Flexible environments encouraging creativity'}
+
+This comprehensive analysis includes:
+✅ Professional Birth Chart (जन्म कुंडली)
+✅ 12-House Planetary Analysis
+✅ Career Timeline & Success Predictions
+✅ Educational Guidance & Stream Selection
+✅ Personalized Mantras & Sacred Remedies
+✅ Lucky Elements & Gemstone Guide
+✅ Wealth Accumulation Timeline
+✅ Intelligence Assessment Report
+✅ 25-Page Detailed PDF Report
+
+INVESTMENT SUMMARY:
+Complete Professional Analysis: ₹69 (Regular Price: ₹299)
+Includes: Birth Chart + Predictions + Remedies + Intelligence Analysis
+Generated on: ${new Date().toLocaleDateString()}
+
+🙏 May ${zodiacDeities[zodiac]?.split(' - ')[0]} bless ${user?.name} with wisdom, success, and happiness.
+
+Thank you for trusting AstroAlign AI - India's most comprehensive Vedic analysis platform.
+
+Best regards,
+AstroAlign AI Professional Team`;
+
+    const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoUrl;
+  };
+
+  const handleViewReport = () => {
+    if (hasActivePurchase) {
+      setShowPremiumContent(true);
+    } else {
+      alert('Please complete payment to access your complete report.');
+    }
+  };
+
+  // Complete Premium content with ALL merged features
+  const renderCompletePremiumContent = () => {
+    const rashiChart = generateRashiChart();
 
     return (
-      <div id="premium-content" className="space-y-4 md:space-y-6">
-        {/* Success Header - Mobile Optimized */}
-        <div className="bg-gradient-to-r from-purple-100 to-gold-100 p-4 md:p-6 rounded-xl border-2 border-gold-300 text-center">
-          <h2 className="text-xl md:text-3xl font-bold text-purple-800 mb-2">🌟 Complete Professional Analysis Unlocked!</h2>
-          <p className="text-purple-700 text-sm md:text-base">Full Vedic Report for {user?.name}</p>
-          <div className="mt-3 bg-gold-200 px-3 py-2 md:px-4 md:py-2 rounded-full inline-block">
-            <span className="text-gold-800 font-bold text-xs md:text-sm">✨ Includes Birth Chart + 20-Page PDF ✨</span>
+      <div className="space-y-6 pb-8">
+        {/* Success Header */}
+        <div className="text-center bg-gradient-to-r from-purple-100 to-gold-100 p-6 rounded-xl border-2 border-gold-300">
+          <h2 className="text-3xl font-bold text-purple-800 mb-2">🌟 Complete Professional Analysis Unlocked!</h2>
+          <p className="text-purple-700 text-lg">Full Vedic + Intelligence Report for {user?.name}</p>
+          <div className="mt-4 bg-gold-200 px-6 py-3 rounded-full inline-block">
+            <span className="text-gold-800 font-bold">✨ Birth Chart + IQ Analysis + Career Guide + Remedies ✨</span>
           </div>
         </div>
 
-        {/* Professional Rashi Chart - Mobile Optimized */}
-        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-4 md:p-6 rounded-xl border-2 border-indigo-300">
-          <h3 className="text-lg md:text-2xl font-bold text-indigo-800 text-center mb-4">🔮 Professional Birth Chart (जन्म कुंडली)</h3>
+        {/* Professional Birth Chart */}
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-xl border-2 border-indigo-300">
+          <h3 className="text-2xl font-bold text-indigo-800 text-center mb-6">🔮 Professional Birth Chart (जन्म कुंडली)</h3>
           
-          <div className="max-w-sm md:max-w-lg mx-auto mb-4 md:mb-6">
-            <div className="grid grid-cols-4 gap-1 bg-indigo-900 p-2 md:p-3 rounded-lg">
+          <div className="max-w-lg mx-auto mb-6">
+            <div className="grid grid-cols-4 gap-1 bg-indigo-900 p-4 rounded-lg">
               {[11, 0, 1, 2, 10, null, null, 3, 9, 8, 7, 4].map((houseIndex, i) => (
-                <div key={i} className={`p-2 md:p-3 text-center rounded text-xs md:text-sm ${
+                <div key={i} className={`p-3 text-center rounded text-sm ${
                   houseIndex === null ? 'bg-gradient-to-r from-gold-200 to-yellow-200 border-2 border-gold-400' : 
                   'bg-white border border-indigo-200'
                 }`}>
                   {houseIndex !== null ? (
                     <>
-                      <div className="text-xs font-bold text-indigo-800">{rashiChart[houseIndex].number}</div>
-                      <div className="text-sm md:text-lg">{getSignSymbol(rashiChart[houseIndex].sign)}</div>
-                      <div className="text-xs text-gray-600 hidden md:block">{rashiChart[houseIndex].sign}</div>
-                      <div className="text-xs text-purple-600 font-semibold">
+                      <div className="text-xs font-bold text-indigo-800">H{rashiChart[houseIndex].number}</div>
+                      <div className="text-xl">{getSignSymbol(rashiChart[houseIndex].sign)}</div>
+                      <div className="text-xs text-gray-600">{rashiChart[houseIndex].sign}</div>
+                      <div className="text-sm text-purple-600 font-semibold">
                         {rashiChart[houseIndex].planets.map(p => getPlanetSymbol(p)).join(' ')}
                       </div>
                     </>
                   ) : (
                     i === 5 ? (
                       <>
-                        <div className="text-sm font-bold text-gold-800">🕉️</div>
-                        <div className="text-xs text-gold-700 font-bold truncate">{user?.name}</div>
-                        <div className="text-xs text-gold-600 hidden md:block">{nakshatra}</div>
+                        <div className="text-lg font-bold text-gold-800">🕉️</div>
+                        <div className="text-xs text-gold-700 font-bold">{user?.name}</div>
+                        <div className="text-xs text-gold-600">{nakshatra}</div>
                       </>
                     ) : (
                       <>
                         <div className="text-sm font-bold text-gold-800">राशि</div>
-                        <div className="text-sm md:text-lg">{getSignSymbol(zodiac)}</div>
-                        <div className="text-xs text-gold-700 hidden md:block">{zodiac}</div>
+                        <div className="text-xl">{getSignSymbol(zodiac)}</div>
+                        <div className="text-xs text-gold-700">{zodiac}</div>
                       </>
                     )
                   )}
@@ -520,15 +720,15 @@ Thank you for trusting our Vedic astrology service!`);
             </div>
           </div>
 
-          {/* Chart Analysis - Mobile Optimized */}
-          <div className="bg-white p-3 md:p-4 rounded-lg border border-indigo-200">
-            <h4 className="font-bold text-indigo-800 mb-3 text-sm md:text-base">🔍 Professional Chart Reading</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 text-xs md:text-sm">
+          {/* Chart Analysis */}
+          <div className="bg-white p-4 rounded-lg border border-indigo-200">
+            <h4 className="font-bold text-indigo-800 mb-4">🔍 Professional Chart Analysis</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
-                <h5 className="font-semibold text-purple-700 mb-2">Planetary Strengths:</h5>
+                <h5 className="font-semibold text-purple-700 mb-3">House Strengths:</h5>
                 {rashiChart.slice(0, 6).map(house => (
-                  <div key={house.number} className="flex justify-between text-xs mb-1">
-                    <span>House {house.number}:</span>
+                  <div key={house.number} className="flex justify-between mb-2">
+                    <span>House {house.number} ({house.significance}):</span>
                     <span className={`font-semibold ${
                       house.strength === 'Excellent' ? 'text-green-600' :
                       house.strength === 'Strong' ? 'text-blue-600' :
@@ -539,10 +739,10 @@ Thank you for trusting our Vedic astrology service!`);
                 ))}
               </div>
               <div>
-                <h5 className="font-semibold text-purple-700 mb-2">Life Areas:</h5>
+                <h5 className="font-semibold text-purple-700 mb-3">Life Areas:</h5>
                 {rashiChart.slice(6, 12).map(house => (
-                  <div key={house.number} className="flex justify-between text-xs mb-1">
-                    <span>House {house.number}:</span>
+                  <div key={house.number} className="flex justify-between mb-2">
+                    <span>House {house.number} ({house.significance}):</span>
                     <span className={`font-semibold ${
                       house.strength === 'Excellent' ? 'text-green-600' :
                       house.strength === 'Strong' ? 'text-blue-600' :
@@ -556,135 +756,296 @@ Thank you for trusting our Vedic astrology service!`);
           </div>
         </div>
 
-        {/* Detailed Professional Analysis - Mobile Optimized */}
-        <div className="space-y-3 md:space-y-4">
-          <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 md:p-6 rounded-lg border-l-4 border-purple-500">
-            <h3 className="text-lg md:text-xl font-bold text-purple-800 mb-3 md:mb-4">📊 Complete Professional Analysis</h3>
-            
-            <div className="grid grid-cols-1 gap-3 md:gap-4">
-              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
-                <h4 className="font-bold text-purple-900 mb-2 text-sm md:text-base">🎯 Career Destiny:</h4>
-                <p className="text-xs md:text-sm text-gray-700 mb-2">
-                  <strong>Primary Fields:</strong> {careerPredictions[zodiac]}
-                </p>
-                <p className="text-xs md:text-sm text-gray-700">
-                  <strong>Success Timeline:</strong> Age 24-32 shows maximum career growth. 
-                  <strong>Leadership Role:</strong> After age 35.
-                </p>
-              </div>
-              
-              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
-                <h4 className="font-bold text-purple-900 mb-2 text-sm md:text-base">🧠 Intelligence Profile:</h4>
-                <p className="text-xs md:text-sm text-gray-700 mb-2">
-                  <strong>IQ Assessment:</strong> {iqScore}/150 (Above Average)
-                </p>
-                <p className="text-xs md:text-sm text-gray-700">
-                  <strong>Learning Style:</strong> {zodiac === 'Leo' ? 'Visual & Dramatic' : zodiac === 'Virgo' ? 'Analytical & Methodical' : 'Creative & Intuitive'}
-                </p>
-              </div>
-            </div>
+        {/* Zodiac Profile with Hindu Deity */}
+        <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-6 rounded-lg border-l-4 border-orange-500">
+          <div className="flex items-center mb-4">
+            <span className="text-3xl mr-3">🕉️</span>
+            <h3 className="text-xl font-bold text-orange-800">{zodiac} Complete Divine Analysis</h3>
           </div>
-
-          {/* Premium Remedies & Guidance - Mobile Optimized */}
-          <div className="bg-gradient-to-r from-gold-50 to-yellow-50 p-4 md:p-6 rounded-lg border-2 border-gold-400">
-            <h3 className="text-lg md:text-xl font-bold text-gold-800 mb-3 md:mb-4">🔱 Personalized Remedies & Mantras</h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-gold-900 mb-2 text-sm md:text-base">🕉️ Sacred Mantras:</h4>
-                <p className="text-xs text-gray-700 mb-1"><strong>Daily:</strong> "Om Ganapataye Namaha" (21 times)</p>
-                <p className="text-xs text-gray-700 mb-1"><strong>Before Study:</strong> "Om Saraswatyai Namaha"</p>
-                <p className="text-xs text-gray-700"><strong>For Success:</strong> "{zodiac === 'Leo' ? 'Om Suryaya Namaha' : zodiac === 'Cancer' ? 'Om Chandraya Namaha' : 'Om Gurave Namaha'}"</p>
-              </div>
-              
-              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-gold-900 mb-2 text-sm md:text-base">🎨 Lucky Elements:</h4>
-                <p className="text-xs text-gray-700 mb-1"><strong>Colors:</strong> {zodiac === 'Leo' ? 'Gold, Orange, Red' : zodiac === 'Cancer' ? 'White, Silver, Blue' : 'Purple, Yellow, Green'}</p>
-                <p className="text-xs text-gray-700 mb-1"><strong>Days:</strong> {zodiac === 'Leo' ? 'Sunday' : zodiac === 'Cancer' ? 'Monday' : 'Thursday'}</p>
-                <p className="text-xs text-gray-700"><strong>Numbers:</strong> {zodiac === 'Leo' ? '1, 3, 9' : zodiac === 'Cancer' ? '2, 7, 11' : '5, 6, 8'}</p>
-              </div>
-              
-              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-gold-900 mb-2 text-sm md:text-base">💎 Gemstone Guide:</h4>
-                <p className="text-xs text-gray-700 mb-1"><strong>Primary:</strong> {zodiac === 'Leo' ? 'Ruby (माणिक)' : zodiac === 'Cancer' ? 'Pearl (मोती)' : 'Yellow Sapphire'}</p>
-                <p className="text-xs text-gray-700 mb-1"><strong>Alternative:</strong> {zodiac === 'Leo' ? 'Sunstone' : zodiac === 'Cancer' ? 'Moonstone' : 'Citrine'}</p>
-                <p className="text-xs text-gray-700"><strong>Wear on:</strong> Ring finger, {zodiac === 'Leo' ? 'Sunday' : zodiac === 'Cancer' ? 'Monday' : 'Thursday'}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Advanced Predictions - Mobile Optimized */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 md:p-6 rounded-lg border-2 border-blue-300">
-            <h3 className="text-lg md:text-xl font-bold text-blue-800 mb-3 md:mb-4">🔮 Advanced Life Predictions</h3>
-            
-            <div className="space-y-3">
-              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-blue-900 mb-2 text-sm md:text-base">📚 Education Timeline:</h4>
-                <div className="text-xs md:text-sm text-gray-700 space-y-1">
-                  <p><strong>Ages 16-18:</strong> Excellent academic performance, especially in {zodiac === 'Leo' ? 'leadership & arts' : zodiac === 'Cancer' ? 'humanities & psychology' : 'science & technology'}</p>
-                  <p><strong>Ages 22-25:</strong> Higher education brings recognition and awards</p>
-                  <p><strong>Best Stream:</strong> {zodiac === 'Leo' ? 'Management, Political Science, Theatre' : zodiac === 'Cancer' ? 'Psychology, Teaching, Medicine' : 'Engineering, Research, Innovation'}</p>
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="md:w-1/3">
+              <div className="relative">
+                <img 
+                  src={zodiacImages[zodiac]} 
+                  alt={`${zodiac} divine energy`}
+                  className="w-full h-48 object-cover rounded-lg shadow-md border-2 border-orange-200"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3 rounded-b-lg">
+                  <p className="text-white text-sm font-medium text-center">
+                    {zodiac} Divine Energy
+                  </p>
                 </div>
               </div>
-              
-              <div className="bg-white p-3 md:p-4 rounded-lg shadow-sm">
-                <h4 className="font-semibold text-blue-900 mb-2 text-sm md:text-base">💰 Wealth & Success Periods:</h4>
-                <div className="text-xs md:text-sm text-gray-700 space-y-1">
-                  <p><strong>Age 28-35:</strong> Major financial growth, property acquisition</p>
-                  <p><strong>Age 40-50:</strong> Peak earning period, business success</p>
-                  <p><strong>Lucky Investment:</strong> {zodiac === 'Leo' ? 'Gold, Real Estate' : zodiac === 'Cancer' ? 'Land, Water Projects' : 'Technology, Mutual Funds'}</p>
+            </div>
+            <div className="md:w-2/3">
+              <div className="bg-gradient-to-r from-yellow-100 to-orange-100 p-4 rounded-lg mb-4 border border-yellow-300">
+                <h4 className="font-semibold text-orange-900 mb-2">🙏 Ruling Deity & Blessings:</h4>
+                <p className="text-orange-800">{zodiacDeities[zodiac]}</p>
+              </div>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                {user?.name} receives divine protection and blessings from {zodiacDeities[zodiac].split(' - ')[0]}. 
+                Born under {zodiac} zodiac with {nakshatra} nakshatra, they carry sacred cosmic energy that guides their 
+                natural talents, personality development, and spiritual growth throughout life.
+              </p>
+              <div className="bg-purple-100 p-4 rounded-lg">
+                <h4 className="font-semibold text-purple-900 mb-2">🌟 Divine Qualities & Gifts:</h4>
+                <p className="text-purple-800 text-sm">
+                  {zodiac === 'Leo' ? "Blessed with Sun God's divine energy - Natural leadership, royal nature, creative expression, inspiring presence, generous heart, and ability to motivate others toward greatness." :
+                   zodiac === 'Virgo' ? "Blessed with Lord Ganesha's wisdom - Exceptional analytical mind, systematic problem-solving, service-oriented nature, attention to detail, and ability to heal and help others." :
+                   zodiac === 'Cancer' ? "Blessed with Lord Shiva's nurturing power - Deep emotional intelligence, protective instincts, intuitive wisdom, caring nature, and ability to create safe spaces for others." :
+                   zodiac === 'Aries' ? "Blessed with Lord Hanuman's courage - Pioneering spirit, physical strength, fearless nature, initiative-taking ability, and power to overcome any obstacle." :
+                   zodiac === 'Taurus' ? "Blessed with Goddess Lakshmi's abundance - Material stability, artistic appreciation, patient nature, practical wisdom, and ability to create lasting wealth and beauty." :
+                   zodiac === 'Gemini' ? "Blessed with Goddess Saraswati's knowledge - Quick learning ability, excellent communication skills, intellectual curiosity, adaptability, and gift for teaching and writing." :
+                   zodiac === 'Libra' ? "Blessed with Lord Shukra's harmony - Natural diplomatic skills, aesthetic sense, fair judgment, relationship-building ability, and talent for creating balance and beauty." :
+                   zodiac === 'Scorpio' ? "Blessed with Goddess Kali's transformation - Deep insight, investigative nature, healing powers, spiritual strength, and ability to transform challenges into opportunities." :
+                   zodiac === 'Sagittarius' ? "Blessed with Lord Vishnu's wisdom - Philosophical mind, truth-seeking nature, optimistic outlook, teaching ability, and power to inspire others toward higher knowledge." :
+                   zodiac === 'Capricorn' ? "Blessed with Lord Shani's discipline - Strong determination, practical approach, goal-oriented nature, leadership in traditional fields, and ability to build lasting foundations." :
+                   zodiac === 'Aquarius' ? "Blessed with Lord Varuna's innovation - Progressive thinking, humanitarian values, independent spirit, technological aptitude, and ability to bring positive change to society." :
+                   "Blessed with Lord Rama's compassion - Imaginative mind, spiritual connection, artistic abilities, empathetic nature, and gift for healing and inspiring others through creativity."}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Complete Intelligence Analysis */}
+        <div className="bg-gradient-to-r from-indigo-50 to-blue-50 p-6 rounded-lg border-l-4 border-indigo-500">
+          <div className="flex items-center mb-4">
+            <span className="text-2xl mr-3">🧠</span>
+            <h3 className="text-xl font-bold text-indigo-800">Complete Intelligence Analysis Report</h3>
+          </div>
+          <div className="mb-4 text-center bg-white p-4 rounded-lg shadow-sm">
+            <h4 className="font-bold text-indigo-900 text-lg">Overall IQ Assessment: {iqScore}/150</h4>
+            <p className="text-indigo-700">Above Average Intelligence with Special Talents</p>
+          </div>
+          <div className="space-y-4">
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-indigo-900 mb-2">🎨 Creative & Artistic Intelligence:</h4>
+              <p className="text-gray-700 text-sm mb-2">{getZodiacSpecificContent('creative')}</p>
+              <div className="bg-blue-50 p-2 rounded text-xs">
+                <strong>Development Tip:</strong> Encourage {zodiac === 'Leo' ? 'theater, public speaking, and visual arts' : zodiac === 'Cancer' ? 'music, storytelling, and emotional expression' : zodiac === 'Virgo' ? 'detailed artwork, crafts, and design' : 'creative problem-solving and innovative projects'}.
+              </div>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-indigo-900 mb-2">⚽ Physical & Sports Intelligence:</h4>
+              <p className="text-gray-700 text-sm mb-2">{getZodiacSpecificContent('physical')}</p>
+              <div className="bg-green-50 p-2 rounded text-xs">
+                <strong>Best Sports:</strong> {zodiac === 'Leo' ? 'Team sports with leadership roles, athletics, swimming' : zodiac === 'Cancer' ? 'Swimming, cycling, team support roles' : zodiac === 'Virgo' ? 'Individual precision sports, gymnastics, yoga' : 'Adventure sports, martial arts, competitive games'}.
+              </div>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-indigo-900 mb-2">🔬 Logical & Analytical Intelligence:</h4>
+              <p className="text-gray-700 text-sm mb-2">{getZodiacSpecificContent('logical')}</p>
+              <div className="bg-purple-50 p-2 rounded text-xs">
+                <strong>Academic Strength:</strong> {zodiac === 'Leo' ? 'Leadership studies, history, political science' : zodiac === 'Cancer' ? 'Psychology, sociology, life sciences' : zodiac === 'Virgo' ? 'Mathematics, science, research methodology' : 'Technology, innovation, abstract concepts'}.
+              </div>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-indigo-900 mb-2">💭 Imagination & Abstract Intelligence:</h4>
+              <p className="text-gray-700 text-sm mb-2">{getZodiacSpecificContent('imagination')}</p>
+              <div className="bg-yellow-50 p-2 rounded text-xs">
+                <strong>Future Potential:</strong> {zodiac === 'Leo' ? 'Visionary leadership, creative direction, inspiring others' : zodiac === 'Cancer' ? 'Intuitive counseling, healing arts, emotional intelligence' : zodiac === 'Virgo' ? 'Systematic innovation, quality improvement, service excellence' : 'Breakthrough thinking, technology innovation, creative solutions'}.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Complete Career Analysis */}
+        <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 rounded-lg border-l-4 border-blue-500">
+          <div className="flex items-center mb-4">
+            <span className="text-2xl mr-3">💼</span>
+            <h3 className="text-xl font-bold text-blue-800">Complete Career Path Analysis</h3>
+          </div>
+          <div className="space-y-4">
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-blue-900 mb-2">🎯 Primary Career Fields:</h4>
+              <p className="text-gray-700 text-sm mb-3">
+                <strong>Best Suited For:</strong> {getCareerPredictions()}
+              </p>
+              <div className="bg-blue-50 p-3 rounded">
+                <h5 className="font-semibold text-blue-800 text-sm mb-2">Success Timeline:</h5>
+                <div className="text-xs space-y-1">
+                  <p><strong>Ages 16-22:</strong> Educational excellence and skill development</p>
+                  <p><strong>Ages 24-32:</strong> Career establishment and rapid growth</p>
+                  <p><strong>Ages 32-40:</strong> Leadership roles and major achievements</p>
+                  <p><strong>Ages 40-50:</strong> Peak earning and business success</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-blue-900 mb-2">📚 Educational Recommendations:</h4>
+              <p className="text-gray-700 text-sm mb-2">
+                <strong>Best Academic Streams:</strong> {zodiac === 'Leo' ? 'Management, Political Science, Mass Communication, Theatre Arts' : zodiac === 'Cancer' ? 'Psychology, Education, Medicine, Social Work, Counseling' : zodiac === 'Virgo' ? 'Engineering, Research, Healthcare, Data Analytics, Quality Management' : 'Technology, Innovation, Creative Arts, Sciences'}
+              </p>
+              <div className="bg-cyan-50 p-3 rounded">
+                <h5 className="font-semibold text-cyan-800 text-sm mb-2">Learning Style:</h5>
+                <p className="text-xs">{user?.name} learns best through {zodiac === 'Leo' ? 'visual demonstrations, group discussions, and leadership opportunities' : zodiac === 'Cancer' ? 'emotional connections, storytelling, and collaborative environments' : zodiac === 'Virgo' ? 'structured methods, detailed explanations, and systematic approaches' : 'hands-on experience, practical applications, and creative exploration'}.</p>
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-blue-900 mb-2">💰 Wealth Timeline & Investment Guide:</h4>
+              <div className="space-y-2 text-xs">
+                <p><strong>Ages 25-30:</strong> Foundation building with steady savings and skill investment</p>
+                <p><strong>Ages 30-38:</strong> Major financial breakthrough and property acquisition opportunities</p>
+                <p><strong>Ages 38-45:</strong> Peak earning period with business ownership potential</p>
+                <p><strong>Best Investments:</strong> {zodiac === 'Leo' ? 'Gold, Real Estate, Government Securities, Entertainment Industry' : zodiac === 'Cancer' ? 'Land, Water Projects, Traditional Assets, Healthcare Sector' : zodiac === 'Virgo' ? 'Healthcare, Technology, Service Sector, Quality-focused Businesses' : 'Education, Innovation, Technology Stocks, Startup Investments'}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Advanced Remedies & Sacred Practices */}
+        <div className="bg-gradient-to-r from-gold-50 to-yellow-50 p-6 rounded-lg border-2 border-gold-400">
+          <h3 className="text-xl font-bold text-gold-800 mb-4">🔱 Personalized Remedies & Sacred Practices</h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-gold-900 mb-3">🕉️ Daily Sacred Practices:</h4>
+              <div className="space-y-2 text-sm">
+                <p><strong>Morning (6-7 AM):</strong> "ॐ गणपतये नमः" (21 times) - Removes obstacles</p>
+                <p><strong>Before Study:</strong> "ॐ सरस्वत्यै नमः" (11 times) - Enhances wisdom</p>
+                <p><strong>For Success:</strong> "{zodiac === 'Leo' ? 'ॐ सूर्याय नमः' : zodiac === 'Cancer' ? 'ॐ चन्द्राय नमः' : zodiac === 'Virgo' ? 'ॐ बुधाय नमः' : 'ॐ गुरवे नमः'}" (Weekly 108 times)</p>
+                <p><strong>Evening Prayer:</strong> Gratitude meditation for 5 minutes</p>
+              </div>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-gold-900 mb-3">🎨 Lucky Elements & Timing:</h4>
+              <div className="space-y-2 text-sm">
+                <p><strong>Colors:</strong> {zodiac === 'Leo' ? 'Gold, Orange, Red, Yellow' : zodiac === 'Cancer' ? 'White, Silver, Blue, Light Green' : zodiac === 'Virgo' ? 'Green, Brown, Yellow, White' : 'Purple, Blue, Yellow, White'}</p>
+                <p><strong>Lucky Days:</strong> {zodiac === 'Leo' ? 'Sunday (Most powerful), Tuesday' : zodiac === 'Cancer' ? 'Monday (Most powerful), Thursday' : zodiac === 'Virgo' ? 'Wednesday (Most powerful), Friday' : 'Thursday (Most powerful), Wednesday'}</p>
+                <p><strong>Numbers:</strong> {zodiac === 'Leo' ? '1, 3, 9, 19, 21' : zodiac === 'Cancer' ? '2, 7, 11, 16, 25' : zodiac === 'Virgo' ? '5, 6, 14, 15, 24' : '3, 6, 8, 12, 21'}</p>
+                <p><strong>Direction:</strong> {zodiac === 'Leo' ? 'East (Sunrise direction)' : zodiac === 'Cancer' ? 'North (Moon direction)' : zodiac === 'Virgo' ? 'North (Mercury direction)' : 'Northeast (Jupiter direction)'}</p>
+              </div>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg shadow-sm md:col-span-2">
+              <h4 className="font-semibold text-gold-900 mb-3">💎 Gemstone & Healing Guide:</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p><strong>Primary Gemstone:</strong> {zodiac === 'Leo' ? 'Ruby (माणिक) - Enhances leadership and confidence' : zodiac === 'Cancer' ? 'Pearl (मोती) - Brings emotional balance and peace' : zodiac === 'Virgo' ? 'Emerald (पन्ना) - Enhances intelligence and communication' : 'Yellow Sapphire (पुखराज) - Brings wisdom and prosperity'}</p>
+                  <p><strong>Alternative Stones:</strong> {zodiac === 'Leo' ? 'Sunstone, Red Coral, Carnelian' : zodiac === 'Cancer' ? 'Moonstone, White Coral, Opal' : zodiac === 'Virgo' ? 'Peridot, Green Tourmaline, Jade' : 'Citrine, Topaz, Tiger Eye'}</p>
+                </div>
+                <div>
+                  <p><strong>How to Wear:</strong> Ring finger of right hand</p>
+                  <p><strong>Best Day:</strong> {zodiac === 'Leo' ? 'Sunday morning after sunrise' : zodiac === 'Cancer' ? 'Monday evening during moonrise' : zodiac === 'Virgo' ? 'Wednesday morning' : 'Thursday morning'}</p>
+                  <p><strong>Metal Setting:</strong> {zodiac === 'Leo' ? 'Gold (preferred) or Copper' : zodiac === 'Cancer' ? 'Silver (preferred) or White Gold' : zodiac === 'Virgo' ? 'Gold or Silver' : 'Gold (preferred) or Silver'}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Download & Share Options - Mobile Optimized */}
-        <div className="bg-indigo-50 p-4 md:p-6 rounded-lg border border-indigo-200 text-center">
-          <h4 className="font-bold text-indigo-800 mb-3 md:mb-4 text-sm md:text-base">📱 Get Your Complete Analysis</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {/* Advanced Life Predictions */}
+        <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg border-2 border-purple-300">
+          <h3 className="text-xl font-bold text-purple-800 mb-4">🔮 Advanced Life Predictions & Guidance</h3>
+          
+          <div className="space-y-4">
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-purple-900 mb-2">🌟 Life Purpose & Personality:</h4>
+              <p className="text-gray-700 text-sm mb-3">
+                {user?.name} possesses a naturally {zodiac === 'Leo' ? 'confident and royal personality with innate leadership qualities. They are generous, creative, and destined to inspire others through their actions and achievements.' : zodiac === 'Cancer' ? 'nurturing and intuitive nature with deep emotional intelligence. They excel in caring for others and have a natural ability to heal and comfort those around them.' : zodiac === 'Virgo' ? 'analytical and perfectionist nature with exceptional attention to detail. They have natural problem-solving abilities and a strong desire to serve others.' : 'unique personality that combines various strengths, making them naturally adaptable and innovative.'}
+              </p>
+              <div className="bg-purple-50 p-3 rounded">
+                <p className="text-xs"><strong>Life Mission:</strong> {user?.name} is destined to {zodiac === 'Leo' ? 'lead and inspire others, bringing positive change through their natural charisma and vision. They will likely hold positions of authority and influence.' : zodiac === 'Cancer' ? 'nurture and guide others, creating safe spaces and emotional healing for their community. They are natural caregivers and protectors.' : zodiac === 'Virgo' ? 'analyze, organize and improve systems around them. They will excel in service-oriented roles that require precision and dedication.' : 'innovate and contribute uniquely to society through their special talents and abilities.'}</p>
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-purple-900 mb-2">📈 Achievement Timeline:</h4>
+              <div className="space-y-2 text-xs">
+                <p><strong>Ages 8-15 (Current):</strong> Foundation building, discovering talents, early academic success</p>
+                <p><strong>Ages 16-18:</strong> Academic excellence, leadership roles, competition victories</p>
+                <p><strong>Ages 19-25:</strong> Higher education achievements, skill mastery, recognition</p>
+                <p><strong>Ages 26-32:</strong> Career breakthrough, financial growth, professional recognition</p>
+                <p><strong>Ages 33-40:</strong> Leadership positions, major achievements, property acquisition</p>
+                <p><strong>Ages 41-50:</strong> Peak success, wealth accumulation, social influence</p>
+                <p><strong>After 50:</strong> Mentorship, spiritual growth, legacy building</p>
+              </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h4 className="font-semibold text-purple-900 mb-2">🌍 Global Opportunities & Innovation:</h4>
+              <p className="text-xs text-gray-700 mb-2">
+                {user?.name} shows {zodiac === 'Leo' ? 'strong potential for international leadership roles in entertainment, politics, or business. They could successfully represent India on global platforms.' : zodiac === 'Cancer' ? 'excellent potential for international work in education, healthcare, or humanitarian fields. Their caring nature will open global opportunities.' : zodiac === 'Virgo' ? 'exceptional potential in global research, technology, or quality-focused industries. Their precision will be valued internationally.' : 'unique innovation potential with ability to create solutions that can impact the world positively.'}
+              </p>
+              <div className="bg-pink-50 p-2 rounded">
+                <p className="text-xs"><strong>Best Countries for Success:</strong> {zodiac === 'Leo' ? 'USA, UK, Australia, UAE (Leadership opportunities)' : zodiac === 'Cancer' ? 'Canada, New Zealand, Switzerland, Japan (Care-based industries)' : zodiac === 'Virgo' ? 'Germany, Singapore, Sweden, South Korea (Technology & precision)' : 'Silicon Valley, Europe, Australia, Canada (Innovation hubs)'}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Download & Share Options */}
+        <div className="bg-gradient-to-r from-green-50 to-teal-50 p-6 rounded-lg border border-green-200 text-center">
+          <h4 className="font-bold text-green-800 mb-4 text-lg">📱 Get Your Complete 25-Page Professional Report</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <button 
-              onClick={generatePDF}
+              onClick={generateCompletePDF}
               disabled={isGeneratingPDF}
-              className={`py-3 px-4 rounded-lg font-semibold text-xs md:text-sm ${
+              className={`py-3 px-4 rounded-lg font-semibold text-sm ${
                 isGeneratingPDF 
                   ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
                   : 'bg-red-600 text-white hover:bg-red-700'
               }`}
             >
-              {isGeneratingPDF ? '⏳ Generating...' : '📄 Download 20-Page PDF'}
+              {isGeneratingPDF ? '⏳ Generating...' : '📄 Download Complete PDF'}
             </button>
             
             <button 
-              onClick={shareToWhatsApp}
-              className="bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 font-semibold text-xs md:text-sm"
+              onClick={handleSendWhatsApp}
+              className="bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 font-semibold text-sm"
             >
-              📱 WhatsApp Report
+              📱 Share on WhatsApp
             </button>
             
             <button 
-              onClick={sendEmail}
+              onClick={handleSendEmail}
               disabled={isSendingEmail}
-              className={`py-3 px-4 rounded-lg font-semibold text-xs md:text-sm ${
+              className={`py-3 px-4 rounded-lg font-semibold text-sm ${
                 isSendingEmail 
                   ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
                   : 'bg-blue-600 text-white hover:bg-blue-700'
               }`}
             >
-              {isSendingEmail ? '⏳ Sending...' : '📧 Email Full Analysis'}
+              {isSendingEmail ? '⏳ Sending...' : '📧 Email Full Report'}
             </button>
             
             <button 
-              onClick={copyShareLink}
-              className="bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 font-semibold text-xs md:text-sm"
+              onClick={() => {
+                const shareData = {
+                  title: `${user?.name}'s Complete Vedic Analysis`,
+                  text: `🌟 Complete Professional Vedic Analysis for ${user?.name}\n\n📊 Includes: Birth Chart + IQ Analysis + Career Guide + Remedies\n\n✨ Generated by AstroAlign AI`,
+                  url: window.location.href
+                };
+                
+                if (navigator.share) {
+                  navigator.share(shareData);
+                } else {
+                  navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`).then(() => {
+                    alert('🔗 Report link copied to clipboard!');
+                  });
+                }
+              }}
+              className="bg-purple-600 text-white py-3 px-4 rounded-lg hover:bg-purple-700 font-semibold text-sm"
             >
-              🔗 Share with Family
+              🔗 Share Report Link
             </button>
           </div>
           
-          <div className="mt-4 bg-green-100 p-3 rounded-lg">
-            <p className="text-green-800 text-xs md:text-sm font-semibold">
-              ✨ Congratulations! You now have the most comprehensive Vedic analysis available.
+          <div className="bg-gradient-to-r from-green-100 to-teal-100 p-4 rounded-lg border border-green-300">
+            <p className="text-green-800 font-semibold mb-2">
+              ✨ Congratulations! You now have the most comprehensive Vedic analysis available for children.
+            </p>
+            <p className="text-green-700 text-sm">
+              This professional-grade report worth ₹69 includes birth chart analysis, intelligence assessment, 
+              career guidance, remedial measures, and lifetime predictions - everything needed to guide {user?.name}'s 
+              development for years to come.
             </p>
           </div>
         </div>
@@ -694,80 +1055,157 @@ Thank you for trusting our Vedic astrology service!`);
 
   if (showPremiumContent) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4">
-        <div className="bg-white rounded-xl md:rounded-2xl max-w-6xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
-          <div className="sticky top-0 bg-white border-b p-3 md:p-4 flex justify-between items-center shadow-sm rounded-t-xl md:rounded-t-2xl">
-            <h2 className="text-lg md:text-xl font-bold">🌟 Complete Professional Analysis</h2>
-            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-xl md:text-2xl">×</button>
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[95vh] overflow-y-auto">
+          <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center shadow-sm rounded-t-2xl">
+            <h2 className="text-xl font-bold">🌟 Complete Professional Vedic Analysis</h2>
+            <button
+              onClick={onClose}
+              className="text-gray-500 hover:text-gray-700 text-2xl"
+            >
+              ×
+            </button>
           </div>
-          <div className="p-3 md:p-6">{renderPremiumContent()}</div>
+          <div className="p-6">
+            {renderCompletePremiumContent()}
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 md:p-4">
-      <div className="bg-white rounded-xl md:rounded-2xl max-w-sm md:max-w-md w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white border-b p-3 md:p-4 flex justify-between items-center rounded-t-xl md:rounded-t-2xl">
-          <h2 className="text-lg md:text-xl font-bold">🌟 Professional Analysis</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-xl md:text-2xl">×</button>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center rounded-t-2xl">
+          <h2 className="text-xl font-bold">🌟 Complete Analysis</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 text-2xl"
+          >
+            ×
+          </button>
         </div>
         
-        <div className="p-4 md:p-6">
-          <div className="text-center mb-4 md:mb-6">
-            <div className="text-3xl md:text-4xl mb-3 md:mb-4">🌟</div>
-            <h3 className="text-xl md:text-2xl font-bold mb-2">Complete Professional Analysis</h3>
-            <p className="text-gray-600 text-sm md:text-base">Astrologer-level report for {user?.name}</p>
-          </div>
-
-          <div className="bg-gradient-to-r from-purple-50 to-gold-50 p-4 md:p-5 rounded-lg border-2 border-purple-300 mb-4 md:mb-6">
-            <h4 className="font-bold mb-3 text-purple-900 text-sm md:text-base">🏆 Complete Professional Package:</h4>
-            <div className="grid grid-cols-1 gap-2 text-xs md:text-sm text-gray-700">
-              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span><strong>Professional Birth Chart</strong> with planetary analysis</div>
-              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Detailed 12-House analysis & predictions</div>
-              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Career timeline & success periods</div>
-              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Personalized mantras & sacred remedies</div>
-              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Lucky colors, gems & auspicious timings</div>
-              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Advanced education & wealth predictions</div>
-              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span><strong>20-page Premium PDF report</strong></div>
-              <div className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>WhatsApp/Email delivery options</div>
-            </div>
-          </div>
-
-          <div className="text-center mb-4 md:mb-6">
-            <div className="flex items-center justify-center space-x-2 mb-2">
-              <div className="text-2xl md:text-3xl font-bold text-purple-600">₹149</div>
-              <div className="text-lg line-through opacity-70 text-gray-500">₹399</div>
-              <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">62% OFF</div>
-            </div>
-            <p className="text-xs bg-red-100 text-red-800 px-3 py-1 rounded-full inline-block mb-2 font-semibold animate-pulse">
-              🔥 Limited Time Offer - Today Only!
+        <div className="p-6">
+          <div className="text-center mb-6">
+            <div className="text-4xl mb-4">🌟</div>
+            <h3 className="text-2xl font-bold mb-2">Complete Professional Analysis</h3>
+            <p className="text-gray-600">
+              Birth Chart + Intelligence + Career Guide for {user?.name}
             </p>
-            <p className="text-xs text-gray-500">Professional astrologer-level analysis • Instant download • Money-back guarantee</p>
+          </div>
+
+          {hasActivePurchase && (
+            <div className="mb-4 p-3 bg-green-100 rounded-lg text-center">
+              <p className="text-green-800 text-sm mb-2">✅ Payment successful!</p>
+              <button
+                onClick={handleViewReport}
+                className="bg-green-600 text-white py-2 px-4 rounded-lg font-semibold text-sm"
+              >
+                📖 View Complete Professional Report
+              </button>
+            </div>
+          )}
+
+          <div className="space-y-4 mb-6">
+            <div className="bg-gradient-to-r from-purple-50 to-gold-50 p-5 rounded-lg border-2 border-purple-300">
+              <h4 className="font-bold mb-3 text-purple-900">🏆 Complete Professional Package Includes:</h4>
+              <ul className="text-sm space-y-2 text-gray-700">
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span><strong>Professional Birth Chart (जन्म कुंडली)</strong> with 12-house analysis</li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Complete IQ Assessment across 4 intelligence types</li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Hindu Deity Blessings & Divine Protection Analysis</li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Detailed Career Timeline & Success Predictions</li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Personalized Mantras & Sacred Remedies</li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Lucky Elements, Gemstones & Auspicious Timings</li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Advanced Education & Wealth Timeline</li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span><strong>25-page Professional PDF Report</strong></li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>WhatsApp, Email & Share Options</li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Lifetime Access & Future Updates</li>
+              </ul>
+            </div>
+
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg border border-blue-200">
+              <h4 className="font-semibold mb-2 text-blue-900">🌟 Enhanced Preview for {zodiac} Children:</h4>
+              <div className="text-sm text-gray-700 space-y-2">
+                <p className="text-xs bg-white p-3 rounded border-l-2 border-blue-400">
+                  <strong>Divine Blessing:</strong> "Born under {zodiac} with {nakshatra} nakshatra, {user?.name} receives protection from {zodiacDeities[zodiac]?.split(' - ')[0]}. 
+                  Their birth chart shows {zodiac === 'Leo' ? 'exceptional leadership potential with natural confidence and creative expression abilities' : 
+                  zodiac === 'Cancer' ? 'deep emotional intelligence with nurturing instincts and protective nature' : 
+                  zodiac === 'Virgo' ? 'analytical brilliance with systematic problem-solving and service-oriented mindset' : 'unique cosmic gifts and specialized talents'}..."
+                </p>
+                <div className="bg-yellow-50 p-2 rounded">
+                  <p className="text-xs text-yellow-800">
+                    <strong>Success Mantra:</strong> "{zodiac === 'Leo' ? 'ॐ सूर्याय नमः' : zodiac === 'Cancer' ? 'ॐ चन्द्राय नमः' : zodiac === 'Virgo' ? 'ॐ बुधाय नमः' : 'ॐ गुरवे नमः'}" - Chant 21 times daily for success and wisdom
+                  </p>
+                </div>
+                <p className="text-xs text-blue-600 italic">*Complete analysis includes birth chart, planetary positions, 20+ sections with detailed guidance.</p>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <div className="text-3xl font-bold text-purple-600">₹69</div>
+                <div className="text-lg line-through opacity-70 text-gray-500">₹299</div>
+                <div className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">77% OFF</div>
+              </div>
+              <p className="text-xs bg-red-100 text-red-800 px-3 py-1 rounded-full inline-block mb-2 font-semibold animate-pulse">
+                🔥 Limited Time Professional Offer - Today Only!
+              </p>
+              <p className="text-xs text-gray-500">
+                Complete astrologer-level analysis • Instant access • Lifetime validity • 7-day guarantee
+              </p>
+            </div>
+
+            <div className="bg-gradient-to-r from-green-50 to-teal-50 p-4 rounded-lg border border-green-200">
+              <h4 className="font-semibold mb-2 text-green-900">⭐ Why This Complete Analysis is Special:</h4>
+              <ul className="text-xs text-gray-700 space-y-1">
+                <li>🌍 World's first IQ + Vedic astrology + Birth chart combination</li>
+                <li>👨‍👩‍👧‍👦 Trusted by 5,000+ Indian families</li>
+                <li>🎯 Professional astrologer-level accuracy for children (8-15 years)</li>
+                <li>📱 Instant access + downloadable 25-page report</li>
+                <li>🔒 Secure payment & complete data protection</li>
+                <li>📈 Comprehensive development roadmap until age 50</li>
+                <li>🕉️ Authentic Vedic mantras, remedies & spiritual guidance</li>
+                <li>🧠 Complete intelligence analysis across all domains</li>
+                <li>💎 Gemstone, lucky elements & timing recommendations</li>
+                <li>🌟 Career predictions with wealth timeline</li>
+              </ul>
+            </div>
           </div>
 
           <div className="space-y-3">
             <button
               onClick={handlePayment}
-              disabled={isProcessingPayment}
-              className={`w-full py-3 md:py-4 rounded-lg font-bold text-white text-sm md:text-base ${
+              disabled={isProcessingPayment || hasActivePurchase}
+              className={`w-full py-4 rounded-lg font-bold text-white ${
                 isProcessingPayment 
                   ? 'bg-gray-400 cursor-not-allowed' 
+                  : hasActivePurchase
+                  ? 'bg-green-600'
                   : 'bg-gradient-to-r from-purple-600 to-gold-600 hover:from-purple-700 hover:to-gold-700'
               }`}
             >
-              {isProcessingPayment ? 'Processing Payment...' : '🌟 Get Complete Analysis for ₹149'}
+              {isProcessingPayment ? 'Processing Payment...' : 
+               hasActivePurchase ? '✅ Payment Complete - View Report Above' :
+               '🌟 Get Complete Analysis for ₹69 (Save ₹230)'}
             </button>
             
-            <button onClick={onClose} className="w-full py-2 text-gray-600 hover:text-gray-800 text-sm md:text-base">
+            <button
+              onClick={onClose}
+              className="w-full py-2 text-gray-600 hover:text-gray-800"
+            >
               Maybe Later
             </button>
           </div>
 
           <div className="mt-4 text-center">
-            <p className="text-xs text-gray-500">🔒 Secure payment by Razorpay • Trusted by 10,000+ families</p>
-            <p className="text-xs text-purple-600 font-medium mt-1">⚡ Join 500+ satisfied customers this month!</p>
+            <p className="text-xs text-gray-500">
+              🔒 Secure payment by Razorpay • Trusted by 5,000+ families
+            </p>
+            <p className="text-xs text-purple-600 font-medium mt-1 animate-pulse">
+              ⚡ Only {Math.floor(Math.random() * 12) + 3} complete professional reports left at this price today!
+            </p>
           </div>
         </div>
       </div>
@@ -775,4 +1213,4 @@ Thank you for trusting our Vedic astrology service!`);
   );
 };
 
-export default PremiumModal149;
+export default PremiumModal69;
