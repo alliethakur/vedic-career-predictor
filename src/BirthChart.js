@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PremiumModal29 from "./PremiumModal29";
-import PremiumModal149 from "./PremiumModal149";
+import PremiumModal69 from "./PremiumModal69";
 
 function getZodiacSign(dobStr) {
   const date = new Date(dobStr);
@@ -42,7 +41,7 @@ function getNakshatra(zodiac) {
   return zodiacNakshatras[Math.floor(Math.random() * zodiacNakshatras.length)];
 }
 
-function BirthChart({ user, result, onBack }) {
+function BirthChart({ user, result, onBack, onPremium }) {
   const { dob, name } = user;
   const { score, breakdown, total } = result;
 
@@ -50,7 +49,6 @@ function BirthChart({ user, result, onBack }) {
   const [zodiac, setZodiac] = useState("Unknown");
   const [nakshatra, setNakshatra] = useState("");
   const [showPremium, setShowPremium] = useState(false);
-  const [premiumType, setPremiumType] = useState("basic");
   const [personalizedInsight, setPersonalizedInsight] = useState("");
   const [hiddenInsights, setHiddenInsights] = useState({});
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -195,9 +193,12 @@ function BirthChart({ user, result, onBack }) {
     return "Growing";
   };
 
-  const handlePremiumClick = (type) => {
-    setPremiumType(type);
+  const handlePremiumClick = () => {
     setShowPremium(true);
+    // Call the onPremium prop if it exists (for App.js navigation)
+    if (onPremium) {
+      onPremium();
+    }
   };
 
   const getZodiacEmoji = (sign) => {
@@ -427,197 +428,143 @@ function BirthChart({ user, result, onBack }) {
               </div>
             </div>
 
-            {/* Modern Pricing Cards - Mobile Optimized */}
+            {/* Single Premium Call-to-Action - Mobile Optimized */}
             <div className="mb-8 md:mb-12">
               <div className="text-center mb-8 md:mb-10">
-                <h3 className="text-2xl md:text-4xl font-bold text-slate-800 mb-3 md:mb-4">Choose Your Path to Enlightenment</h3>
-                <p className="text-lg md:text-xl text-slate-600 mb-4 md:mb-6">Unlock your child's complete potential</p>
+                <h3 className="text-2xl md:text-4xl font-bold text-slate-800 mb-3 md:mb-4">Complete Professional Analysis</h3>
+                <p className="text-lg md:text-xl text-slate-600 mb-4 md:mb-6">Birth Chart + Intelligence + Career Guide + Remedies</p>
                 <div className="inline-flex items-center bg-gradient-to-r from-rose-500 to-orange-500 text-white px-4 py-2 md:px-6 md:py-3 rounded-full font-bold animate-pulse text-sm md:text-base">
-                  ⚡ LIMITED TIME: 70% OFF
+                  ⚡ LIMITED TIME: 77% OFF - Today Only!
                 </div>
               </div>
 
-              <div className="grid gap-6 md:gap-8 max-w-5xl mx-auto">
-                {/* Essential Plan - Mobile Optimized */}
+              {/* Single Premium Card */}
+              <div className="max-w-lg mx-auto">
                 <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl md:rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition duration-300"></div>
-                  <div className="relative bg-white p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-xl">
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-1 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold">
-                        MOST POPULAR
-                      </span>
-                    </div>
-                    
-                    <div className="text-center mb-6 md:mb-8 pt-2 md:pt-4">
-                      <div className="text-3xl md:text-5xl mb-3 md:mb-4">✨</div>
-                      <h4 className="text-xl md:text-2xl font-bold text-slate-800 mb-1 md:mb-2">Essential Insights</h4>
-                      <p className="text-slate-600 text-sm md:text-base">Complete Vedic analysis</p>
-                    </div>
+                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-gold-600 rounded-2xl md:rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition duration-300"></div>
+                 <div className="relative bg-white p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-xl">
+                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                     <span className="bg-gradient-to-r from-purple-600 to-gold-600 text-white px-4 py-1 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold">
+                       COMPLETE PACKAGE
+                     </span>
+                   </div>
+                   
+                   <div className="text-center mb-6 md:mb-8 pt-2 md:pt-4">
+                     <div className="text-3xl md:text-5xl mb-3 md:mb-4">🌟</div>
+                     <h4 className="text-xl md:text-2xl font-bold text-slate-800 mb-1 md:mb-2">Complete Vedic Analysis</h4>
+                     <p className="text-slate-600 text-sm md:text-base">Birth Chart + IQ + Career + Remedies</p>
+                   </div>
 
-                    <div className="text-center mb-6 md:mb-8">
-                      <div className="flex items-baseline justify-center space-x-2 mb-2">
-                        <span className="text-4xl md:text-5xl font-bold text-slate-800">₹29</span>
-                        <span className="text-xl md:text-2xl text-slate-400 line-through">₹99</span>
-                      </div>
-                      <span className="text-xs md:text-sm text-slate-600">One-time payment</span>
-                    </div>
+                   <div className="text-center mb-6 md:mb-8">
+                     <div className="flex items-baseline justify-center space-x-2 mb-2">
+                       <span className="text-4xl md:text-5xl font-bold text-purple-600">₹69</span>
+                       <span className="text-xl md:text-2xl text-slate-400 line-through">₹299</span>
+                       <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">77% OFF</span>
+                     </div>
+                     <span className="text-xs md:text-sm text-slate-600">One-time payment • Lifetime access</span>
+                   </div>
 
-                    <ul className="space-y-3 md:space-y-4 mb-6 md:mb-8">
-                      {[
-                        "Complete personality analysis",
-                        "Vedic remedies & mantras",
-                        "Career recommendations",
-                        "Lucky gems & colors",
-                        "WhatsApp + PDF delivery"
-                      ].map((feature, index) => (
-                        <li key={index} className="flex items-center text-slate-700 text-sm md:text-base">
-                          <span className="text-emerald-500 mr-3 text-lg">✓</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+                   <ul className="space-y-3 md:space-y-4 mb-6 md:mb-8">
+                     {[
+                       "🔮 Professional Birth Chart (जन्म कुंडली)",
+                       "🧠 Complete IQ Assessment (4 types)",
+                       "🕉️ Hindu Deity Blessings & Protection",
+                       "💼 Career Timeline & Success Predictions",
+                       "🔱 Personalized Mantras & Remedies",
+                       "💎 Lucky Gemstones & Elements",
+                       "📄 25-page Professional PDF Report",
+                       "📱 WhatsApp + Email Delivery",
+                       "✨ Lifetime Access & Updates"
+                     ].map((feature, index) => (
+                       <li key={index} className="flex items-center text-slate-700 text-sm md:text-base">
+                         <span className="text-green-500 mr-3 text-lg">✓</span>
+                         {feature}
+                       </li>
+                     ))}
+                   </ul>
 
-                    <button
-                      onClick={() => handlePremiumClick("basic")}
-                      className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 md:py-4 rounded-xl md:rounded-2xl font-bold hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base"
-                    >
-                      Get Essential Report
-                    </button>
-                  </div>
-                </div>
+                   <button
+                     onClick={handlePremiumClick}
+                     className="w-full bg-gradient-to-r from-purple-600 to-gold-600 text-white py-3 md:py-4 rounded-xl md:rounded-2xl font-bold hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base"
+                   >
+                     🌟 Get Complete Analysis for ₹69 (Save ₹230!)
+                   </button>
 
-                {/* Premium Plan - Mobile Optimized */}
-                <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl md:rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition duration-300"></div>
-                  <div className="relative bg-white p-6 md:p-8 rounded-2xl md:rounded-3xl shadow-xl">
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-gradient-to-r from-amber-400 to-orange-500 text-white px-4 py-1 md:px-6 md:py-2 rounded-full text-xs md:text-sm font-bold">
-                        PREMIUM CHOICE
-                      </span>
-                    </div>
-                    
-                    <div className="text-center mb-6 md:mb-8 pt-2 md:pt-4">
-                      <div className="text-3xl md:text-5xl mb-3 md:mb-4">👑</div>
-                      <h4 className="text-xl md:text-2xl font-bold text-slate-800 mb-1 md:mb-2">Complete Analysis</h4>
-                      <p className="text-slate-600 text-sm md:text-base">Professional astrologer report</p>
-                    </div>
+                   <div className="mt-4 text-center">
+                     <p className="text-xs text-slate-500">🔒 Secure Payment • Instant Delivery • 7-day Guarantee</p>
+                   </div>
+                 </div>
+               </div>
+             </div>
 
-                    <div className="text-center mb-6 md:mb-8">
-                      <div className="flex items-baseline justify-center space-x-2 mb-2">
-                        <span className="text-4xl md:text-5xl font-bold text-slate-800">₹149</span>
-                        <span className="text-xl md:text-2xl text-slate-400 line-through">₹299</span>
-                      </div>
-                      <span className="text-xs md:text-sm text-slate-600">Includes consultation</span>
-                    </div>
+             {/* Trust Badges - Mobile Optimized */}
+             <div className="mt-8 md:mt-12 flex flex-wrap justify-center gap-3 md:gap-6">
+               {[
+                 { icon: "🔒", text: "Secure Payment" },
+                 { icon: "⚡", text: "Instant Delivery" },
+                 { icon: "🏆", text: "5,000+ Happy Families" },
+                 { icon: "📱", text: "Mobile Optimized" }
+               ].map((badge, index) => (
+                 <div key={index} className="flex items-center space-x-2 bg-slate-100 px-3 py-2 md:px-4 md:py-2 rounded-full">
+                   <span className="text-lg md:text-xl">{badge.icon}</span>
+                   <span className="text-xs md:text-sm font-medium text-slate-700">{badge.text}</span>
+                 </div>
+               ))}
+             </div>
+           </div>
 
-                    <ul className="space-y-3 md:space-y-4 mb-6 md:mb-8">
-                      <li className="font-bold text-amber-600 text-center mb-3 text-sm md:text-base">
-                        ✨ Everything in Essential PLUS:
-                      </li>
-                      {[
-                        "Professional birth chart",
-                        "12-house detailed analysis",
-                        "Planetary positions & effects",
-                        "15-min consultation call(Coming Soon)",
-                        "2-page premium PDF"
-                      ].map((feature, index) => (
-                        <li key={index} className="flex items-center text-slate-700 text-sm md:text-base">
-                          <span className="text-amber-500 mr-3 text-lg">✓</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+           {/* Action Buttons - Mobile Optimized */}
+           <div className="text-center">
+             <button
+               onClick={onBack}
+               className="bg-slate-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl hover:bg-slate-700 transition-all duration-300 font-medium text-sm md:text-base"
+             >
+               ← Retake Assessment
+             </button>
+           </div>
+         </div>
+       </div>
+     </div>
 
-                    <button
-                      onClick={() => handlePremiumClick("detailed")}
-                      className="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-white py-3 md:py-4 rounded-xl md:rounded-2xl font-bold hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base"
-                    >
-                      Get Premium Report
-                    </button>
-                  </div>
-                </div>
-              </div>
+     {/* Single Premium Modal */}
+     {showPremium && (
+       <PremiumModal69
+         zodiac={zodiac}
+         nakshatra={nakshatra}
+         iqScore={score}
+         hiddenInsights={hiddenInsights}
+         user={user}
+         onClose={() => setShowPremium(false)}
+       />
+     )}
 
-              {/* Trust Badges - Mobile Optimized */}
-              <div className="mt-8 md:mt-12 flex flex-wrap justify-center gap-3 md:gap-6">
-                {[
-                  { icon: "🔒", text: "Secure Payment" },
-                  { icon: "⚡", text: "Instant Delivery" },
-                  { icon: "🏆", text: "10,000+ Happy Families" }
-                ].map((badge, index) => (
-                  <div key={index} className="flex items-center space-x-2 bg-slate-100 px-3 py-2 md:px-4 md:py-2 rounded-full">
-                    <span className="text-lg md:text-xl">{badge.icon}</span>
-                    <span className="text-xs md:text-sm font-medium text-slate-700">{badge.text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Action Buttons - Mobile Optimized */}
-            <div className="text-center">
-              <button
-                onClick={onBack}
-                className="bg-slate-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl hover:bg-slate-700 transition-all duration-300 font-medium text-sm md:text-base"
-              >
-                ← Retake Assessment
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Premium Modals */}
-      {showPremium && premiumType === "basic" && (
-        <PremiumModal29
-          zodiac={zodiac}
-          nakshatra={nakshatra}
-          iqScore={score}
-          hiddenInsights={hiddenInsights}
-          user={user}
-          onClose={() => setShowPremium(false)}
-        />
-      )}
-      
-      {showPremium && premiumType === "detailed" && (
-        <PremiumModal149
-          zodiac={zodiac}
-          nakshatra={nakshatra}
-          iqScore={score}
-          hiddenInsights={hiddenInsights}
-          user={user}
-          onClose={() => setShowPremium(false)}
-        />
-      )}
-
-      <style jsx>{`
-        @keyframes blob {
-          0% {
-            transform: translate(0px, 0px) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-          100% {
-            transform: translate(0px, 0px) scale(1);
-          }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
-    </div>
-  );
+     <style jsx>{`
+       @keyframes blob {
+         0% {
+           transform: translate(0px, 0px) scale(1);
+         }
+         33% {
+           transform: translate(30px, -50px) scale(1.1);
+         }
+         66% {
+           transform: translate(-20px, 20px) scale(0.9);
+         }
+         100% {
+           transform: translate(0px, 0px) scale(1);
+         }
+       }
+       .animate-blob {
+         animation: blob 7s infinite;
+       }
+       .animation-delay-2000 {
+         animation-delay: 2s;
+       }
+       .animation-delay-4000 {
+         animation-delay: 4s;
+       }
+     `}</style>
+   </div>
+ );
 }
 
 export default BirthChart;
-
-
