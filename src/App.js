@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
-import LoadingScreen from "./LoadingScreen";
 import IQIntroForm from "./IQIntroForm";
 import PotentialTest from "./PotentialTest";
 import BirthChart from "./BirthChart";
-import PremiumModal69 from "./PremiumModal29";
+import PremiumModal29 from "./PremiumModal29";
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState("loading");
+  const [currentScreen, setCurrentScreen] = useState("form");
   const [userData, setUserData] = useState(null);
   const [testResults, setTestResults] = useState(null);
-
-  // Main test flow (8–15 yrs)
-  const handleLoadingComplete = () => setCurrentScreen("form");
   
   const handleStart = (data) => {
     setUserData(data);
@@ -27,21 +23,17 @@ function App() {
   const handlePremiumClick = () => setCurrentScreen("premium");
   
   const handleBackToMainForm = () => setCurrentScreen("form");
-
+  
   // Make navigation functions globally accessible (if still needed)
   useEffect(() => {
     window.navigateToMainForm = handleBackToMainForm;
   }, []);
-
+  
   // Screens
-  if (currentScreen === "loading") {
-    return <LoadingScreen onComplete={handleLoadingComplete} />;
-  }
-
   if (currentScreen === "form") {
     return <IQIntroForm onStart={handleStart} />;
   }
-
+  
   if (currentScreen === "test") {
     return (
       <PotentialTest
@@ -51,7 +43,7 @@ function App() {
       />
     );
   }
-
+  
   if (currentScreen === "birthchart") {
     return (
       <BirthChart
@@ -62,10 +54,10 @@ function App() {
       />
     );
   }
-
+  
   if (currentScreen === "premium") {
     return (
-      <PremiumModal69
+      <PremiumModal29
         zodiac={testResults?.zodiac}
         nakshatra={testResults?.nakshatra}
         iqScore={testResults?.totalScore}
@@ -75,7 +67,7 @@ function App() {
       />
     );
   }
-
+  
   return null;
 }
 
