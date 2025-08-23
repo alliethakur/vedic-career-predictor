@@ -3,7 +3,7 @@ import LoadingScreen from "./LoadingScreen";
 import IQIntroForm from "./IQIntroForm";
 import PotentialTest from "./PotentialTest";
 import BirthChart from "./BirthChart";
-import PremiumModal69 from "./PremiumModal69";
+import PremiumModal69 from "./PremiumModal29";
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState("loading");
