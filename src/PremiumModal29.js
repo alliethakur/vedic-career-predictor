@@ -941,33 +941,6 @@ AstroAlign AI Professional Team`;
           )}
 
           <div className="space-y-4 mb-6">
-            <div className="bg-gradient-to-r from-purple-50 to-gold-50 p-5 rounded-lg border-2 border-purple-300">
-              <h4 className="font-bold mb-3 text-purple-900">🏆 Complete Professional Package Includes:</h4>
-              <ul className="text-sm space-y-2 text-gray-700">
-                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span><strong>Professional Birth Chart (जन्म कुंडली)</strong></li>
-                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Complete IQ Assessment</li>
-                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Career Timeline & Success Predictions</li>
-                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Personalized Mantras & Remedies</li>
-                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Lucky Elements & Gemstone Guide</li>
-                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Education & Wealth Timeline</li>
-                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span><strong>Complete Professional PDF Report</strong></li>
-                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>WhatsApp, Email & Share Options</li>
-                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Lifetime Access</li>
-              </ul>
-            </div>
-
-            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg border border-blue-200">
-              <h4 className="font-semibold mb-2 text-blue-900">🌟 What You'll Discover:</h4>
-              <div className="text-sm text-gray-700 space-y-1">
-                <p>• Your child's divine ruling deity and blessings</p>
-                <p>• Complete birth chart with planetary analysis</p>
-                <p>• Intelligence assessment across 4 key areas</p>
-                <p>• Career success timeline and wealth predictions</p>
-                <p>• Daily mantras and spiritual practices</p>
-                <p>• Lucky colors, numbers, and gemstone recommendations</p>
-              </div>
-            </div>
-
             <div className="text-center">
               <div className="flex items-center justify-center space-x-2 mb-2">
                 <div className="text-3xl font-bold text-purple-600">₹29</div>
@@ -977,25 +950,21 @@ AstroAlign AI Professional Team`;
               <p className="text-xs bg-red-100 text-red-800 px-3 py-1 rounded-full inline-block mb-2 font-semibold animate-pulse">
                 🔥 Limited Time Offer - Today Only!
               </p>
-              <p className="text-xs text-gray-500">
-                Complete astrologer-level analysis • Instant access • Lifetime validity
-              </p>
             </div>
 
-            <div className="bg-gradient-to-r from-green-50 to-teal-50 p-4 rounded-lg border border-green-200">
-              <h4 className="font-semibold mb-2 text-green-900">⭐ Why Choose This Analysis:</h4>
-              <ul className="text-xs text-gray-700 space-y-1">
-                <li>🌍 World's first IQ + Vedic astrology combination</li>
-                <li>👨‍👩‍👧‍👦 Trusted by 5,000+ Indian families</li>
-                <li>🎯 Professional astrologer-level accuracy</li>
-                <li>📱 Instant access + downloadable report</li>
-                <li>🔒 Secure payment & data protection</li>
-                <li>🕉️ Authentic Vedic remedies & guidance</li>
-              </ul>
-            </div>
-          </div>
+            {/* Test Button for Development */}
+            <button
+              onClick={() => {
+                console.log('Test button clicked - simulating successful payment');
+                setShowPremiumContent(true);
+                setHasActivePurchase(true);
+                alert('🧪 TEST MODE: Payment successful! Your complete analysis is now available.');
+              }}
+              className="w-full py-3 rounded-lg font-bold text-white bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg border-2 border-green-400"
+            >
+              🧪 TEST ACCESS (Development Only)
+            </button>
 
-          <div className="space-y-3">
             <button
               onClick={handlePayment}
               disabled={isProcessingPayment || hasActivePurchase}
@@ -1004,13 +973,43 @@ AstroAlign AI Professional Team`;
                   ? 'bg-gray-400 cursor-not-allowed' 
                   : hasActivePurchase
                   ? 'bg-green-600'
-                  : 'bg-gradient-to-r from-purple-600 to-gold-600 hover:from-purple-700 hover:to-gold-700'
+                  : 'bg-gradient-to-r from-purple-700 via-purple-600 to-amber-500 hover:from-purple-800 hover:via-purple-700 hover:to-amber-600 shadow-xl border-2 border-purple-400'
               }`}
             >
               {isProcessingPayment ? 'Processing Payment...' : 
                hasActivePurchase ? '✅ Payment Complete - View Report Above' :
                '🌟 Get Complete Analysis for ₹29 (Save ₹270)'}
             </button>
+          </div>
+
+          <div className="space-y-4 mb-6">
+            <div className="bg-gradient-to-r from-purple-50 to-gold-50 p-4 rounded-lg border border-purple-300">
+              <h4 className="font-bold mb-2 text-purple-900">🏆 What You'll Get:</h4>
+              <ul className="text-sm space-y-1 text-gray-700">
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Birth Chart + IQ Analysis</li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Career Guide + Remedies</li>
+                <li className="flex items-start"><span className="text-green-500 mr-2 mt-0.5">✅</span>Complete PDF Report</li>
+              </ul>
+            </div>
+
+            <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-lg border border-blue-200">
+              <h4 className="font-semibold mb-2 text-blue-900">🌟 What You'll Discover:</h4>
+              <div className="text-sm text-gray-700 space-y-1">
+                <p>• Your child's divine blessings & talents</p>
+                <p>• Success timeline & lucky elements</p>
+                <p>• Daily mantras & spiritual practices</p>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-green-50 to-teal-50 p-4 rounded-lg border border-green-200">
+              <h4 className="font-semibold mb-2 text-green-900">⭐ Why Choose This:</h4>
+              <ul className="text-xs text-gray-700 space-y-1">
+                <li>🌍 World's first IQ + Vedic combination</li>
+                <li>👨‍👩‍👧‍👦 Trusted by 5,000+ families</li>
+                <li>🔒 Secure payment & instant access</li>
+              </ul>
+            </div>
+          </div>
             
             <button
               onClick={onClose}
