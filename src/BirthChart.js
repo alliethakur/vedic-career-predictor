@@ -428,13 +428,13 @@ function BirthChart({ user, result, onBack, onPremium }) {
               </div>
             </div>
 
-            {/* Single Premium Call-to-Action - Mobile Optimized */}
+            {/* Single Premium Call-to-Action - Mobile Optimized with ₹29 */}
             <div className="mb-8 md:mb-12">
               <div className="text-center mb-8 md:mb-10">
                 <h3 className="text-2xl md:text-4xl font-bold text-slate-800 mb-3 md:mb-4">Complete Professional Analysis</h3>
                 <p className="text-lg md:text-xl text-slate-600 mb-4 md:mb-6">Birth Chart + Intelligence + Career Guide + Remedies</p>
                 <div className="inline-flex items-center bg-gradient-to-r from-rose-500 to-orange-500 text-white px-4 py-2 md:px-6 md:py-3 rounded-full font-bold animate-pulse text-sm md:text-base">
-                  ⚡ LIMITED TIME: 77% OFF - Today Only!
+                  ⚡ LIMITED TIME: 90% OFF - Today Only!
                 </div>
               </div>
 
@@ -457,9 +457,9 @@ function BirthChart({ user, result, onBack, onPremium }) {
 
                    <div className="text-center mb-6 md:mb-8">
                      <div className="flex items-baseline justify-center space-x-2 mb-2">
-                       <span className="text-4xl md:text-5xl font-bold text-purple-600">₹69</span>
+                       <span className="text-4xl md:text-5xl font-bold text-purple-600">₹29</span>
                        <span className="text-xl md:text-2xl text-slate-400 line-through">₹299</span>
-                       <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">77% OFF</span>
+                       <span className="bg-red-500 text-white px-2 py-1 rounded text-xs font-bold">90% OFF</span>
                      </div>
                      <span className="text-xs md:text-sm text-slate-600">One-time payment • Lifetime access</span>
                    </div>
@@ -472,7 +472,7 @@ function BirthChart({ user, result, onBack, onPremium }) {
                        "💼 Career Timeline & Success Predictions",
                        "🔱 Personalized Mantras & Remedies",
                        "💎 Lucky Gemstones & Elements",
-                       "📄 25-page Professional PDF Report",
+                       "📄 Complete Professional PDF Report",
                        "📱 WhatsApp + Email Delivery",
                        "✨ Lifetime Access & Updates"
                      ].map((feature, index) => (
@@ -487,7 +487,7 @@ function BirthChart({ user, result, onBack, onPremium }) {
                      onClick={handlePremiumClick}
                      className="w-full bg-gradient-to-r from-purple-600 to-gold-600 text-white py-3 md:py-4 rounded-xl md:rounded-2xl font-bold hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-sm md:text-base"
                    >
-                     🌟 Get Complete Analysis for ₹69 (Save ₹230!)
+                     🌟 Get Complete Analysis for ₹29 (Save ₹270!)
                    </button>
 
                    <div className="mt-4 text-center">
@@ -514,7 +514,7 @@ function BirthChart({ user, result, onBack, onPremium }) {
            </div>
 
            {/* Action Buttons - Mobile Optimized */}
-           <div className="text-center">
+           <div className="text-center p-4 md:p-8">
              <button
                onClick={onBack}
                className="bg-slate-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl md:rounded-2xl hover:bg-slate-700 transition-all duration-300 font-medium text-sm md:text-base"
@@ -526,9 +526,9 @@ function BirthChart({ user, result, onBack, onPremium }) {
        </div>
      </div>
 
-     {/* Single Premium Modal */}
+     {/* Single Premium Modal - Updated to use PremiumModal29 */}
      {showPremium && (
-       <PremiumModal69
+       <PremiumModal29
          zodiac={zodiac}
          nakshatra={nakshatra}
          iqScore={score}
@@ -562,10 +562,15 @@ function BirthChart({ user, result, onBack, onPremium }) {
        .animation-delay-4000 {
          animation-delay: 4s;
        }
+       .line-clamp-2 {
+         overflow: hidden;
+         display: -webkit-box;
+         -webkit-box-orient: vertical;
+         -webkit-line-clamp: 2;
+       }
      `}</style>
    </div>
  );
 }
 
 export default BirthChart;
-
