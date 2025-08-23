@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PremiumModal69 from "./PremiumModal69";
+import PremiumModal29 from "./PremiumModal29";
 
 function getZodiacSign(dobStr) {
   const date = new Date(dobStr);
@@ -568,3 +568,4 @@ function BirthChart({ user, result, onBack, onPremium }) {
 }
 
 export default BirthChart;
+
