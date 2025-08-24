@@ -9,7 +9,7 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState("form");
   const [userData, setUserData] = useState(null);
   const [testResults, setTestResults] = useState(null);
-  const [selectedPremiumTier, setSelectedPremiumTier] = useState(null); // Track which premium modal to show
+  const [selectedPremiumTier, setSelectedPremiumTier] = useState(null);
   
   const handleStart = (data) => {
     setUserData(data);
@@ -21,7 +21,7 @@ function App() {
     setCurrentScreen("birthchart");
   };
   
-  // Premium modal handlers - now with tier selection
+  // Premium modal handlers
   const handlePremium29Click = () => {
     setSelectedPremiumTier("29");
     setCurrentScreen("premium");
@@ -34,7 +34,6 @@ function App() {
   
   const handleBackToMainForm = () => setCurrentScreen("form");
   
-  // Make navigation functions globally accessible (if still needed)
   useEffect(() => {
     window.navigateToMainForm = handleBackToMainForm;
   }, []);
@@ -59,7 +58,7 @@ function App() {
       <BirthChart
         user={userData}
         result={testResults}
-        onPremium29={handlePremium29Click}  // Pass both handlers to BirthChart
+        onPremium29={handlePremium29Click}
         onPremium99={handlePremium99Click}
         onBack={() => setCurrentScreen("test")}
       />
@@ -73,7 +72,7 @@ function App() {
         <PremiumModal29
           zodiac={testResults?.zodiac}
           nakshatra={testResults?.nakshatra}
-          iqScore={testResults?.totalScore}
+          iqScore={testResults?.score}  // ✅ FIXED: Changed from totalScore to score
           hiddenInsights={testResults?.hiddenInsights}
           user={userData}
           onClose={() => setCurrentScreen("birthchart")}
@@ -86,7 +85,7 @@ function App() {
         <PremiumModal99
           zodiac={testResults?.zodiac}
           nakshatra={testResults?.nakshatra}
-          iqScore={testResults?.totalScore}
+          iqScore={testResults?.score}  // ✅ FIXED: Changed from totalScore to score
           hiddenInsights={testResults?.hiddenInsights}
           user={userData}
           onClose={() => setCurrentScreen("birthchart")}
