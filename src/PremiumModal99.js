@@ -40,6 +40,26 @@ const PremiumModal99 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
   const generatePDF = async () => {
     setIsGeneratingPDF(true);
     try {
+      // Load required libraries dynamically
+      if (!window.html2canvas) {
+        const html2canvasScript = document.createElement('script');
+        html2canvasScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        await new Promise((resolve, reject) => {
+          html2canvasScript.onload = resolve;
+          html2canvasScript.onerror = reject;
+          document.body.appendChild(html2canvasScript);
+        });
+      }
+
+      if (!window.jsPDF) {
+        const jsPDFScript = document.createElement('script');
+        jsPDFScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+        await new Promise((resolve, reject) => {
+          jsPDFScript.onload = resolve;
+          jsPDFScript.onerror = reject;
+          document.body.appendChild(jsPDFScript);
+        });
+      }
       // Create PDF content as HTML string for better formatting
       const pdfContent = `
         <!DOCTYPE html>
@@ -195,9 +215,10 @@ const PremiumModal99 = ({ zodiac, nakshatra, iqScore, hiddenInsights, onClose, u
         };
         await window.html2pdf().set(opt).from(element).save();
       } else {
-        // Fallback to basic PDF creation
-        const canvas = await html2canvas(element, { scale: 2 });
+        // Fallback to basic PDF creation using dynamically loaded jsPDF
+        const canvas = await window.html2canvas(element, { scale: 2 });
         const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
         const pdf = new jsPDF('p', 'mm', 'a4');
         const imgWidth = 210;
         const pageHeight = 295;
