@@ -12,6 +12,47 @@ function PotentialTest({ user, onComplete, onBack }) {
 
   const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
+  // Add zodiac calculation functions
+  const getZodiacSign = (dobStr) => {
+    const date = new Date(dobStr);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+
+    if ((month === 1 && day <= 19) || (month === 12 && day >= 22)) return "Capricorn";
+    if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return "Aquarius";
+    if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return "Pisces";
+    if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return "Aries";
+    if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return "Taurus";
+    if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return "Gemini";
+    if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return "Cancer";
+    if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return "Leo";
+    if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return "Virgo";
+    if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return "Libra";
+    if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return "Scorpio";
+    if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return "Sagittarius";
+    return "Unknown";
+  };
+
+  const getNakshatra = (zodiac) => {
+    const nakshatras = {
+      Aries: ["Ashwini", "Bharani", "Krittika"],
+      Taurus: ["Krittika", "Rohini", "Mrigashira"],
+      Gemini: ["Mrigashira", "Ardra", "Punarvasu"],
+      Cancer: ["Punarvasu", "Pushya", "Ashlesha"],
+      Leo: ["Magha", "Purva Phalguni", "Uttara Phalguni"],
+      Virgo: ["Uttara Phalguni", "Hasta", "Chitra"],
+      Libra: ["Chitra", "Swati", "Vishakha"],
+      Scorpio: ["Vishakha", "Anuradha", "Jyeshtha"],
+      Sagittarius: ["Mula", "Purva Ashadha", "Uttara Ashadha"],
+      Capricorn: ["Uttara Ashadha", "Shravana", "Dhanishta"],
+      Aquarius: ["Dhanishta", "Shatabhisha", "Purva Bhadrapada"],
+      Pisces: ["Purva Bhadrapada", "Uttara Bhadrapada", "Revati"]
+    };
+    
+    const zodiacNakshatras = nakshatras[zodiac] || ["Ashwini"];
+    return zodiacNakshatras[Math.floor(Math.random() * zodiacNakshatras.length)];
+  };
+
   useEffect(() => {
     if (!age) return;
 
@@ -57,24 +98,33 @@ function PotentialTest({ user, onComplete, onBack }) {
 
     const totalScore = Object.values(typeScore).reduce((sum, score) => sum + score, 0);
 
-    // FIXED: Map your typeScore to expected format
+    // Map typeScore to expected format
     const mappedBreakdown = {
-      logical: typeScore.aptitude || 0,        // Map aptitude to logical
-      creative: typeScore.creative || 0,       // Keep creative as is
-      sports: typeScore.sports || 0,           // Keep sports as is  
-      imaginative: typeScore.imaginative || 0  // Keep imaginative as is
+      logical: typeScore.aptitude || 0,        
+      creative: typeScore.creative || 0,       
+      sports: typeScore.sports || 0,           
+      imaginative: typeScore.imaginative || 0  
     };
+
+    // Calculate zodiac and nakshatra
+    const currentZodiac = user?.dob ? getZodiacSign(user.dob) : "Leo";
+    const currentNakshatra = getNakshatra(currentZodiac);
 
     console.log('Debug - Original typeScore:', typeScore);
     console.log('Debug - Mapped breakdown:', mappedBreakdown);
+    console.log('Debug - Zodiac/Nakshatra:', currentZodiac, currentNakshatra);
 
+    // FIXED: Include zodiac and nakshatra in the results
     onComplete({
       score: totalScore,
-      breakdown: mappedBreakdown, // Use mapped version instead of typeScore
+      breakdown: mappedBreakdown,
       premiumData: premiumResponses,
       total: selectedQuestions.length,
+      zodiac: currentZodiac,           // ✅ ADD THIS
+      nakshatra: currentNakshatra,     // ✅ ADD THIS
+      hiddenInsights: {}               // ✅ ADD THIS (empty object to prevent undefined errors)
     });
-  }, [answers, selectedQuestions, onComplete, isSubmitting]);
+  }, [answers, selectedQuestions, onComplete, isSubmitting, user?.dob]);
 
   useEffect(() => {
     if (timer <= 0) {
@@ -320,6 +370,5 @@ function PotentialTest({ user, onComplete, onBack }) {
     </div>
   );
 }
-
 
 export default PotentialTest;
