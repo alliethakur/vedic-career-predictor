@@ -56,23 +56,6 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [userCount, setUserCount] = useState(15247);
 
-  // Animated counter effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setUserCount(prev => prev + Math.floor(Math.random() * 3) + 1);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Testimonial rotation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
-    }, 4000);
-    return () => clearInterval(interval);
-    // eslint-disable-next-line
-  }, []);
-
   const testimonials = [
     {
       name: "Priya Sharma",
@@ -96,6 +79,22 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
       avatar: "👩"
     }
   ];
+
+  // Animated counter effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setUserCount(prev => prev + Math.floor(Math.random() * 3) + 1);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Testimonial rotation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
   useEffect(() => {
     const dobDate = new Date(dob);
@@ -197,7 +196,6 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
 
   const handlePremium29Click = () => {
     setShowPremium29(true);
-    // Call the onPremium29 prop if it exists (for App.js navigation)
     if (onPremium29) {
       onPremium29();
     }
@@ -205,7 +203,6 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
 
   const handlePremium99Click = () => {
     setShowPremium99(true);
-    // Call the onPremium99 prop if it exists (for App.js navigation)
     if (onPremium99) {
       onPremium99();
     }
@@ -228,7 +225,7 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
         <div className="absolute bottom-0 left-1/3 w-64 h-64 md:w-96 md:h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
 
-      {/* Live Activity Indicators - Mobile Optimized */}
+      {/* Live Activity Indicators */}
       <div className="fixed top-4 right-2 md:top-6 md:right-6 z-30 space-y-2 md:space-y-3">
         <div className="bg-white/95 backdrop-blur-xl rounded-xl md:rounded-2xl px-3 py-2 md:px-5 md:py-3 shadow-xl border border-white/20">
           <div className="flex items-center space-x-2 md:space-x-3">
@@ -249,7 +246,7 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-3 md:px-4 py-6 md:py-10">
-        {/* Modern Header - Mobile Optimized */}
+        {/* Header */}
         <div className="text-center mb-8 md:mb-12">
           <div className="inline-flex items-center bg-gradient-to-r from-purple-100 to-blue-100 rounded-full px-4 py-2 md:px-6 md:py-3 mb-4 md:mb-6">
             <div className="w-2 h-2 bg-purple-600 rounded-full mr-2 md:mr-3 animate-pulse"></div>
@@ -266,9 +263,9 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
           </p>
         </div>
 
-        {/* Main Analysis Card - Mobile Optimized */}
+        {/* Main Analysis Card */}
         <div className="bg-white/80 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
-          {/* Premium Header with Gradient - Mobile Responsive */}
+          {/* Premium Header */}
           <div className="relative bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 p-4 md:p-8 text-white">
             <div className="absolute inset-0 bg-black/10"></div>
             <div className="relative z-10">
@@ -293,7 +290,7 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
           </div>
 
           <div className="p-4 md:p-8 lg:p-12">
-            {/* Key Metrics Grid - Mobile Optimized */}
+            {/* Key Metrics Grid */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-10">
               {[
                 { 
@@ -333,7 +330,7 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
               ))}
             </div>
 
-            {/* Intellectual Aptitude Analysis - Mobile Optimized */}
+            {/* Intellectual Aptitude Analysis */}
             <div className="bg-gradient-to-r from-emerald-50 to-teal-50 p-4 md:p-8 rounded-2xl md:rounded-3xl mb-6 md:mb-8 border border-emerald-200">
               <div className="flex flex-col md:flex-row items-start justify-between mb-4 md:mb-6 gap-4">
                 <div className="flex-1">
@@ -352,7 +349,7 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
               </div>
             </div>
 
-            {/* Nakshatra Insights - Mobile Optimized */}
+            {/* Nakshatra Insights */}
             <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 md:p-8 rounded-2xl md:rounded-3xl mb-8 md:mb-10 border border-purple-200">
               <div className="flex items-center mb-4 md:mb-6">
                 <div className="bg-gradient-to-r from-purple-500 to-indigo-500 p-2 md:p-3 rounded-xl md:rounded-2xl mr-3 md:mr-4">
@@ -372,7 +369,7 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
               </div>
             </div>
 
-            {/* Premium Features Section - Mobile Optimized */}
+            {/* Premium Features Section */}
             <div className="mb-8 md:mb-12">
               <div className="text-center mb-6 md:mb-8">
                 <h3 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2 md:mb-3">Unlock Complete Analysis</h3>
@@ -413,7 +410,7 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
               </div>
             </div>
 
-            {/* Social Proof - Mobile Optimized */}
+            {/* Social Proof */}
             <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 md:p-8 rounded-2xl md:rounded-3xl mb-8 md:mb-10 border border-blue-200">
               <h3 className="text-xl md:text-2xl font-bold text-center text-slate-800 mb-6 md:mb-8">Trusted by Thousands of Families</h3>
               
@@ -438,7 +435,7 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
               </div>
             </div>
 
-            {/* Dual Premium Call-to-Action - Mobile Optimized */}
+            {/* Dual Premium Call-to-Action */}
             <div className="mb-8 md:mb-12">
               <div className="text-center mb-8 md:mb-10">
                 <h3 className="text-2xl md:text-4xl font-bold text-slate-800 mb-3 md:mb-4">Choose Your Analysis Package</h3>
@@ -575,7 +572,7 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
                 </div>
               </div>
 
-              {/* Trust Badges - Mobile Optimized */}
+              {/* Trust Badges */}
               <div className="mt-8 md:mt-12 flex flex-wrap justify-center gap-3 md:gap-6">
                 {[
                   { icon: "🔒", text: "Secure Payment" },
@@ -591,7 +588,7 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
               </div>
             </div>
 
-            {/* Action Buttons - Mobile Optimized */}
+            {/* Action Buttons */}
             <div className="text-center p-4 md:p-8">
               <button
                 onClick={onBack}
@@ -603,64 +600,64 @@ function BirthChart({ user, result, onBack, onPremium29, onPremium99 }) {
           </div>
         </div>
       </div>
+
+      {/* Dual Premium Modals */}
+      {showPremium29 && (
+        <PremiumModal29
+          zodiac={zodiac}
+          nakshatra={nakshatra}
+          iqScore={score}
+          hiddenInsights={hiddenInsights}
+          user={user}
+          onClose={() => setShowPremium29(false)}
+        />
+      )}
+
+      {showPremium99 && (
+        <PremiumModal99
+          zodiac={zodiac}
+          nakshatra={nakshatra}
+          iqScore={score}
+          hiddenInsights={hiddenInsights}
+          user={user}
+          onClose={() => setShowPremium99(false)}
+        />
+      )}
+
+      {/* CSS Styles */}
+      <style jsx>{`
+        @keyframes blob {
+          0% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+        .line-clamp-2 {
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+        }
+      `}</style>
     </div>
-
-    {/* Dual Premium Modals */}
-    {showPremium29 && (
-      <PremiumModal29
-        zodiac={zodiac}
-        nakshatra={nakshatra}
-        iqScore={score}
-        hiddenInsights={hiddenInsights}
-        user={user}
-        onClose={() => setShowPremium29(false)}
-      />
-    )}
-
-    {showPremium99 && (
-      <PremiumModal99
-        zodiac={zodiac}
-        nakshatra={nakshatra}
-        iqScore={score}
-        hiddenInsights={hiddenInsights}
-        user={user}
-        onClose={() => setShowPremium99(false)}
-      />
-    )}
-
-    <style jsx>{`
-      @keyframes blob {
-        0% {
-          transform: translate(0px, 0px) scale(1);
-        }
-        33% {
-          transform: translate(30px, -50px) scale(1.1);
-        }
-        66% {
-          transform: translate(-20px, 20px) scale(0.9);
-        }
-        100% {
-          transform: translate(0px, 0px) scale(1);
-        }
-      }
-      .animate-blob {
-        animation: blob 7s infinite;
-      }
-      .animation-delay-2000 {
-        animation-delay: 2s;
-      }
-      .animation-delay-4000 {
-        animation-delay: 4s;
-      }
-      .line-clamp-2 {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-      }
-    `}</style>
-  </div>
-);
+  );
 }
 
 export default BirthChart;
