@@ -3,11 +3,13 @@ import IQIntroForm from "./IQIntroForm";
 import PotentialTest from "./PotentialTest";
 import BirthChart from "./BirthChart";
 import PremiumModal29 from "./PremiumModal29";
+import PremiumModal99 from "./PremiumModal99";
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState("form");
   const [userData, setUserData] = useState(null);
   const [testResults, setTestResults] = useState(null);
+  const [selectedPremiumTier, setSelectedPremiumTier] = useState(null); // Track which premium modal to show
   
   const handleStart = (data) => {
     setUserData(data);
@@ -19,8 +21,16 @@ function App() {
     setCurrentScreen("birthchart");
   };
   
-  // Single premium modal handler
-  const handlePremiumClick = () => setCurrentScreen("premium");
+  // Premium modal handlers - now with tier selection
+  const handlePremium29Click = () => {
+    setSelectedPremiumTier("29");
+    setCurrentScreen("premium");
+  };
+  
+  const handlePremium99Click = () => {
+    setSelectedPremiumTier("99");
+    setCurrentScreen("premium");
+  };
   
   const handleBackToMainForm = () => setCurrentScreen("form");
   
@@ -49,23 +59,40 @@ function App() {
       <BirthChart
         user={userData}
         result={testResults}
-        onPremium={handlePremiumClick}
+        onPremium29={handlePremium29Click}  // Pass both handlers to BirthChart
+        onPremium99={handlePremium99Click}
         onBack={() => setCurrentScreen("test")}
       />
     );
   }
   
   if (currentScreen === "premium") {
-    return (
-      <PremiumModal29
-        zodiac={testResults?.zodiac}
-        nakshatra={testResults?.nakshatra}
-        iqScore={testResults?.totalScore}
-        hiddenInsights={testResults?.hiddenInsights}
-        user={userData}
-        onClose={() => setCurrentScreen("birthchart")}
-      />
-    );
+    // Render the appropriate premium modal based on selection
+    if (selectedPremiumTier === "29") {
+      return (
+        <PremiumModal29
+          zodiac={testResults?.zodiac}
+          nakshatra={testResults?.nakshatra}
+          iqScore={testResults?.totalScore}
+          hiddenInsights={testResults?.hiddenInsights}
+          user={userData}
+          onClose={() => setCurrentScreen("birthchart")}
+        />
+      );
+    }
+    
+    if (selectedPremiumTier === "99") {
+      return (
+        <PremiumModal99
+          zodiac={testResults?.zodiac}
+          nakshatra={testResults?.nakshatra}
+          iqScore={testResults?.totalScore}
+          hiddenInsights={testResults?.hiddenInsights}
+          user={userData}
+          onClose={() => setCurrentScreen("birthchart")}
+        />
+      );
+    }
   }
   
   return null;
